@@ -19,6 +19,17 @@ import '@utils/console.ts'                          // 控制台输出内容
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import { setupGlobDirectives } from './directives'
 import language from './language'
+import {
+  setupNProgress,
+} from './plugins'
+
+
+
+
+async function setupApp() {
+
+  // 设置顶部进度条
+setupNProgress()
 
 const app = createApp(App)
 initStore(app)
@@ -28,7 +39,12 @@ setupGlobDirectives(app)
 
 app.use(language)
 
+
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
 app.mount('#app')
+}
+
+// 初始化应用程序
+setupApp()

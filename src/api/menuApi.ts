@@ -12,8 +12,10 @@ export const menuService = {
   ): Promise<{ menuList: MenuListType[]; closeLoading: () => void }> {
     // 获取到的菜单数据
     const menuList = asyncRoutes
+    console.log('%c Line:15 🍿 menuList', 'color:#33a5ff', menuList)
     // 处理后的菜单数据
     const processedMenuList: MenuListType[] = menuList.map((route) => processRoute(route))
+    console.log('%c Line:19 🍑 processedMenuList', 'color:#e41a6a', processedMenuList)
 
     const loading = ElLoading.service({
       lock: true,
