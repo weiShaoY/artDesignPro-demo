@@ -1,30 +1,40 @@
 import { ElMessage } from 'element-plus'
 import { useSettingStore } from '@/store/modules/setting'
-import { useWorktabStore } from '@/store/modules/worktab'
+import { useWorkTabStore } from '@/store/modules/workTab'
 
 // 初始化本地数据
 export function initState() {
   if (validateStorageData() || isLocalStorageEmpty()) {
-    const worktabStore = useWorktabStore()
+    const workTabStore = useWorkTabStore()
     const settingStore = useSettingStore()
 
-    worktabStore.initState()
+    workTabStore.initState()
     settingStore.initState()
   }
 }
 
-// 获取系统存储数据
+/**
+ *  获取系统存储数据
+ */
 export function getSysStorage() {
-  const version = getSysVersion() || import.meta.env.VITE_VERSION
+  console.log('import.meta.env:', import.meta.env)
+
+  console.log('%c Line:19 🥚 import.meta.env.VITE_VERSION', 'color:#ffdd4d', getSysVersion())
+  const version = getSysVersion() || import.meta.env.VITE_VERSION || '1.0.0'
+  console.log('%c Line:19 🍰 version', 'color:#e41a6a', version)
   return localStorage.getItem(`sys-v${version}`) as any
 }
 
-// 获取系统版本
+/**
+ *  获取系统版本
+ */
 export function getSysVersion() {
   return localStorage.getItem('version')
 }
 
-// 验证本地存储数据的类型
+/**
+ *  验证本地存储数据的类型
+ */
 function validate(obj: any, schema: any, path: string = ''): boolean {
   return Object.keys(schema).every((key) => {
     const fullPath = path ? `${path}.${key}` : key
@@ -63,7 +73,7 @@ export function validateStorageData() {
       info: 'object',
       isLogin: 'boolean',
       language: 'string',
-      worktab: {
+      workTab: {
         current: {
           title: 'string',
           path: 'string',

@@ -5,7 +5,7 @@ import { RouteLocationNormalized } from 'vue-router'
 import { useTheme } from '@/composables/useTheme'
 import { formatMenuTitle } from '@/utils/menu'
 import { SystemInfo } from '@/config/setting'
-import { setWorktab } from '@/utils/worktab'
+import { setWorkTab } from '@/utils/workTab'
 import { useMenuStore } from '@/store/modules/menu'
 import { getMenuList } from './getMenuList'
 import { registerAsyncRoutes } from '../modules/dynamicRoutes'
@@ -77,7 +77,7 @@ function createRouteGuard(router: Router) {
     }
 
     // 设置工作标签页和页面标题
-    setWorktab(to)
+    setWorkTab(to)
 
     next()
   })

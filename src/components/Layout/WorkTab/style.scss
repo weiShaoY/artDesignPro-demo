@@ -1,6 +1,6 @@
 @use '@styles/variables.scss' as *;
 
-.worktab {
+.workTab {
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
@@ -98,13 +98,13 @@
 }
 
 @media only screen and (max-width: $device-ipad) {
-  .worktab {
+  .workTab {
     padding: 6px 10px;
   }
 }
 
 @media only screen and (max-width: $device-phone) {
-  .worktab {
+  .workTab {
     padding: 0 15px;
   }
 }

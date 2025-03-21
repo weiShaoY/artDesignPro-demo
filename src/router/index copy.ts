@@ -16,7 +16,7 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { useTheme } from '@/composables/useTheme'
 import { RoutesAlias } from './modules/routesAlias'
-import { setWorktab } from '@/utils/worktab'
+import { setWorkTab } from '@/utils/workTab'
 import { registerAsyncRoutes } from './modules/dynamicRoutes'
 import { formatMenuTitle } from '@/utils/menu'
 
@@ -156,7 +156,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // 设置工作标签页和页面标题
-  setWorktab(to)
+  setWorkTab(to)
   setPageTitle(to)
 
   next()

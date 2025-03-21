@@ -5,7 +5,7 @@ import { HOME_PAGE } from '@/router/index'
 import { router } from '@/router'
 import { getSysStorage } from '@/utils/storage'
 
-export const useWorktabStore = defineStore('worktabStore', () => {
+export const useWorkTabStore = defineStore('workTabStore', () => {
   /**
    *  已打开的选项卡
    */
@@ -29,9 +29,9 @@ export const useWorktabStore = defineStore('worktabStore', () => {
     const sysStorage = getSysStorage()
     if (sysStorage) {
       const sys = JSON.parse(sysStorage)
-      const { worktab } = sys.user
-      current.value = worktab.current || {}
-      opened.value = worktab.opened || []
+      const { workTab } = sys.user
+      current.value = workTab.current || {}
+      opened.value = workTab.opened || []
       checkFirstHomePage()
     }
   }

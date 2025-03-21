@@ -4,7 +4,7 @@ import { LanguageEnum } from '@/enums/appEnum'
 import { router } from '@/router'
 import { UserInfo } from '@/types/store'
 import { useSettingStore } from './setting'
-import { useWorktabStore } from './worktab'
+import { useWorkTabStore } from './workTab'
 import { getSysStorage } from '@/utils/storage'
 import { MenuListType } from '@/types/menu'
 
@@ -33,7 +33,7 @@ export const useUserStore = defineStore('userStore', () => {
   // Getters
   const getUserInfo = computed(() => info.value)
   const getSettingState = computed(() => useSettingStore().$state)
-  const getWorktabState = computed(() => useWorktabStore().$state)
+  const getWorkTabState = computed(() => useWorkTabStore().$state)
 
   // Actions
   const initState = () => {
@@ -71,7 +71,7 @@ export const useUserStore = defineStore('userStore', () => {
         lockPassword: lockPassword.value,
         searchHistory: searchHistory.value,
         refreshToken: refreshToken.value,
-        worktab: getWorktabState.value,
+        workTab: getWorkTabState.value,
         setting: getSettingState.value
       }
     })
@@ -119,7 +119,7 @@ export const useUserStore = defineStore('userStore', () => {
       accessToken.value = ''
       refreshToken.value = ''
       sessionStorage.removeItem('accessToken')
-      useWorktabStore().opened = []
+      useWorkTabStore().opened = []
       saveUserData()
       sessionStorage.removeItem('iframeRoutes')
       router.push('/login')
@@ -137,7 +137,7 @@ export const useUserStore = defineStore('userStore', () => {
     refreshToken,
     getUserInfo,
     getSettingState,
-    getWorktabState,
+    getWorkTabState,
     initState,
     saveUserData,
     setUserInfo,

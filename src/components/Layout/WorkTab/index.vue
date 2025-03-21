@@ -1,5 +1,5 @@
 <template>
-  <div class="worktab">
+  <div class="workTab">
     <div class="scroll-view" ref="scrollRef">
       <ul
         class="tabs"
@@ -36,24 +36,24 @@
               command="left"
               :disabled="activeTabIndex === 0 || activeTabIndex === 1"
             >
-              <span>{{ $t('worktab.btn[0]') }}</span>
+              <span>{{ $t('workTab.btn[0]') }}</span>
             </el-dropdown-item>
             <el-dropdown-item
               :icon="ArrowRight"
               command="right"
               :disabled="activeTabIndex === list.length - 1"
             >
-              <span>{{ $t('worktab.btn[1]') }}</span>
+              <span>{{ $t('workTab.btn[1]') }}</span>
             </el-dropdown-item>
             <el-dropdown-item
               :icon="Close"
               command="other"
               :disabled="list.length === 1 || (list.length === 2 && activeTabIndex === 1)"
             >
-              <span>{{ $t('worktab.btn[2]') }}</span>
+              <span>{{ $t('workTab.btn[2]') }}</span>
             </el-dropdown-item>
             <el-dropdown-item :icon="CircleClose" command="all" :disabled="list.length === 1">
-              <span>{{ $t('worktab.btn[3]') }}</span>
+              <span>{{ $t('workTab.btn[3]') }}</span>
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -70,14 +70,14 @@
   import { useI18n } from 'vue-i18n'
   import { ArrowDown, ArrowLeft, ArrowRight, Close, CircleClose } from '@element-plus/icons-vue'
 
-  import { useWorktabStore } from '@/store/modules/worktab'
+  import { useWorkTabStore } from '@/store/modules/workTab'
   import { formatMenuTitle } from '@/utils/menu'
 
   import type { MenuItemType } from '@/components/Widgets/MenuRight.vue'
   import { WorkTabType } from '@/types/store'
 
   const { t } = useI18n()
-  const store = useWorktabStore()
+  const store = useWorkTabStore()
   const route = useRoute()
   const router = useRouter()
   const { currentRoute } = router
@@ -112,25 +112,25 @@
     return [
       {
         key: 'left',
-        label: t('worktab.btn[0]'),
+        label: t('workTab.btn[0]'),
         icon: 'ArrowLeft',
         disabled: isFirstOrSecondTab
       },
       {
         key: 'right',
-        label: t('worktab.btn[1]'),
+        label: t('workTab.btn[1]'),
         icon: 'ArrowRight',
         disabled: isLastTab
       },
       {
         key: 'other',
-        label: t('worktab.btn[2]'),
+        label: t('workTab.btn[2]'),
         icon: 'Close',
         disabled: isOneTab || disableOther
       },
       {
         key: 'all',
-        label: t('worktab.btn[3]'),
+        label: t('workTab.btn[3]'),
         icon: 'CircleClose',
         disabled: isOneTab
       }
@@ -150,7 +150,7 @@
   }
 
   // 自动定位当前标签页到可视区域
-  const worktabAutoPosition = () => {
+  const workTabAutoPosition = () => {
     if (!scrollRef.value || !tabsRef.value) return
 
     const scrollWidth = scrollRef.value.offsetWidth
@@ -182,7 +182,7 @@
   onMounted(() => {
     listenerScroll() // 监听滚动事件
     addTouchListeners() // 添加触摸事件监听
-    worktabAutoPosition() // 初始定位
+    workTabAutoPosition() // 初始定位
   })
 
   // 监听路由变化，自动定位标签页
@@ -190,7 +190,7 @@
     () => currentRoute.value,
     () => {
       setTransition()
-      worktabAutoPosition()
+      workTabAutoPosition()
     }
   )
 
@@ -225,12 +225,12 @@
     }
 
     setTimeout(() => {
-      worktabClosePosition()
+      workTabClosePosition()
     }, 100)
   }
 
   // 关闭标签页后的位置调整
-  const worktabClosePosition = () => {
+  const workTabClosePosition = () => {
     if (!scrollRef.value || !tabsRef.value) return
 
     const curTabEl = getCurTabEl()

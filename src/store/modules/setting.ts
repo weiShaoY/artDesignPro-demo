@@ -67,14 +67,27 @@ export const useSettingStore = defineStore('settingStore', () => {
   const containerWidth = ref(ContainerWidthEnum.FULL)
 
   /**  获取菜单主题 */
-  function getMenuTheme(): MenuThemeType {
+  // function getMenuTheme(): MenuThemeType {
+  //   const list = ThemeList.filter((item) => item.theme === menuThemeType.value)
+  //   if (isDark.value) {
+  //     return DarkMenuStyles[0]
+  //   } else {
+  //     return list[0]
+  //   }
+  // }
+  /**
+   * 获取菜单主题
+   * @returns 菜单主题配置
+   */
+  const getMenuTheme = computed<MenuThemeType>(() => {
     const list = ThemeList.filter((item) => item.theme === menuThemeType.value)
     if (isDark.value) {
       return DarkMenuStyles[0]
     } else {
       return list[0]
     }
-  }
+  })
+
   /**  是否为暗黑模式 */
   const isDark = computed(() => systemThemeType.value === SystemThemeEnum.DARK)
   /**  获取菜单展开宽度 */
@@ -91,6 +104,7 @@ export const useSettingStore = defineStore('settingStore', () => {
 
   function initState() {
     let sys = getSysStorage()
+    console.log('%c Line:94 🌮 sys', 'color:#ea7e5c', sys)
 
     if (sys) {
       sys = JSON.parse(sys)

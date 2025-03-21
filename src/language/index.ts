@@ -1,7 +1,7 @@
 import { createI18n } from 'vue-i18n'
 import type { I18n, I18nOptions } from 'vue-i18n'
 import { LanguageEnum } from '@/enums/appEnum'
-import { getSysStorage } from '@/utils/storage'
+// import { getSysStorage } from '@/utils/storage'
 
 // 动态导入语言文件
 const messages = {
@@ -17,16 +17,17 @@ export const languageOptions = [
 
 // 获取初始语言
 const getDefaultLanguage = (): LanguageEnum => {
-  const sys = getSysStorage()
-  if (!sys) return LanguageEnum.ZH
+  // const sys = getSysStorage()
+  // if (!sys) return LanguageEnum.ZH
 
-  try {
-    const { user } = JSON.parse(sys)
-    return user?.language || LanguageEnum.ZH
-  } catch (error) {
-    console.error('获取初始语言失败', error)
-    return LanguageEnum.ZH
-  }
+  // try {
+  //   const { user } = JSON.parse(sys)
+  //   return user?.language || LanguageEnum.ZH
+  // } catch (error) {
+  //   console.error('获取初始语言失败', error)
+  //   return LanguageEnum.ZH
+  // }
+  return LanguageEnum.ZH
 }
 
 const i18nOptions: I18nOptions = {

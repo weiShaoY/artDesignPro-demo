@@ -71,7 +71,7 @@
     "text": ["No"],
     "viewAll": "View all"
   },
-  "worktab": {
+  "workTab": {
     "btn": ["Close left", "Close right", "Close outher", "Close All"]
   },
   "console": {
