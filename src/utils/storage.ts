@@ -1,17 +1,13 @@
 import { ElMessage } from 'element-plus'
-import { router } from '@/router'
-import { useUserStore } from '@/store/modules/user'
 import { useSettingStore } from '@/store/modules/setting'
 import { useWorktabStore } from '@/store/modules/worktab'
 
 // 初始化本地数据
 export function initState() {
   if (validateStorageData() || isLocalStorageEmpty()) {
-    const userStore = useUserStore()
     const worktabStore = useWorktabStore()
     const settingStore = useSettingStore()
 
-    userStore.initState()
     worktabStore.initState()
     settingStore.initState()
   }
@@ -56,17 +52,6 @@ function handleError() {
     duration: 5000,
     message: '系统检测到本地数据异常，请重新登录系统恢复使用！'
   })
-
-  logOut()
-}
-
-function logOut() {
-  setTimeout(() => {
-    localStorage.clear()
-    useUserStore().logOut()
-    router.push('/login')
-    initState()
-  }, 1000)
 }
 
 // 验证本地存储数据并处理异常
@@ -115,7 +100,6 @@ export function validateStorageData() {
     // data.user.language = 2024
 
     if (Object.keys(data).length === 0) {
-      logOut()
       return false
     }
 
@@ -147,7 +131,7 @@ export function saveUserData() {
 
   window.addEventListener(eventType, () => {
     if (getSysVersion() && getSysStorage()) {
-      useUserStore().saveUserData()
+      // useUserStore().saveUserData()
     }
   })
 }

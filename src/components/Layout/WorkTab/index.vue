@@ -71,7 +71,6 @@
   import { ArrowDown, ArrowLeft, ArrowRight, Close, CircleClose } from '@element-plus/icons-vue'
 
   import { useWorktabStore } from '@/store/modules/worktab'
-  import { useUserStore } from '@/store/modules/user'
   import { formatMenuTitle } from '@/utils/menu'
 
   import type { MenuItemType } from '@/components/Widgets/MenuRight.vue'
@@ -79,7 +78,6 @@
 
   const { t } = useI18n()
   const store = useWorktabStore()
-  const userStore = useUserStore()
   const route = useRoute()
   const router = useRouter()
   const { currentRoute } = router
@@ -193,17 +191,6 @@
     () => {
       setTransition()
       worktabAutoPosition()
-    }
-  )
-
-  // 监听语言变化，重置标签页位置
-  watch(
-    () => userStore.language,
-    () => {
-      translateX.value = 0
-      nextTick(() => {
-        worktabAutoPosition()
-      })
     }
   )
 

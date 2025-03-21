@@ -90,7 +90,6 @@ declare module 'vue' {
     LeftView: typeof import('./../components/Pages/Login/LeftView.vue')['default']
     LineChart: typeof import('./../components/Widgets/Charts/LineChart.vue')['default']
     LineChartCard: typeof import('./../components/Widgets/Cards/LineChartCard.vue')['default']
-    LockScreen: typeof import('./../components/Layout/LockScreen/index.vue')['default']
     MapChart: typeof import('./../components/Widgets/Charts/MapChart.vue')['default']
     MenuLeft: typeof import('./../components/Layout/MenuLeft/index.vue')['default']
     MenuRight: typeof import('./../components/Widgets/MenuRight.vue')['default']

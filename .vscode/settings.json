@@ -1,5 +1,5 @@
 {
   "volar.inlayHints.eventArgumentInInlineHandlers": true,
   "i18n-ally.localesPaths": ["src/language", "src/language/locales"],
-  "i18n-ally.sourceLanguage": "en"
+  "i18n-ally.sourceLanguage": "zh"
 }

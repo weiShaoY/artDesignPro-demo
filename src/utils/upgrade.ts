@@ -1,6 +1,5 @@
 import { upgradeLogList } from '@/mock/upgradeLog'
 import { ElNotification } from 'element-plus'
-import { useUserStore } from '@/store/modules/user'
 
 // 系统升级
 export function systemUpgrade() {
@@ -39,10 +38,6 @@ export function systemUpgrade() {
         localStorage.setItem('version', version)
         // 删除旧版本号
         localStorage.removeItem(oldSysKey)
-        // 需要重新登录
-        if (requireReLogin) {
-          useUserStore().logOut()
-        }
       }, 1000)
     }
   }, 1000)

@@ -1,7 +1,7 @@
 <template>
   <BasicBanner
     class="banner"
-    :title="`欢迎回来 用户名iconfont-sys`"
+    :title="`欢迎回来 用户名`"
     :showButton="false"
     backgroundColor="var(--el-color-primary-light-9)"
     titleColor="var(--art-gray-900)"

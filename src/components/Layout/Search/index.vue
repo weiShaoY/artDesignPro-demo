@@ -45,6 +45,7 @@
         </div>
       </div>
 
+      <!-- 搜索历史 -->
       <div
         class="history-box"
         v-show="!searchVal && searchResult.length === 0 && historyResult.length > 0"
