@@ -66,15 +66,6 @@ export const useSettingStore = defineStore('settingStore', () => {
   /** 容器宽度 */
   const containerWidth = ref(ContainerWidthEnum.FULL)
 
-  /**  获取菜单主题 */
-  // function getMenuTheme(): MenuThemeType {
-  //   const list = ThemeList.filter((item) => item.theme === menuThemeType.value)
-  //   if (isDark.value) {
-  //     return DarkMenuStyles[0]
-  //   } else {
-  //     return list[0]
-  //   }
-  // }
   /**
    * 获取菜单主题
    * @returns 菜单主题配置
