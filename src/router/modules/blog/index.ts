@@ -4,7 +4,7 @@ export const blogList = [
     path: '/dashboard',
     component: '/index/index',
     meta: {
-      title: 'menus.dashboard.title',
+      title: '仪表盘',
       icon: '&#xe721;',
       keepAlive: false
     },
@@ -14,7 +14,7 @@ export const blogList = [
         name: 'Console',
         component: '/dashboard/console',
         meta: {
-          title: 'menus.dashboard.console',
+          title: '工作台',
           keepAlive: true
         }
       },
@@ -23,7 +23,7 @@ export const blogList = [
         name: 'Analysis',
         component: '/dashboard/analysis',
         meta: {
-          title: 'menus.dashboard.analysis',
+          title: '分析页',
           keepAlive: true
         }
       },
@@ -32,7 +32,7 @@ export const blogList = [
         name: 'Ecommerce',
         component: '/dashboard/ecommerce',
         meta: {
-          title: 'menus.dashboard.ecommerce',
+          title: '电子商务',
           keepAlive: true,
           showTextBadge: 'new'
         }
@@ -44,7 +44,7 @@ export const blogList = [
     name: 'Menu',
     component: '/index/index',
     meta: {
-      title: 'menus.menu.title',
+      title: '菜单管理',
       icon: '&#xe8a4;',
       keepAlive: false
     },
@@ -54,7 +54,7 @@ export const blogList = [
         name: 'Menus',
         component: '/menu/Menu',
         meta: {
-          title: 'menus.menu.menu',
+          title: '菜单权限',
           icon: '&#xe8a4;',
           keepAlive: true,
           authList: [
@@ -78,7 +78,7 @@ export const blogList = [
         name: 'Permission',
         component: '/menu/Permission',
         meta: {
-          title: 'menus.menu.permission',
+          title: '权限控制',
           icon: '&#xe831;',
           showTextBadge: 'new',
           keepAlive: true,
@@ -103,7 +103,7 @@ export const blogList = [
         name: 'Nested',
         component: '',
         meta: {
-          title: 'menus.menu.nested',
+          title: '嵌套菜单',
           icon: '&#xe676;',
           keepAlive: true
         },
@@ -113,7 +113,7 @@ export const blogList = [
             name: 'NestedMenu1',
             component: '/menu/nested/Menu1',
             meta: {
-              title: 'menus.menu.menu1',
+              title: '菜单1',
               icon: '&#xe676;',
               keepAlive: true
             }
@@ -123,7 +123,7 @@ export const blogList = [
             name: 'NestedMenu2',
             component: '',
             meta: {
-              title: 'menus.menu.menu2',
+              title: '菜单2',
               icon: '&#xe676;',
               keepAlive: true
             },
@@ -133,7 +133,7 @@ export const blogList = [
                 name: 'NestedMenu2-1',
                 component: '/menu/nested/menu2/Menu2-1',
                 meta: {
-                  title: 'menus.menu.menu21',
+                  title: '菜单2-1',
                   icon: '&#xe676;',
                   keepAlive: true
                 }
@@ -145,7 +145,7 @@ export const blogList = [
             name: 'NestedMenu3',
             component: '',
             meta: {
-              title: 'menus.menu.menu3',
+              title: '菜单3',
               icon: '&#xe676;',
               keepAlive: true
             },
@@ -155,7 +155,7 @@ export const blogList = [
                 name: 'NestedMenu3-1',
                 component: '/menu/nested/menu3/Menu3-1',
                 meta: {
-                  title: 'menus.menu.menu31',
+                  title: '菜单3-1',
                   icon: '&#xe676;',
                   keepAlive: true
                 }
@@ -165,7 +165,7 @@ export const blogList = [
                 name: 'NestedMenu3-2',
                 component: '',
                 meta: {
-                  title: 'menus.menu.menu32',
+                  title: '菜单3-2',
                   icon: '&#xe676;',
                   keepAlive: true
                 },
@@ -175,7 +175,7 @@ export const blogList = [
                     name: 'NestedMenu3-2-1',
                     component: '/menu/nested/menu3/menu3-2/Menu3-2-1',
                     meta: {
-                      title: 'menus.menu.menu321',
+                      title: '菜单3-2-1',
                       icon: '&#xe676;',
                       keepAlive: true
                     }
@@ -194,7 +194,7 @@ export const blogList = [
     path: '/log/changeLog',
     component: '/log/ChangeLog',
     meta: {
-      title: 'menus.plan.log',
+      title: '更新日志',
       showTextBadge: `v2.2.4`,
       icon: '&#xe712;',
       keepAlive: false,

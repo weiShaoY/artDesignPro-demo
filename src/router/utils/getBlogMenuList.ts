@@ -9,7 +9,7 @@ import { blogList } from '@/router/modules/blog'
  * 为路由数组添加唯一 id
  * @param  routes - 原始路由数组
  * @param  parentId - 父级 id，默认为 0
- * @returns   返回带有 id 的新路由数组
+ * @returns   返回带有 id 的路由数组
  */
 function addIdsToRoutes(routes: any, parentId = 0) {
   return routes.map((route: any, index: number) => {
@@ -37,16 +37,51 @@ function addIdsToRoutes(routes: any, parentId = 0) {
   })
 }
 
-export function getMenuList(
+/**
+ * 递归遍历菜单列表，在 path 前拼接 `/blog`
+ * @param  menuList 菜单列表
+ * @returns  处理后 path 添加 博客路径 前缀 的路由数组
+ */
+function addBlogPathToRoutes(routes: any) {
+  return routes.map((item: any) => {
+    const newItem = { ...item, path: `${import.meta.env.VITE_ROUTER_BLOG_PATH}${item.path}` }
+
+    // 递归处理子菜单
+    if (newItem.children) {
+      newItem.children = addBlogPathToRoutes(newItem.children)
+    }
+
+    return newItem
+  })
+}
+
+/**
+ *  获取博客菜单列表
+ * @param delay - 延迟时间，默认为 300ms
+ */
+export function getBlogMenuList(
   delay: number = 300
 ): Promise<{ menuList: MenuListType[]; closeLoading: () => void }> {
-  // 获取到的菜单数据
-  // const menuList = asyncRoutes
+  /**
+   *  添加id后的菜单
+   */
   const menuList = addIdsToRoutes(blogList)
-  console.log('%c Line:11 🍰 menuList', 'color:#b03734', menuList)
-  // 处理后的菜单数据
-  const processedMenuList: MenuListType[] = menuList.map((route: any) => processRoute(route))
+
+  const newMenuList = addBlogPathToRoutes(menuList)
+  // import.meta.env.VITE_ROUTER_BLOG_PATH
+  console.log(
+    '%c Line:53 🥥 import.meta.env.VITE_ROUTER_BLOG_PATH',
+    'color:#e41a6a',
+    import.meta.env.VITE_ROUTER_BLOG_PATH
+  )
+
+  /**
+   *  处理后的菜单
+   */
+  const processedMenuList: MenuListType[] = newMenuList.map((route: any) => processRoute(route))
+
   console.log('%c Line:782 🍓 processedMenuList', 'color:#ed9ec7', processedMenuList)
+
   const loading = ElLoading.service({
     lock: true,
     background: 'rgba(0, 0, 0, 0)',

@@ -7,7 +7,7 @@ import { formatMenuTitle } from '@/utils/menu'
 import { SystemInfo } from '@/config/setting'
 import { setWorkTab } from '@/utils/workTab'
 import { useMenuStore } from '@/store/modules/menu'
-import { getMenuList } from './getMenuList'
+import { getBlogMenuList } from './getBlogMenuList'
 import { registerAsyncRoutes } from '../modules/dynamicRoutes'
 
 /**
@@ -42,6 +42,32 @@ function createDocumentTitleGuard(router: Router) {
       }, 150)
     }
   })
+}
+
+/**
+ * 根据接口返回的菜单列表注册动态路由
+ * @throws 若菜单列表为空或获取失败则抛出错误
+ */
+async function getMenuData(router: any): Promise<void> {
+  try {
+    // 获取菜单列表
+    const { menuList, closeLoading } = await getBlogMenuList()
+    console.log('%c Line:129 🍅 menuList', 'color:#e41a6a', menuList)
+
+    // 设置菜单列表
+    useMenuStore().setMenuList(menuList as [])
+
+    // 注册异步路由
+    registerAsyncRoutes(router, menuList)
+    // 标记路由已注册
+    isRouteRegistered.value = true
+
+    // 关闭加载动画
+    closeLoading()
+  } catch (error) {
+    console.error('获取菜单列表失败:', error)
+    throw error
+  }
 }
 
 /**
@@ -105,30 +131,4 @@ export function createRouterGuard(router: Router) {
 
   // 创建文档标题守卫
   createDocumentTitleGuard(router)
-}
-
-/**
- * 根据接口返回的菜单列表注册动态路由
- * @throws 若菜单列表为空或获取失败则抛出错误
- */
-async function getMenuData(router: any): Promise<void> {
-  try {
-    // 获取菜单列表
-    const { menuList, closeLoading } = await getMenuList()
-    console.log('%c Line:129 🍅 menuList', 'color:#e41a6a', menuList)
-
-    // 设置菜单列表
-    useMenuStore().setMenuList(menuList as [])
-
-    // 注册异步路由
-    registerAsyncRoutes(router, menuList)
-    // 标记路由已注册
-    isRouteRegistered.value = true
-
-    // 关闭加载动画
-    closeLoading()
-  } catch (error) {
-    console.error('获取菜单列表失败:', error)
-    throw error
-  }
 }
