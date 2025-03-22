@@ -1,6 +1,6 @@
 import type { Router } from 'vue-router'
 
-import { createBlogRouteGuard } from './blog/index'
+import { createBlogRouteGuard } from './blogRouteGuard'
 
 import { createDocumentTitleGuard } from './documentTitleGuard'
 

@@ -1,8 +1,10 @@
+
+
 export type MenuListType = {
   id: number
   path: string // 路由
   name: string // 组件名
-  component?: string // 改为字符串类型，表示组件路径
+  component?: () => Promise<any> // 组件路径的异步导入
   meta: {
     title: string // 菜单名称
     icon?: string // 菜单图标

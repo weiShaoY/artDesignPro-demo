@@ -17,7 +17,7 @@ import { useSettingStore } from '@/store/modules/setting'
 
 import { useWorkTabStore } from '@/store/modules/workTab'
 
-import { blogRouteList } from '../../modules/blog'
+import { blogRouteList } from '../modules/blog'
 
 /**
  *  博客路由的基础路径
@@ -86,83 +86,67 @@ type ConvertedRoute = {
  * @param route - 单个菜单项数据
  * @returns 转换后的路由对象
  */
-function convertRouteComponent(route: MenuListType) {
-  const { component, children, ...routeConfig } = route
+/**
+ * 将菜单数据转换为 Vue Router 路由对象
+ * @param route - 单个菜单项数据
+ * @returns 转换后的路由对象
+ */
+function convertRouteComponent(route: MenuListType): ConvertedRoute {
+  const { component, children, ...routeConfig } = route;
 
-  /**
-   *  创建基础路由对象
-   */
+  // 创建基础路由对象
   const converted: ConvertedRoute = {
     ...routeConfig,
-    // 默认组件为空，稍后处理
-    component
-  }
+    component, // 默认组件
+  };
 
   try {
-    if (route.meta.isIframe && route.meta.isInMainContainer) {
-      console.log('%c Line:97 🌶 route.meta', 'color:#e41a6a', route.meta)
-      converted.component = BLOG_DEFAULT_LAYOUT
-
-      converted.path = `/${route.path?.split('/').slice(1, 3).join('/')}`
-
-      // 清空主路径的 name，避免冲突
-      converted.name = ''
-
-      // 定义子路由
+    // 处理 iframe 且在主容器内的路由
+    if (route.meta.isInMainContainer && route.meta.isIframe ) {
+      converted.component = BLOG_DEFAULT_LAYOUT;
+      converted.path = `/${route.path?.split('/').slice(1, 3).join('/')}`;
+      converted.name = ''; // 清空主路径的 name
       converted.children = [
         {
           id: route.id,
           path: route.path,
           name: route.name,
           component: BLOG_IFRAME_LAYOUT,
-          meta: route.meta
-        }
-      ]
-    }
-
-    // 处理 iframe 类型的路由
-    else if (route.meta.isIframe) {
-      converted.component = BLOG_IFRAME_LAYOUT
+          meta: route.meta,
+        },
+      ];
     }
 
     // 处理主容器内部的路由
     else if (route.meta.isInMainContainer) {
-      /**
-       *  保存原始组件
-       */
-      const originalComponent = converted.component
-
-      converted.component = BLOG_DEFAULT_LAYOUT
-
-      converted.path = `/${route.path?.split('/').slice(1, 3).join('/')}`
-
-      // 清空主路径的 name，避免冲突
-      converted.name = ''
-
-      // 定义子路由
+      converted.component = BLOG_DEFAULT_LAYOUT;
+      converted.path = `/${route.path?.split('/').slice(1, 3).join('/')}`;
+      converted.name = ''; // 清空主路径的 name
       converted.children = [
         {
           id: route.id,
           path: route.path,
           name: route.name,
-          component: originalComponent,
-          meta: route.meta
-        }
-      ]
+          component: component as RouteRecordRaw['component'],
+          meta: route.meta,
+        },
+      ];
+    }     // 处理 iframe 类型的路由
+    else if (route.meta.isIframe) {
+      converted.component = BLOG_IFRAME_LAYOUT;
     }
 
     // 递归处理子路由
     if (children?.length) {
-      converted.children = children.map((child) => convertRouteComponent(child))
+      converted.children = children.map((child) => convertRouteComponent(child));
     }
 
-    return converted
+    return converted;
   } catch (error) {
-    console.error(`路由转换失败: ${route.name}`, error)
-    throw error
+    console.error(`路由转换失败: ${route.name}`, error);
+    throw error;
   }
 }
-
 /**
  * 处理博客菜单路由的导航守卫逻辑
  * @param to - 目标路由对象
@@ -178,7 +162,6 @@ function handleBlogMenuGuard(
   // 如果博客菜单未添加
   if (!isAddBlogMenu.value) {
     try {
-      // addBlogMenu(router)
       try {
         const menuList = addIdsToRoutes(blogRouteList)
 
