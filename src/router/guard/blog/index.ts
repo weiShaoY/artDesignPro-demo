@@ -82,7 +82,7 @@ function processRouter(route: MenuListType, iframeRoutes: MenuListType[]) {
   const converted: ConvertedRoute = {
     ...routeConfig,
     // 默认组件为空，稍后处理
-    component: component,
+    component,
   }
 
   try {
@@ -101,7 +101,7 @@ function processRouter(route: MenuListType, iframeRoutes: MenuListType[]) {
 
     // 处理主容器内部的路由
     else if (route.meta.isInMainContainer) {
-      console.log("%c Line:104 🥒 route.meta", "color:#33a5ff", route);
+      console.log('%c Line:104 🥒 route.meta', 'color:#33a5ff', route)
       /**
        *  保存原始组件
        */
@@ -162,7 +162,11 @@ function addBlogMenu(router: Router): void {
 
     menuList.forEach((route: any) => {
       // 递归处理
-      processRouter(route, iframeRoutes)
+      const routeConfig = processRouter(route, iframeRoutes)
+
+      console.log('%c Line:166 🍩 routeConfig', 'color:#e41a6a', routeConfig)
+
+      router.addRoute(routeConfig as RouteRecordRaw)
     })
 
     // /////////////////////////////

@@ -40,7 +40,8 @@ const staticRoutes: AppRouteRecordRaw[] = [
       title: '500',
     },
   },
-  ...blogList,
+
+  // ...blogList,
 ]
 
 /** 创建路由实例 */
