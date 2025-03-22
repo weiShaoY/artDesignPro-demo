@@ -2,13 +2,22 @@ import type { App } from 'vue'
 
 import type { RouteRecordRaw } from 'vue-router'
 
-import { blogList } from '@/router/modules/blog'
-
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 import { createRouterGuard } from './guard'
 
-import 'nprogress/nprogress.css'
+import { formatModules } from './utils'
+
+const appModules = import.meta.glob('./modules/*/index.ts', {
+  eager: true,
+})
+
+/**
+ *  获取路由列表
+ */
+export const routeList = formatModules(appModules, [])
+
+console.log('%c Line:19 🍖 routeList', 'color:#2eafb0', routeList)
 
 /** 扩展的路由配置类型 */
 export type AppRouteRecordRaw = RouteRecordRaw & {
@@ -41,7 +50,7 @@ const staticRoutes: AppRouteRecordRaw[] = [
     },
   },
 
-  // ...blogList,
+  ...routeList,
 ]
 
 /** 创建路由实例 */

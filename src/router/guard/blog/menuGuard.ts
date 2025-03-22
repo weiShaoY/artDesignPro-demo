@@ -2,7 +2,7 @@ import type { MenuListType } from '@/types/menu'
 
 import { fourDotsSpinnerSvg } from '@/assets/svg/loading'
 
-import { blogList } from '@/router/modules/blog'
+import { blogRouteList } from '@/router/modules/blog'
 
 import { useMenuStore } from '@/store/modules/menu'
 

@@ -8,7 +8,7 @@ import { useSettingStore } from '@/store/modules/setting'
 
 import { setWorkTab } from '@/utils/workTab'
 
-import { blogList } from '../../modules'
+import { blogMainList } from '../../modules'
 
 // import.meta.env.VITE_ROUTER_BLOG_PATH
 
@@ -58,7 +58,7 @@ function createBlogMenuGuard(router: Router) {
     if (!isRouteRegistered.value) {
       try {
         // 获取菜单列表
-        const menuList = addIdsToRoutes(blogList)
+        const menuList = addIdsToRoutes(blogMainList)
 
         // 设置菜单列表
         useMenuStore().setMenuList(menuList)

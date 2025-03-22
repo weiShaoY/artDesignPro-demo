@@ -1,11 +1,14 @@
+import type { MenuListType } from '@/types/menu'
+
 /**
  * 动态路由处理
  * 根据接口返回的菜单列表注册动态路由
  */
 import type { Router, RouteRecordRaw } from 'vue-router'
-import type { MenuListType } from '@/types/menu'
-import { RoutesAlias } from './routesAlias'
+
 import { saveIframeRoutes } from '@/utils/menu'
+
+import { RoutesAlias } from './routesAlias'
 
 /**
  * 动态导入 views 目录下所有 .vue 组件
@@ -22,23 +25,28 @@ const modules: Record<string, () => Promise<any>> = import.meta.glob('../../view
 function loadComponent(componentPath: string, routeName: string): () => Promise<any> {
   // 生成完整的组件路径
   const fullPath = `../../views${componentPath}.vue`
+
   // 从已导入的模块中查找对应的组件
   const module = modules[fullPath]
+
   // 如果找不到组件，则在控制台报错
   if (!module && componentPath !== '') {
     console.error(`未找到组件：${routeName} ${fullPath}`)
   }
+
   return module as () => Promise<any>
 }
 
 /**
  * 扩展的路由配置类型，继承 Vue Router 的 RouteRecordRaw 类型
  */
-interface ConvertedRoute extends Omit<RouteRecordRaw, 'children'> {
+type ConvertedRoute = {
+
   /**
    *  菜单 ID
    */
   id?: number
+
   /**
    *  子路由列表
    */
@@ -47,7 +55,7 @@ interface ConvertedRoute extends Omit<RouteRecordRaw, 'children'> {
    *  路由组件
    */
   component?: RouteRecordRaw['component'] | (() => Promise<any>)
-}
+} & Omit<RouteRecordRaw, 'children'>
 
 /**
  * 处理 iframe 类型的路由
@@ -58,12 +66,13 @@ interface ConvertedRoute extends Omit<RouteRecordRaw, 'children'> {
 function handleIframeRoute(
   converted: ConvertedRoute,
   route: MenuListType,
-  iframeRoutes: MenuListType[]
+  iframeRoutes: MenuListType[],
 ): void {
   // 设定 iframe 路由的 path 规则
   converted.path = `/outside/iframe/${route.name}`
   // 指定统一的 iframe 组件
   converted.component = () => import('@/views/outside/Iframe.vue')
+
   // 将当前 iframe 路由存入 iframeRoutes 供后续处理
   iframeRoutes.push(route)
 }
@@ -77,14 +86,17 @@ function handleIframeRoute(
 function handleLayoutRoute(
   converted: ConvertedRoute,
   route: MenuListType,
-  component: string | undefined
+  component: string | undefined,
 ): void {
   // 设置主布局组件
   converted.component = () => import('@/views/index/index.vue')
+
   // 获取路径的第一级作为主路由路径
   converted.path = `/${(route.path?.split('/')[1] || '').trim()}`
+
   // 清空主路由的 name，避免冲突
   converted.name = ''
+
   // 配置子路由
   converted.children = [
     {
@@ -92,8 +104,8 @@ function handleLayoutRoute(
       path: route.path,
       name: route.name,
       component: loadComponent(component as string, route.name),
-      meta: route.meta
-    }
+      meta: route.meta,
+    },
   ]
 }
 
@@ -106,9 +118,9 @@ function handleLayoutRoute(
 function handleNormalRoute(converted: any, component: string | undefined, routeName: string): void {
   if (component) {
     // 从别名映射中查找组件或动态加载
-    converted.component =
-      RoutesAlias[component as keyof typeof RoutesAlias] ||
-      loadComponent(component as string, routeName)
+    converted.component
+      = RoutesAlias[component as keyof typeof RoutesAlias]
+        || loadComponent(component as string, routeName)
   }
 }
 
@@ -124,25 +136,28 @@ function convertRouteComponent(route: MenuListType, iframeRoutes: MenuListType[]
   // 创建基础路由对象
   const converted: ConvertedRoute = {
     ...routeConfig,
-    component: undefined
+    component: undefined,
   }
 
   try {
     if (route.meta.isIframe) {
       handleIframeRoute(converted, route, iframeRoutes)
-    } else if (route.meta.isInMainContainer) {
+    }
+    else if (route.meta.isInMainContainer) {
       handleLayoutRoute(converted, route, component)
-    } else {
+    }
+    else {
       handleNormalRoute(converted, component, route.name)
     }
 
     // 递归转换子路由
     if (children?.length) {
-      converted.children = children.map((child) => convertRouteComponent(child, iframeRoutes))
+      converted.children = children.map(child => convertRouteComponent(child, iframeRoutes))
     }
 
     return converted
-  } catch (error) {
+  }
+  catch (error) {
     console.error(`路由转换失败: ${route.name}`, error)
     throw error
   }
@@ -162,7 +177,9 @@ export function registerAsyncRoutes(router: Router, menuList: MenuListType[]): v
     if (route.name && !router.hasRoute(route.name)) {
       // 转换路由配置
       const routeConfig = convertRouteComponent(route, iframeRoutes)
+
       console.log('%c Line:165 🍒 routeConfig', 'color:#ed9ec7', routeConfig)
+
       // 动态添加路由
       router.addRoute(routeConfig as RouteRecordRaw)
     }

@@ -15,17 +15,26 @@
   import { ref, onMounted } from 'vue'
 
   const route = useRoute()
+  const router = useRouter()
+  console.log("%c Line:18 🍅 route", "color:#b03734", route);
+
+  console.log("%c Line:19 🍷 router", "color:#3f7cff", router);
 
   const iframeRef = ref<HTMLIFrameElement | null>(null)
   const isLoading = ref(true)
   const iframeUrl = ref('')
 
   onMounted(() => {
-    const iframeRoute = getIframeRoutes().find((item: any) => item.path === route.path)
-
-    if (iframeRoute?.meta) {
-      iframeUrl.value = iframeRoute.meta.link
+    if(route.meta.link){
+      iframeUrl.value = route.meta.link as string
     }
+
+    // const iframeRoute = getIframeRoutes().find((item: any) => item.path === route.path)
+
+    // if (iframeRoute?.meta) {
+    //   iframeUrl.value = iframeRoute.meta.link
+    //   console.log("%c Line:28 🥛 iframeUrl.value", "color:#fca650", iframeUrl.value);
+    // }
   })
 
   const handleIframeLoad = () => {

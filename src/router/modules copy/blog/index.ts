@@ -1,6 +1,31 @@
 import { BLOG_DEFAULT_LAYOUT } from '@/layouts'
 
-export const blogRouteList: any[] = [
+// import { MenuListType } from '@/types/menu'
+
+const blogList = [{
+  path: '/outside',
+  component: BLOG_DEFAULT_LAYOUT,
+  name: 'Outside',
+  meta: {
+    title: '内嵌页面',
+  },
+  children: [
+    {
+      path: '/outside/iframe/:path',
+      name: 'Iframe',
+      component: () => import('@/pages/blog/outside/iframe/index.vue'),
+      meta: {
+        title: 'iframe',
+      },
+    },
+  ],
+}]
+
+export default blogList
+
+export const blogMainList: any[] = [
+
+  // ///////////////
 
   {
     name: 'Dashboard',
@@ -195,8 +220,8 @@ export const blogRouteList: any[] = [
 
   // 一级菜单
   {
-    path: '/blog/log/changeLog',
     name: 'ChangeLog',
+    path: '/blog/log/changeLog',
     component: () => import('@/pages/blog/log/ChangeLog.vue'),
     meta: {
       title: '更新日志',
@@ -205,32 +230,5 @@ export const blogRouteList: any[] = [
       keepAlive: false,
       isInMainContainer: true,
     },
-  },
-
-  {
-    path: '/blog/widgets',
-    name: 'Widgets',
-    component: BLOG_DEFAULT_LAYOUT,
-    meta: {
-      title: '测试页面',
-      icon: '&#xe81a;',
-      keepAlive: false,
-    },
-    children: [
-      {
-        path: '/blog/outside/iframe/elementui',
-        name: 'ElementUI',
-        component: '',
-        meta: {
-          title: 'elementUI',
-          keepAlive: false,
-          link: 'https://element-plus.org/zh-CN/component/overview.html',
-          isIframe: true,
-          showBadge: true,
-          icon: '&#xe676;',
-
-        },
-      },
-    ],
   },
 ]

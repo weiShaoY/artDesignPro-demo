@@ -1,11 +1,28 @@
-import { defineStore } from 'pinia'
-import { MenuThemeType } from '@/types/store'
-import { ThemeList, ElementPlusTheme, DarkMenuStyles, SystemSetting } from '@/config/setting'
-import { SystemThemeEnum, MenuThemeEnum, MenuTypeEnum, ContainerWidthEnum } from '@/enums/appEnum'
-import { colourBlend, handleElementThemeColor } from '@/utils/colors'
-import { getSysStorage } from '@/utils/storage'
+import type { MenuThemeType } from '@/types/store'
+
 import { useCeremony } from '@/composables/useCeremony'
-import { ref, computed } from 'vue'
+
+import {
+  DarkMenuStyles,
+  ElementPlusTheme,
+  SystemSetting,
+  ThemeList,
+} from '@/config/setting'
+
+import {
+  ContainerWidthEnum,
+  MenuThemeEnum,
+  MenuTypeEnum,
+  SystemThemeEnum,
+} from '@/enums/appEnum'
+
+import { colourBlend, handleElementThemeColor } from '@/utils/colors'
+
+import { getSysStorage } from '@/utils/storage'
+
+import { defineStore } from 'pinia'
+
+import { computed, ref } from 'vue'
 
 const { defaultMenuWidth, defaultCustomRadius } = SystemSetting
 
@@ -13,83 +30,113 @@ const { defaultMenuWidth, defaultCustomRadius } = SystemSetting
 export const useSettingStore = defineStore('settingStore', () => {
   /**  菜单类型 */
   const menuType = ref(MenuTypeEnum.LEFT)
+
   /**  菜单展开宽度 */
   const menuOpenWidth = ref(defaultMenuWidth)
+
   /**  全局主题类型 light dark */
   const systemThemeType = ref(SystemThemeEnum.LIGHT)
+
   /**  全局主题模式 light dark auto */
   const systemThemeMode = ref(SystemThemeEnum.LIGHT)
+
   /**  菜单主题类型 */
   const menuThemeType = ref(MenuThemeEnum.DESIGN)
+
   /**  系统主题颜色 */
   const systemThemeColor = ref(ElementPlusTheme.primary)
+
   /**  盒子模式 border | shadow */
   const boxBorderMode = ref(true)
+
   /**  是否开启手风琴模式 */
   const uniqueOpened = ref(true)
+
   /**  是否显示菜单展开按钮 */
   const showMenuButton = ref(true)
+
   /**  是否显示页面刷新按钮 */
   const showRefreshButton = ref(true)
+
   /**  是否显示全局面包屑 */
   const showCrumbs = ref(true)
+
   /**  设置后是否自动关闭窗口 */
   const autoClose = ref(false)
+
   /**  是否显示多标签 */
   const showWorkTab = ref(true)
+
   /**  是否显示多语言选择 */
   const showLanguage = ref(true)
+
   /**  是否显示顶部进度条 */
   const showNprogress = ref(true)
+
   /**  色弱模式 */
   const colorWeak = ref(false)
+
   /**  是否显示设置引导 */
   const showSettingGuide = ref(true)
+
   /**  页面切换动画 */
   const pageTransition = ref('slide-right')
+
   /**  菜单是否展开 */
   const menuOpen = ref(true)
+
   /**  刷新 */
   const refresh = ref(false)
+
   /**  水印是否显示 */
   const watermarkVisible = ref(false)
+
   /**  自定义圆角 */
   const customRadius = ref(defaultCustomRadius)
+
   /**  是否加载完礼花 */
   const holidayFireworksLoaded = ref(false)
+
   /**  是否显示节日文本 */
   const showFestivalText = ref(false)
+
   /**  节日日期 */
   const festivalDate = ref('')
+
   /**  双列菜单是否显示文本 */
   const dualMenuShowText = ref(false)
+
   /** 容器宽度 */
   const containerWidth = ref(ContainerWidthEnum.FULL)
+
+  /**  是否为暗黑模式 */
+  const isDark = computed(() => systemThemeType.value === SystemThemeEnum.DARK)
 
   /**
    * 获取菜单主题
    * @returns 菜单主题配置
    */
   const getMenuTheme = computed<MenuThemeType>(() => {
-    const list = ThemeList.filter((item) => item.theme === menuThemeType.value)
+    const list = ThemeList.filter(item => item.theme === menuThemeType.value)
+
     if (isDark.value) {
       return DarkMenuStyles[0]
-    } else {
+    }
+    else {
       return list[0]
     }
   })
 
-  /**  是否为暗黑模式 */
-  const isDark = computed(() => systemThemeType.value === SystemThemeEnum.DARK)
   /**  获取菜单展开宽度 */
-  const getMenuOpenWidth = computed(() => menuOpenWidth.value + 'px' || defaultMenuWidth + 'px')
+  const getMenuOpenWidth = computed(() => `${menuOpenWidth.value}px` || `${defaultMenuWidth}px`)
 
   /**  获取自定义圆角 */
-  const getCustomRadius = computed(() => customRadius.value + 'rem' || defaultCustomRadius + 'rem')
+  const getCustomRadius = computed(() => `${customRadius.value}rem` || `${defaultCustomRadius}rem`)
 
   /**  节日礼花否显示 */
   const isShowFireworks: ComputedRef<boolean> = computed(() => {
     const currentFestivalDate: string | undefined = useCeremony().currentFestivalData.value?.date
+
     return festivalDate.value !== currentFestivalDate
   })
 
@@ -99,6 +146,7 @@ export const useSettingStore = defineStore('settingStore', () => {
     if (sys) {
       sys = JSON.parse(sys)
       const { setting } = sys.user
+
       menuType.value = setting.menuType || MenuTypeEnum.LEFT
       menuOpenWidth.value = Number(setting.menuOpenWidth) || defaultMenuWidth
       systemThemeType.value = setting.systemThemeType || SystemThemeEnum.LIGHT
@@ -127,11 +175,13 @@ export const useSettingStore = defineStore('settingStore', () => {
       dualMenuShowText.value = setting.dualMenuShowText
       setCustomRadius(customRadius.value)
       setElementThemeColor(setting.systemThemeColor)
-    } else {
+    }
+    else {
       setCustomRadius(customRadius.value)
       setElementThemeColor(ElementPlusTheme.primary)
     }
   }
+
   function setMenuType(type: MenuTypeEnum) {
     menuType.value = type
   }
@@ -264,6 +314,7 @@ export const useSettingStore = defineStore('settingStore', () => {
   function setDualMenuShowText(show: boolean) {
     dualMenuShowText.value = show
   }
+
   return {
     menuType,
     menuOpenWidth,
@@ -293,7 +344,7 @@ export const useSettingStore = defineStore('settingStore', () => {
     dualMenuShowText,
     containerWidth,
 
-    //////
+    // ////
     getMenuTheme,
     isDark,
     getMenuOpenWidth,
@@ -326,12 +377,13 @@ export const useSettingStore = defineStore('settingStore', () => {
     setholidayFireworksLoaded,
     setShowFestivalText,
     setFestivalDate,
-    setDualMenuShowText
+    setDualMenuShowText,
   }
 })
 
 function setElementThemeColor(color: string) {
   const mixColor = '#ffffff'
+
   const elStyle = document.documentElement.style
 
   elStyle.setProperty('--el-color-primary', color)
@@ -340,6 +392,7 @@ function setElementThemeColor(color: string) {
   // 生成更淡一点的颜色
   for (let i = 1; i < 16; i++) {
     const itemColor = colourBlend(color, mixColor, i / 16)
+
     elStyle.setProperty(`--el-color-primary-custom-${i}`, itemColor)
   }
 }

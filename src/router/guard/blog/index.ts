@@ -17,7 +17,7 @@ import { useSettingStore } from '@/store/modules/setting'
 
 import { setWorkTab } from '@/utils/workTab'
 
-import { blogList } from '../../modules'
+import { blogRouteList } from '../../modules/blog'
 
 // 从环境变量中获取博客路由的基础路径
 const BLOG_PATH = import.meta.env.VITE_ROUTER_BLOG_PATH
@@ -88,12 +88,17 @@ function processRouter(route: MenuListType, iframeRoutes: MenuListType[]) {
   try {
     // 处理 iframe 类型的路由
     if (route.meta.isIframe) {
-      // handleIframeRoute(converted, route, iframeRoutes)
+      console.log('%c Line:91 🍔 route', 'color:#4fff4B', route)
+
       // 统一 iframe 路由路径前缀
-      converted.path = `/outside/iframe/${route.name}`
+      // converted.path = `/blog/outside/iframe/${route.name}`
 
       // 指定 iframe 组件
-      converted.component = () => import('@/views/outside/Iframe.vue')
+      converted.component = () => import('@/pages/blog/outside/iframe/index.vue')
+
+      // converted.meta = route.meta
+
+      console.log('%c Line:99 🥚 converted', 'color:#ed9ec7', converted)
 
       // 将该路由存入 iframe 路由集合
       iframeRoutes.push(route)
@@ -101,21 +106,16 @@ function processRouter(route: MenuListType, iframeRoutes: MenuListType[]) {
 
     // 处理主容器内部的路由
     else if (route.meta.isInMainContainer) {
-      console.log('%c Line:104 🥒 route.meta', 'color:#33a5ff', route)
       /**
        *  保存原始组件
        */
       const originalComponent = converted.component
-
-      console.log('%c Line:108 🥚 originalComponent', 'color:#ea7e5c', originalComponent)
 
       converted.component = () => import('@/layouts/blog/default/index.vue')
 
       converted.path = `/${route.path?.split('/')
         .slice(1, 3)
         .join('/')}`
-
-      console.log('%c Line:117 🍪 converted.path', 'color:#7f2b82', converted.path)
 
       // 清空主路径的 name，避免冲突
       converted.name = ''
@@ -130,7 +130,6 @@ function processRouter(route: MenuListType, iframeRoutes: MenuListType[]) {
           meta: route.meta,
         },
       ]
-      console.log('%c Line:131 🍌 converted', 'color:#93c0a4', converted)
     }
 
     // 递归处理子路由
@@ -152,7 +151,7 @@ function processRouter(route: MenuListType, iframeRoutes: MenuListType[]) {
  */
 function addBlogMenu(router: Router): void {
   try {
-    const menuList = addIdsToRoutes(blogList)
+    const menuList = addIdsToRoutes(blogRouteList)
 
     // 设置菜单列表
     useMenuStore().setMenuList(menuList)
@@ -164,7 +163,7 @@ function addBlogMenu(router: Router): void {
       // 递归处理
       const routeConfig = processRouter(route, iframeRoutes)
 
-      console.log('%c Line:166 🍩 routeConfig', 'color:#e41a6a', routeConfig)
+      console.log('%c Line:164 🧀 routeConfig', 'color:#6ec1c2', routeConfig)
 
       router.addRoute(routeConfig as RouteRecordRaw)
     })
@@ -232,6 +231,8 @@ function handleBlogMenuGuard(
  * @param to - 目标路由对象
  */
 function handleBlogWorkTabGuard(to: RouteLocationNormalized): void {
+  console.log('%c Line:234 🎂 to', 'color:#465975', to)
+
   // 设置工作标签
   setWorkTab(to)
 }
