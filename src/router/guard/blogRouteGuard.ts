@@ -1,10 +1,10 @@
-import type { MenuListType } from '@/types/menu'
+// import type { MenuListType } from '@/types/menu'
 
 import type {
   NavigationGuardNext,
   RouteLocationNormalized,
   Router,
-  RouteRecordRaw
+  RouteRecordRaw,
 } from 'vue-router'
 
 import { useTheme } from '@/composables/useTheme'
@@ -23,7 +23,6 @@ import { blogRouteList } from '../modules/blog'
  *  博客路由的基础路径
  */
 const BLOG_PATH = import.meta.env.VITE_ROUTER_BLOG_PATH
-
 
 /**
  *  错误页面的路径
@@ -60,14 +59,14 @@ function addIdsToRoutes(routeList: any[], parentId: number = 0): any[] {
     if (route.meta?.authList) {
       route.meta.authList = route.meta.authList.map((auth: any, authIndex: number) => ({
         ...auth,
-        id: id * 100 + (authIndex + 1)
+        id: id * 100 + (authIndex + 1),
       }))
     }
 
     // 返回处理后的路由对象
     return {
       ...route,
-      id
+      id,
     }
   })
 }
@@ -91,21 +90,23 @@ type ConvertedRoute = {
  * @param route - 单个菜单项数据
  * @returns 转换后的路由对象
  */
-function convertRouteComponent(route: MenuListType): ConvertedRoute {
-  const { component, children, ...routeConfig } = route;
+function convertRouteComponent(route: BlogType.MenuListType): ConvertedRoute {
+  const { component, children, ...routeConfig } = route
 
   // 创建基础路由对象
   const converted: ConvertedRoute = {
     ...routeConfig,
     component, // 默认组件
-  };
+  }
 
   try {
     // 处理 iframe 且在主容器内的路由
-    if (route.meta.isInMainContainer && route.meta.isIframe ) {
-      converted.component = BLOG_DEFAULT_LAYOUT;
-      converted.path = `/${route.path?.split('/').slice(1, 3).join('/')}`;
-      converted.name = ''; // 清空主路径的 name
+    if (route.meta.isInMainContainer && route.meta.isIframe) {
+      converted.component = BLOG_DEFAULT_LAYOUT
+      converted.path = `/${route.path?.split('/')
+        .slice(1, 3)
+        .join('/')}`
+      converted.name = '' // 清空主路径的 name
       converted.children = [
         {
           id: route.id,
@@ -114,14 +115,16 @@ function convertRouteComponent(route: MenuListType): ConvertedRoute {
           component: BLOG_IFRAME_LAYOUT,
           meta: route.meta,
         },
-      ];
+      ]
     }
 
     // 处理主容器内部的路由
     else if (route.meta.isInMainContainer) {
-      converted.component = BLOG_DEFAULT_LAYOUT;
-      converted.path = `/${route.path?.split('/').slice(1, 3).join('/')}`;
-      converted.name = ''; // 清空主路径的 name
+      converted.component = BLOG_DEFAULT_LAYOUT
+      converted.path = `/${route.path?.split('/')
+        .slice(1, 3)
+        .join('/')}`
+      converted.name = '' // 清空主路径的 name
       converted.children = [
         {
           id: route.id,
@@ -130,23 +133,25 @@ function convertRouteComponent(route: MenuListType): ConvertedRoute {
           component: component as RouteRecordRaw['component'],
           meta: route.meta,
         },
-      ];
-    }     // 处理 iframe 类型的路由
+      ]
+    } // 处理 iframe 类型的路由
     else if (route.meta.isIframe) {
-      converted.component = BLOG_IFRAME_LAYOUT;
+      converted.component = BLOG_IFRAME_LAYOUT
     }
 
     // 递归处理子路由
     if (children?.length) {
-      converted.children = children.map((child) => convertRouteComponent(child));
+      converted.children = children.map(child => convertRouteComponent(child as BlogType.MenuListType))
     }
 
-    return converted;
-  } catch (error) {
-    console.error(`路由转换失败: ${route.name}`, error);
-    throw error;
+    return converted
+  }
+  catch (error) {
+    console.error(`路由转换失败: ${route.name}`, error)
+    throw error
   }
 }
+
 /**
  * 处理博客菜单路由的导航守卫逻辑
  * @param to - 目标路由对象
@@ -157,7 +162,7 @@ function handleBlogMenuGuard(
   to: RouteLocationNormalized,
   from: RouteLocationNormalized,
   next: NavigationGuardNext,
-  router: Router
+  router: Router,
 ): void {
   // 如果博客菜单未添加
   if (!isAddBlogMenu.value) {
@@ -177,7 +182,8 @@ function handleBlogMenuGuard(
 
         // 标记路由已注册
         isAddBlogMenu.value = true
-      } catch (error) {
+      }
+      catch (error) {
         console.error('路由注册失败:', error)
         throw new Error('路由注册失败')
       }
@@ -191,10 +197,11 @@ function handleBlogMenuGuard(
       if (to.fullPath !== from.fullPath) {
         return next({
           ...to,
-          replace: true
+          replace: true,
         })
       }
-    } catch {
+    }
+    catch {
       // 如果注册失败，跳转到错误页面
       return next(ERROR_PATH)
     }
@@ -215,7 +222,9 @@ function handleBlogMenuGuard(
  */
 function handleBlogWorkTabGuard(to: RouteLocationNormalized): void {
   const workTabStore = useWorkTabStore()
+
   const { meta, path, name, params, query } = to
+
   if (!meta.isHideTab) {
     workTabStore.openTab({
       title: meta.title as string,
@@ -223,7 +232,7 @@ function handleBlogWorkTabGuard(to: RouteLocationNormalized): void {
       name: name as string,
       keepAlive: meta.keepAlive as boolean,
       params,
-      query
+      query,
     })
   }
 }
@@ -249,7 +258,8 @@ export function createBlogRouteGuard(router: Router): void {
     // 如果目标路径包含博客路径，执行博客菜单守卫逻辑
     if (to.path.includes(BLOG_PATH)) {
       handleBlogMenuGuard(to, from, next, router)
-    } else {
+    }
+    else {
       // 否则，直接放行
       next()
     }

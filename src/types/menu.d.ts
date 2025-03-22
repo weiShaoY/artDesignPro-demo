@@ -1,5 +1,3 @@
-
-
 export type MenuListType = {
   id: number
   path: string // 路由

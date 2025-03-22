@@ -1,6 +1,6 @@
 import { BLOG_DEFAULT_LAYOUT } from '@/layouts'
 
-export const blogRouteList: any[] = [
+export const blogRouteList: BlogType.AppRouteRecordRaw[] = [
 
   {
     name: 'Dashboard',
@@ -105,7 +105,8 @@ export const blogRouteList: any[] = [
       {
         path: '/blog/menu/nested',
         name: 'Nested',
-        component: '',
+
+        // component: '',
         meta: {
           title: '嵌套菜单',
           icon: '&#xe676;',
@@ -125,7 +126,8 @@ export const blogRouteList: any[] = [
           {
             path: '/blog/menu/nested/menu2',
             name: 'NestedMenu2',
-            component: '',
+
+            // component: '',
             meta: {
               title: '菜单2',
               icon: '&#xe676;',
@@ -147,7 +149,8 @@ export const blogRouteList: any[] = [
           {
             path: '/blog/menu/nested/menu3',
             name: 'NestedMenu3',
-            component: '',
+
+            // component: '',
             meta: {
               title: '菜单3',
               icon: '&#xe676;',
@@ -167,7 +170,8 @@ export const blogRouteList: any[] = [
               {
                 path: '/blog/menu/nested/menu3/menu3-2',
                 name: 'NestedMenu3-2',
-                component: '',
+
+                // component: '',
                 meta: {
                   title: '菜单3-2',
                   icon: '&#xe676;',
@@ -177,7 +181,7 @@ export const blogRouteList: any[] = [
                   {
                     path: '/blog/menu/nested/menu3/menu3-2-1',
                     name: 'NestedMenu3-2-1',
-                    component: '/menu/nested/menu3/menu3-2/Menu3-2-1',
+                    component: () => import('@/pages/blog/menu/nested/menu3/menu3-2/Menu3-2-1.vue'),
                     meta: {
                       title: '菜单3-2-1',
                       icon: '&#xe676;',
@@ -220,7 +224,8 @@ export const blogRouteList: any[] = [
       {
         path: '/blog/outside/iframe/elementui',
         name: 'ElementUI',
-        component: '',
+
+        // component: '',
         meta: {
           title: 'elementUI',
           keepAlive: false,
