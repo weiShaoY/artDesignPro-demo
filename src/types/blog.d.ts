@@ -24,6 +24,11 @@ declare namespace BlogType {
     component?: RouteRecordRaw['component'] | (() => Promise<any>)
 
     /**
+     *  重定向
+     */
+    redirect?: string
+
+    /**
      * 路由元信息
      */
     meta: {

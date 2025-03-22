@@ -1,8 +1,8 @@
 import { BLOG_DEFAULT_LAYOUT } from '@/layouts'
 
 const documentRoute: BlogType.AppRouteRecordRaw = {
-  path: '/blog/widgets',
-  name: 'Widgets',
+  path: '/blog/document',
+  name: 'Document',
   component: BLOG_DEFAULT_LAYOUT,
   meta: {
     title: '文档',
@@ -12,7 +12,7 @@ const documentRoute: BlogType.AppRouteRecordRaw = {
   },
   children: [
     {
-      path: '/blog/outside/iframe/elementui',
+      path: '/blog/document/elementui',
       name: 'ElementUI',
 
       // component: '',

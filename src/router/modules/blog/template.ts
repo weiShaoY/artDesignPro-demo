@@ -1,5 +1,6 @@
 import { BLOG_DEFAULT_LAYOUT } from '@/layouts'
 
+// eslint-disable-next-line unused-imports/no-unused-vars
 const dashboardRoute: BlogType.AppRouteRecordRaw = {
   name: 'Dashboard',
   path: '/blog/dashboard',

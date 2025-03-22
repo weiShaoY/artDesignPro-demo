@@ -7,6 +7,8 @@ import type {
   RouteRecordRaw,
 } from 'vue-router'
 
+import { fourDotsSpinnerSvg } from '@/assets/svg/loading'
+
 import { useTheme } from '@/composables/useTheme'
 
 import { BLOG_DEFAULT_LAYOUT, BLOG_IFRAME_LAYOUT } from '@/layouts'
@@ -45,7 +47,7 @@ const isAddBlogMenu = ref(false)
  * @param parentId - 父级路由的ID，默认为0
  * @returns 添加了ID并排序后的路由列表
  */
-function assignIdsAndSortRoutes(routeList: any[], parentId: number = 0): any[] {
+function assignIdsAndSortRoutes(routeList: BlogType.MenuListType[], parentId: number = 0): any[] {
   // 按 meta.order 排序路由列表
   const sortedRouteList = routeList.sort((a, b) => {
     const orderA = a.meta?.order ?? Number.MAX_SAFE_INTEGER // 如果没有 order，则排在后面
@@ -143,7 +145,9 @@ function convertRouteComponent(route: BlogType.MenuListType): ConvertedRoute {
           meta: route.meta,
         },
       ]
-    } // 处理 iframe 类型的路由
+    }
+
+    // 处理 iframe 类型的路由
     else if (route.meta.isIframe) {
       converted.component = BLOG_IFRAME_LAYOUT
     }
@@ -161,36 +165,60 @@ function convertRouteComponent(route: BlogType.MenuListType): ConvertedRoute {
   }
 }
 
+function handleBlogMenuList(router: Router, delay: number = 300): Promise<{ closeLoading: () => void }> {
+  const loading = ElLoading.service({
+    lock: true,
+    background: 'rgba(0, 0, 0, 0)',
+    svg: fourDotsSpinnerSvg,
+    svgViewBox: '0 0 40 40',
+  })
+
+  const menuList = assignIdsAndSortRoutes(blogRouteList)
+
+  // 设置菜单列表
+  useMenuStore().setMenuList(menuList)
+
+  menuList.forEach((route: any) => {
+    // 递归处理
+    const routeConfig = convertRouteComponent(route)
+
+    router.addRoute(routeConfig as RouteRecordRaw)
+  })
+
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        /**
+         *  关闭加载
+         */
+        closeLoading: () => loading.close(),
+      })
+    }, delay)
+  })
+}
+
 /**
  * 处理博客菜单路由的导航守卫逻辑
  * @param to - 目标路由对象
  * @param from - 来源路由对象
  * @param next - 导航控制函数
  */
-function handleBlogMenuGuard(
+async function handleBlogMenuGuard(
   to: RouteLocationNormalized,
   from: RouteLocationNormalized,
   next: NavigationGuardNext,
   router: Router,
-): void {
+) {
   // 如果博客菜单未添加
   if (!isAddBlogMenu.value) {
     try {
       try {
-        const menuList = assignIdsAndSortRoutes(blogRouteList)
-
-        // 设置菜单列表
-        useMenuStore().setMenuList(menuList)
-
-        menuList.forEach((route: any) => {
-          // 递归处理
-          const routeConfig = convertRouteComponent(route)
-
-          router.addRoute(routeConfig as RouteRecordRaw)
-        })
+        const { closeLoading } = await handleBlogMenuList(router)
 
         // 标记路由已注册
         isAddBlogMenu.value = true
+
+        closeLoading()
       }
       catch (error) {
         console.error('路由注册失败:', error)
@@ -263,10 +291,10 @@ function handleBlogThemeGuard(to: RouteLocationNormalized): void {
  */
 export function createBlogRouteGuard(router: Router): void {
   // 全局前置守卫
-  router.beforeEach((to, from, next) => {
+  router.beforeEach(async (to, from, next) => {
     // 如果目标路径包含博客路径，执行博客菜单守卫逻辑
     if (to.path.includes(BLOG_PATH)) {
-      handleBlogMenuGuard(to, from, next, router)
+      await handleBlogMenuGuard(to, from, next, router)
     }
     else {
       // 否则，直接放行

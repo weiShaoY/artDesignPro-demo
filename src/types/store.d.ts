@@ -1,7 +1,7 @@
-import { MenuThemeEnum, SystemThemeEnum } from '@/enums/appEnum'
+import type { MenuThemeEnum, SystemThemeEnum } from '@/enums/appEnum'
 
 // 用户信息
-export interface UserInfo {
+export type UserInfo = {
   id: number
   name: string
   username: string
@@ -10,7 +10,7 @@ export interface UserInfo {
 }
 
 // 系统主题样式（light | dark）
-export interface SystemThemeType {
+export type SystemThemeType = {
   className: string // className
 }
 
@@ -20,7 +20,7 @@ export type SystemThemeTypes = {
 }
 
 // 菜单主题样式
-export interface MenuThemeType {
+export type MenuThemeType = {
   theme: MenuThemeEnum // 主题名称
   background: string // 背景色
   systemNameColor: string // 系统标题颜色
@@ -35,7 +35,7 @@ export interface MenuThemeType {
 }
 
 // 设置中心
-export interface Setting {
+export type Setting = {
   theme: string // 主题
   uniqueOpened: boolean // 是否开启手风琴模式
   menuButton: boolean // 是否显示菜单展开按钮
@@ -49,7 +49,7 @@ export interface Setting {
 }
 
 // 多标签
-export interface WorkTabType {
+export type WorkTabType = {
   title: string
   path: string
   name: string

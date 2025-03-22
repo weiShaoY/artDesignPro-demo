@@ -49,6 +49,10 @@ const staticRoutes: AppRouteRecordRaw[] = [
       title: '500',
     },
   },
+  {
+    path: '/blog',
+    redirect: import.meta.env.VITE_ROUTER_BLOG_HOME,
+  },
 
   ...routeList,
 ]
