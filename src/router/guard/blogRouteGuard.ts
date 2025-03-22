@@ -40,19 +40,28 @@ const NOT_FOUND_PATH = '/404'
 const isAddBlogMenu = ref(false)
 
 /**
- * 为路由及其子路由添加唯一ID
+ * 为路由及其子路由添加唯一ID，并按 meta.order 排序
  * @param routeList - 需要处理的路由列表
  * @param parentId - 父级路由的ID，默认为0
- * @returns 添加了ID的路由列表
+ * @returns 添加了ID并排序后的路由列表
  */
-function addIdsToRoutes(routeList: any[], parentId: number = 0): any[] {
-  return routeList.map((route, index) => {
+function assignIdsAndSortRoutes(routeList: any[], parentId: number = 0): any[] {
+  // 按 meta.order 排序路由列表
+  const sortedRouteList = routeList.sort((a, b) => {
+    const orderA = a.meta?.order ?? Number.MAX_SAFE_INTEGER // 如果没有 order，则排在后面
+
+    const orderB = b.meta?.order ?? Number.MAX_SAFE_INTEGER // 如果没有 order，则排在后面
+
+    return orderA - orderB // 按 order 升序排序
+  })
+
+  return sortedRouteList.map((route, index) => {
     // 生成当前路由的唯一ID，基于父级ID和当前索引
     const id = parentId * 100 + (index + 1)
 
     // 如果当前路由有子路由，递归处理子路由
     if (route.children?.length) {
-      route.children = addIdsToRoutes(route.children, id)
+      route.children = assignIdsAndSortRoutes(route.children, id)
     }
 
     // 如果当前路由有权限列表，为每个权限项添加唯一ID
@@ -168,7 +177,7 @@ function handleBlogMenuGuard(
   if (!isAddBlogMenu.value) {
     try {
       try {
-        const menuList = addIdsToRoutes(blogRouteList)
+        const menuList = assignIdsAndSortRoutes(blogRouteList)
 
         // 设置菜单列表
         useMenuStore().setMenuList(menuList)

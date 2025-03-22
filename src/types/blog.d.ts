@@ -82,6 +82,11 @@ declare namespace BlogType {
        * 是否在主容器内
        */
       isInMainContainer?: boolean
+
+      /**
+       *  排序
+       */
+      order?: number
     }
 
     /**

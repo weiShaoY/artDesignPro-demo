@@ -36,10 +36,9 @@ const dashboardRoute: BlogType.AppRouteRecordRaw = {
         title: '电子商务',
         keepAlive: true,
         showTextBadge: 'new',
-        order: 0,
       },
     },
   ],
 }
 
-export default dashboardRoute
+// export default dashboardRoute
