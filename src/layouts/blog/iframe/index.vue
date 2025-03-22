@@ -1,6 +1,7 @@
 <template>
   <div class="iframe-container">
     <iframe
+     v-if="iframeUrl"
       ref="iframeRef"
       :src="iframeUrl"
       frameborder="0"
@@ -11,20 +12,16 @@
 </template>
 
 <script setup lang="ts">
-  import { getIframeRoutes } from '@/utils/menu'
   import { ref, onMounted } from 'vue'
 
   const route = useRoute()
-
   const iframeRef = ref<HTMLIFrameElement | null>(null)
   const isLoading = ref(true)
   const iframeUrl = ref('')
 
   onMounted(() => {
-    const iframeRoute = getIframeRoutes().find((item: any) => item.path === route.path)
-
-    if (iframeRoute?.meta) {
-      iframeUrl.value = iframeRoute.meta.link
+    if(route.meta.link){
+      iframeUrl.value = route.meta.link as string
     }
   })
 

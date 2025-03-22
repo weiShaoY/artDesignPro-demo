@@ -233,4 +233,17 @@ export const blogRouteList: any[] = [
       },
     ],
   },
+
+  {
+    path: '/blog/log/test',
+    name: 'ChangeLog',
+    meta: {
+      title: '测试',
+      icon: '&#xe712;',
+      keepAlive: false,
+      isIframe: true,
+      isInMainContainer: true,
+      link: 'https://element-plus.org/zh-CN/component/overview.html',
+    },
+  },
 ]
