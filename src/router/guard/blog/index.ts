@@ -19,10 +19,11 @@ import { useWorkTabStore } from '@/store/modules/workTab'
 
 import { blogRouteList } from '../../modules/blog'
 
-// 从环境变量中获取博客路由的基础路径
+/**
+ *  博客路由的基础路径
+ */
 const BLOG_PATH = import.meta.env.VITE_ROUTER_BLOG_PATH
 
-// 定义错误页面和404页面的路径常量
 
 /**
  *  错误页面的路径
@@ -120,7 +121,7 @@ function convertRouteComponent(route: MenuListType) {
     }
 
     // 处理 iframe 类型的路由
-  else  if (route.meta.isIframe) {
+    else if (route.meta.isIframe) {
       converted.component = BLOG_IFRAME_LAYOUT
     }
 
@@ -163,32 +164,6 @@ function convertRouteComponent(route: MenuListType) {
 }
 
 /**
- * 注册博客路由
- * @throws 如果路由注册失败，抛出错误
- */
-function addBlogMenu(router: Router): void {
-  try {
-    const menuList = addIdsToRoutes(blogRouteList)
-
-    // 设置菜单列表
-    useMenuStore().setMenuList(menuList)
-
-    menuList.forEach((route: any) => {
-      // 递归处理
-      const routeConfig = convertRouteComponent(route)
-
-      router.addRoute(routeConfig as RouteRecordRaw)
-    })
-
-    // 标记路由已注册
-    isAddBlogMenu.value = true
-  } catch (error) {
-    console.error('路由注册失败:', error)
-    throw new Error('路由注册失败')
-  }
-}
-
-/**
  * 处理博客菜单路由的导航守卫逻辑
  * @param to - 目标路由对象
  * @param from - 来源路由对象
@@ -203,7 +178,26 @@ function handleBlogMenuGuard(
   // 如果博客菜单未添加
   if (!isAddBlogMenu.value) {
     try {
-      addBlogMenu(router)
+      // addBlogMenu(router)
+      try {
+        const menuList = addIdsToRoutes(blogRouteList)
+
+        // 设置菜单列表
+        useMenuStore().setMenuList(menuList)
+
+        menuList.forEach((route: any) => {
+          // 递归处理
+          const routeConfig = convertRouteComponent(route)
+
+          router.addRoute(routeConfig as RouteRecordRaw)
+        })
+
+        // 标记路由已注册
+        isAddBlogMenu.value = true
+      } catch (error) {
+        console.error('路由注册失败:', error)
+        throw new Error('路由注册失败')
+      }
 
       // 如果目标路由是404，直接放行
       if (to.name === '404') {
@@ -237,12 +231,8 @@ function handleBlogMenuGuard(
  * @param to - 目标路由对象
  */
 function handleBlogWorkTabGuard(to: RouteLocationNormalized): void {
-  // 设置工作标签
-  // setWorkTab(to)
   const workTabStore = useWorkTabStore()
-
   const { meta, path, name, params, query } = to
-
   if (!meta.isHideTab) {
     workTabStore.openTab({
       title: meta.title as string,
