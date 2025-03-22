@@ -80,7 +80,12 @@ type ConvertedRoute = {
   component?: RouteRecordRaw['component'] | (() => Promise<any>)
 } & Omit<RouteRecordRaw, 'children'>
 
-function processRouter(route: MenuListType) {
+/**
+ * 将接口返回的菜单数据转换为 Vue Router 路由对象
+ * @param route - 单个菜单项数据
+ * @returns 转换后的路由对象
+ */
+function convertRouteComponent(route: MenuListType) {
   const { component, children, ...routeConfig } = route
 
   /**
@@ -147,7 +152,7 @@ function processRouter(route: MenuListType) {
 
     // 递归处理子路由
     if (children?.length) {
-      converted.children = children.map((child) => processRouter(child))
+      converted.children = children.map((child) => convertRouteComponent(child))
     }
 
     return converted
@@ -170,7 +175,7 @@ function addBlogMenu(router: Router): void {
 
     menuList.forEach((route: any) => {
       // 递归处理
-      const routeConfig = processRouter(route)
+      const routeConfig = convertRouteComponent(route)
 
       router.addRoute(routeConfig as RouteRecordRaw)
     })
