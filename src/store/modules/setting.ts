@@ -95,7 +95,6 @@ export const useSettingStore = defineStore('settingStore', () => {
 
   function initState() {
     let sys = getSysStorage()
-    console.log('%c Line:94 🌮 sys', 'color:#ea7e5c', sys)
 
     if (sys) {
       sys = JSON.parse(sys)

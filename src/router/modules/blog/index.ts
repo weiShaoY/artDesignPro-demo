@@ -1,58 +1,83 @@
-export const blogList = [
+import { BLOG_DEFAULT_LAYOUT } from '@/layouts'
+
+// import { MenuListType } from '@/types/menu'
+
+export const blogList: any[] = [
+  {
+    path: '/outside',
+    component: BLOG_DEFAULT_LAYOUT,
+    name: 'Outside',
+    meta: {
+      title: '内嵌页面',
+    },
+    children: [
+      {
+        path: '/outside/iframe/:path',
+        name: 'Iframe',
+        component: () => import('@/pages/blog/outside/iframe/index.vue'),
+        meta: {
+          title: 'iframe',
+        },
+      },
+    ],
+  },
+
+  // ///////////////
+
   {
     name: 'Dashboard',
-    path: '/dashboard',
-    component: '/index/index',
+    path: '/blog/dashboard',
+    component: BLOG_DEFAULT_LAYOUT,
     meta: {
       title: '仪表盘',
       icon: '&#xe721;',
-      keepAlive: false
+      keepAlive: false,
     },
     children: [
       {
-        path: 'console',
+        path: '/blog/dashboard/console',
         name: 'Console',
-        component: '/dashboard/console',
+        component: () => import('@/pages/blog/dashboard/console/index.vue'),
         meta: {
           title: '工作台',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
-        path: 'analysis',
+        path: '/blog/dashboard/analysis',
         name: 'Analysis',
-        component: '/dashboard/analysis',
+        component: () => import('@/pages/blog/dashboard/analysis/index.vue'),
         meta: {
           title: '分析页',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
-        path: 'ecommerce',
+        path: '/blog/dashboard/ecommerce',
         name: 'Ecommerce',
-        component: '/dashboard/ecommerce',
+        component: () => import('@/pages/blog/dashboard/ecommerce/index.vue'),
         meta: {
           title: '电子商务',
           keepAlive: true,
-          showTextBadge: 'new'
-        }
-      }
-    ]
+          showTextBadge: 'new',
+        },
+      },
+    ],
   },
   {
-    path: '/menu',
+    path: '/blog/menu',
     name: 'Menu',
-    component: '/index/index',
+    component: BLOG_DEFAULT_LAYOUT,
     meta: {
       title: '菜单管理',
       icon: '&#xe8a4;',
-      keepAlive: false
+      keepAlive: false,
     },
     children: [
       {
-        path: 'menu',
+        path: '/blog/menu/menu',
         name: 'Menus',
-        component: '/menu/Menu',
+        component: () => import('@/pages/blog/menu/Menu.vue'),
         meta: {
           title: '菜单权限',
           icon: '&#xe8a4;',
@@ -60,23 +85,24 @@ export const blogList = [
           authList: [
             {
               title: '新增',
-              auth_mark: 'add'
+              auth_mark: 'add',
             },
             {
               title: '编辑',
-              auth_mark: 'edit'
+              auth_mark: 'edit',
             },
             {
               title: '删除',
-              auth_mark: 'delete'
-            }
-          ]
-        }
+              auth_mark: 'delete',
+            },
+          ],
+        },
       },
       {
-        path: 'permission',
+        path: '/blog/menu/permission',
         name: 'Permission',
-        component: '/menu/Permission',
+        component: () => import('@/pages/blog/menu/Permission.vue'),
+
         meta: {
           title: '权限控制',
           icon: '&#xe831;',
@@ -85,120 +111,121 @@ export const blogList = [
           authList: [
             {
               title: '新增',
-              auth_mark: 'add'
+              auth_mark: 'add',
             },
             {
               title: '编辑',
-              auth_mark: 'edit'
+              auth_mark: 'edit',
             },
             {
               title: '删除',
-              auth_mark: 'delete'
-            }
-          ]
-        }
+              auth_mark: 'delete',
+            },
+          ],
+        },
       },
       {
-        path: 'nested',
+        path: '/blog/menu/nested',
         name: 'Nested',
         component: '',
         meta: {
           title: '嵌套菜单',
           icon: '&#xe676;',
-          keepAlive: true
+          keepAlive: true,
         },
         children: [
           {
-            path: 'menu1',
+            path: '/blog/menu/nested/menu1',
             name: 'NestedMenu1',
-            component: '/menu/nested/Menu1',
+            component: () => import('@/pages/blog/menu/nested/Menu1.vue'),
             meta: {
               title: '菜单1',
               icon: '&#xe676;',
-              keepAlive: true
-            }
+              keepAlive: true,
+            },
           },
           {
-            path: 'menu2',
+            path: '/blog/menu/nested/menu2',
             name: 'NestedMenu2',
             component: '',
             meta: {
               title: '菜单2',
               icon: '&#xe676;',
-              keepAlive: true
+              keepAlive: true,
             },
             children: [
               {
-                path: 'menu2-1',
+                path: '/blog/menu/nested/menu2/menu2-1',
                 name: 'NestedMenu2-1',
-                component: '/menu/nested/menu2/Menu2-1',
+                component: () => import('@/pages/blog/menu/nested/menu2/Menu2-1.vue'),
                 meta: {
                   title: '菜单2-1',
                   icon: '&#xe676;',
-                  keepAlive: true
-                }
-              }
-            ]
+                  keepAlive: true,
+                },
+              },
+            ],
           },
           {
-            path: 'menu3',
+            path: '/blog/menu/nested/menu3',
             name: 'NestedMenu3',
             component: '',
             meta: {
               title: '菜单3',
               icon: '&#xe676;',
-              keepAlive: true
+              keepAlive: true,
             },
             children: [
               {
-                path: 'menu3-1',
+                path: '/blog/menu/nested/menu3/menu3-1',
                 name: 'NestedMenu3-1',
-                component: '/menu/nested/menu3/Menu3-1',
+                component: () => import('@/pages/blog/menu/nested/menu3/Menu3-1.vue'),
                 meta: {
                   title: '菜单3-1',
                   icon: '&#xe676;',
-                  keepAlive: true
-                }
+                  keepAlive: true,
+                },
               },
               {
-                path: 'menu3-2',
+                path: '/blog/menu/nested/menu3/menu3-2',
                 name: 'NestedMenu3-2',
                 component: '',
                 meta: {
                   title: '菜单3-2',
                   icon: '&#xe676;',
-                  keepAlive: true
+                  keepAlive: true,
                 },
                 children: [
                   {
-                    path: 'menu3-2-1',
+                    path: '/blog/menu/nested/menu3/menu3-2-1',
                     name: 'NestedMenu3-2-1',
                     component: '/menu/nested/menu3/menu3-2/Menu3-2-1',
                     meta: {
                       title: '菜单3-2-1',
                       icon: '&#xe676;',
-                      keepAlive: true
-                    }
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ]
+                      keepAlive: true,
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
+
   // 一级菜单
   {
     name: 'ChangeLog',
-    path: '/log/changeLog',
-    component: '/log/ChangeLog',
+    path: '/blog/log/changeLog',
+    component: () => import('@/pages/blog/log/ChangeLog.vue'),
     meta: {
       title: '更新日志',
       showTextBadge: `v2.2.4`,
       icon: '&#xe712;',
       keepAlive: false,
-      isInMainContainer: true
-    }
-  }
+      isInMainContainer: true,
+    },
+  },
 ]

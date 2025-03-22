@@ -1,12 +1,14 @@
 import type { App } from 'vue'
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+
+import type { RouteRecordRaw } from 'vue-router'
+
+import { blogList } from '@/router/modules/blog'
+
+import { createRouter, createWebHashHistory } from 'vue-router'
+
+import { createRouterGuard } from './guard'
 
 import 'nprogress/nprogress.css'
-import { RoutesAlias } from './modules/routesAlias'
-
-import { createRouterGuard } from './utils/guards'
-
-import Home from '@views/index/index.vue'
 
 /** 扩展的路由配置类型 */
 export type AppRouteRecordRaw = RouteRecordRaw & {
@@ -14,44 +16,41 @@ export type AppRouteRecordRaw = RouteRecordRaw & {
 }
 
 /** 首页路径常量 */
-export const HOME_PAGE = '/dashboard/console'
+export const HOME_PAGE = '/blog/dashboard/console'
 
 /** 静态路由配置 */
 const staticRoutes: AppRouteRecordRaw[] = [
-  { path: '/', redirect: HOME_PAGE },
   {
-    path: '/dashboard',
-    component: Home,
-    name: 'Dashboard',
-    meta: { title: 'menus.dashboard.title' },
-    children: [
-      {
-        path: RoutesAlias.Dashboard,
-        name: 'Console',
-        component: () => import('@views/dashboard/console/index.vue'),
-        meta: { title: 'menus.dashboard.console', keepAlive: false }
-      },
-      {
-        path: RoutesAlias.Analysis,
-        name: 'Analysis',
-        component: () => import('@views/dashboard/analysis/index.vue'),
-        meta: { title: 'menus.dashboard.analysis', keepAlive: false }
-      },
-      {
-        path: RoutesAlias.Ecommerce,
-        name: 'Ecommerce',
-        component: () => import('@views/dashboard/ecommerce/index.vue'),
-        meta: { title: 'menus.dashboard.ecommerce', keepAlive: false }
-      }
-    ]
-  }
+    path: '/',
+    redirect: HOME_PAGE,
+  },
+  {
+    path: '/404',
+    name: '404',
+    component: () => import('@/pages/error/404/index.vue'),
+    meta: {
+      title: '404',
+    },
+  },
+  {
+    path: '/500',
+    name: '500',
+    component: () => import('@/pages/error/500/index.vue'),
+    meta: {
+      title: '500',
+    },
+  },
+  ...blogList,
 ]
 
 /** 创建路由实例 */
 export const router = createRouter({
   history: createWebHashHistory(),
   routes: staticRoutes,
-  scrollBehavior: () => ({ left: 0, top: 0 })
+  scrollBehavior: () => ({
+    left: 0,
+    top: 0,
+  }),
 })
 
 /**
