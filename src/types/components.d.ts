@@ -96,7 +96,7 @@ declare module 'vue' {
     MenuTop: typeof import('./../components/Layout/MenuTop/index.vue')['default']
     MenuTopSubmenu: typeof import('./../components/Layout/MenuTop/MenuTopSubmenu.vue')['default']
     MixedMenu: typeof import('./../components/Layout/MixedMenu/index.vue')['default']
-    Network: typeof import('./../components/Widgets/Network.vue')['default']
+    Network: typeof import('./../components/Network.vue')['default']
     Notice: typeof import('./../components/Layout/Notice/index.vue')['default']
     ProgressCard: typeof import('./../components/Widgets/Cards/ProgressCard.vue')['default']
     RadarChart: typeof import('./../components/Widgets/Charts/RadarChart.vue')['default']

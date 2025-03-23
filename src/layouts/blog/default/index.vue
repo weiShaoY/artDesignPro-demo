@@ -42,11 +42,10 @@
     <!-- 个性化设置 -->
     <setting></setting>
 
-    <!-- 聊天组件 -->
-    <chat></chat>
+
 
     <!-- 烟花组件 -->
-    <fireworks></fireworks>
+    <Fireworks></Fireworks>
 
     <!-- 水印组件 -->
     <Watermark :visible="watermarkVisible"></Watermark>
@@ -56,14 +55,22 @@
 <script setup lang="ts">
   import '@/assets/styles/transition.scss'
   import { computed, ref, watch, nextTick } from 'vue'
-  import MenuLeft from '@comps/Layout/MenuLeft/index.vue'
-  import TopBar from '@comps/Layout/TopBar/index.vue'
-  import WorkTab from '@comps/Layout/WorkTab/index.vue'
-  import Setting from '@comps/Layout/Setting/index.vue'
+  import MenuLeft from './components/MenuLeft/index.vue'
+  import TopBar from './components/TopBar/index.vue'
+  import WorkTab from './components/WorkTab/index.vue'
+  import Setting from './components/Setting/index.vue'
+  import Search from './components/Search/index.vue'
+  import Fireworks from './components/Fireworks/index.vue'
+  import Watermark from './components/Watermark/index.vue'
+
+
+
   import { MenuWidth, MenuTypeEnum } from '@/enums/appEnum'
   import { useMenuStore } from '@/store/modules/menu'
   import { useSettingStore } from '@/store/modules/setting'
   import { useWorkTabStore } from '@/store/modules/workTab'
+
+  import mittBus from '@/utils/mittBus'
 
   // 网络状态
   const { isOnline } = useNetwork()
@@ -130,6 +137,15 @@
       isRefresh.value = true
     })
   }
+
+  onMounted(() => {
+    // 初始化打开烟花
+    // 延迟3s
+    setTimeout(() => {
+      // 初始化打开搜索框
+      mittBus.emit('triggerFireworks')
+    }, 3000)
+  })
 </script>
 
 <style lang="scss" scoped>

@@ -5,5 +5,7 @@
  * mittBus.emit('event', data)
  */
 import mitt from 'mitt'
+
 const mittBus = mitt()
+
 export default mittBus
