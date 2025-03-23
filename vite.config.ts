@@ -17,6 +17,8 @@ import viteCompression from 'vite-plugin-compression'
 // import viteImagemin from 'vite-plugin-imagemin'
 // import { visualizer } from 'rollup-plugin-visualizer'
 
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+
 export default ({ mode }) => {
   const root = process.cwd()
 
@@ -156,6 +158,12 @@ export default ({ mode }) => {
       //     ]
       //   }
       // })
+
+      createSvgIconsPlugin({
+        // 指定需要缓存的图标文件夹
+        iconDirs: [path.resolve(process.cwd(), 'src/assets/svgs')],
+        symbolId: 'icon-[dir]-[name]',
+      }),
     ],
     // 预加载项目必需的组件
     optimizeDeps: {

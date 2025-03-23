@@ -108,6 +108,7 @@ declare module 'vue' {
     Setting: typeof import('./../components/Layout/Setting/index.vue')['default']
     StatsCard: typeof import('./../components/Widgets/Cards/StatsCard.vue')['default']
     Submenu: typeof import('./../components/Layout/Submenu/submenu.vue')['default']
+    SvgIcon: typeof import('./../components/SvgIcon/index.vue')['default']
     TableBar: typeof import('./../components/Table/TableBar.vue')['default']
     TextScroll: typeof import('./../components/Widgets/TextScroll.vue')['default']
     TimelineListCard: typeof import('./../components/Widgets/Cards/TimelineListCard.vue')['default']

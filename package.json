@@ -1,7 +1,7 @@
 {
   "name": "vue-ts-vite-demo",
-  "version": "0.0.0",
   "type": "module",
+  "version": "0.0.0",
   "scripts": {
     "dev": "vite --open",
     "build": "vue-tsc --noEmit && vite build",
@@ -13,27 +13,6 @@
     "lint:lint-staged": "lint-staged"
   },
 
-  "lint-staged": {
-    "*.{js,ts}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{cjs,json}": [
-      "prettier --write"
-    ],
-    "*.{vue,html}": [
-      "eslint --fix",
-      "prettier --write",
-      "stylelint --fix --allow-empty-input"
-    ],
-    "*.{scss,css}": [
-      "stylelint --fix --allow-empty-input",
-      "prettier --write"
-    ],
-    "*.md": [
-      "prettier --write"
-    ]
-  },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
     "@vue/reactivity": "^3.4.35",
@@ -62,11 +41,11 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.8.1",
-    "@unocss/eslint-config": "^66.0.0",
-    "@unocss/eslint-plugin": "^66.0.0",
     "@types/node": "^22.1.0",
     "@typescript-eslint/eslint-plugin": "^8.3.0",
     "@typescript-eslint/parser": "^8.3.0",
+    "@unocss/eslint-config": "^66.0.0",
+    "@unocss/eslint-plugin": "^66.0.0",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/compiler-sfc": "^3.0.5",
     "eslint": "^9.14.0",
@@ -90,8 +69,30 @@
     "vite": "^6.1.0",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-imagemin": "^0.6.1",
+    "vite-plugin-svg-icons": "^2.0.1",
     "vue-demi": "^0.14.9",
     "vue-img-cutter": "^3.0.5",
     "vue-tsc": "~2.1.6"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{cjs,json}": [
+      "prettier --write"
+    ],
+    "*.{vue,html}": [
+      "eslint --fix",
+      "prettier --write",
+      "stylelint --fix --allow-empty-input"
+    ],
+    "*.{scss,css}": [
+      "stylelint --fix --allow-empty-input",
+      "prettier --write"
+    ],
+    "*.md": [
+      "prettier --write"
+    ]
   }
 }
