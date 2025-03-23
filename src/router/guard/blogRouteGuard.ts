@@ -7,7 +7,7 @@ import type {
   RouteRecordRaw,
 } from 'vue-router'
 
-import { fourDotsSpinnerSvg } from '@/assets/svg/loading'
+import { fourDotsSpinnerSvg } from '@/assets/svgs/loading'
 
 import { useTheme } from '@/composables/useTheme'
 

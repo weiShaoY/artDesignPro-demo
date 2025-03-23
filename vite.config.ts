@@ -4,6 +4,8 @@ import { fileURLToPath } from 'node:url'
 
 import vue from '@vitejs/plugin-vue'
 
+import UnoCSS from 'unocss/vite'
+
 import AutoImport from 'unplugin-auto-import/vite'
 
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
@@ -12,10 +14,10 @@ import Components from 'unplugin-vue-components/vite'
 
 import { defineConfig, loadEnv } from 'vite'
 
-import viteCompression from 'vite-plugin-compression'
-
 // import viteImagemin from 'vite-plugin-imagemin'
 // import { visualizer } from 'rollup-plugin-visualizer'
+
+import viteCompression from 'vite-plugin-compression'
 
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 
@@ -158,6 +160,10 @@ export default ({ mode }) => {
       //     ]
       //   }
       // })
+
+      // https://github.com/antfu/unocss
+      // 查看 uno.config.ts 文件进行 Uno.css 配置
+      UnoCSS(),
 
       createSvgIconsPlugin({
         // 指定需要缓存的图标文件夹

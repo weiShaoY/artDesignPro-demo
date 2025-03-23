@@ -12,3 +12,8 @@ export const BLOG_IFRAME_LAYOUT = () => import('./blog/iframe/index.vue')
  *  首页模块默认布局组件
  */
 export const HOME_DEFAULT_LAYOUT = () => import('./home/index.vue')
+
+/**
+ *   简单布局组件
+ */
+export const SIMPLE_LAYOUT = () => import('./simple/index.vue')

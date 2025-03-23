@@ -2,6 +2,8 @@ import type { App } from 'vue'
 
 import type { RouteRecordRaw } from 'vue-router'
 
+import { SIMPLE_LAYOUT } from '@/layouts'
+
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 import { createRouterGuard } from './guard'
@@ -34,20 +36,46 @@ const staticRoutes: AppRouteRecordRaw[] = [
     redirect: HOME_PAGE,
   },
   {
+    path: '/403',
+    component: SIMPLE_LAYOUT,
+    children: [
+      {
+        path: '',
+        name: '403',
+        component: () => import('@/pages/error/403/index.vue'),
+        meta: {
+          title: '403',
+        },
+      },
+    ],
+  },
+  {
     path: '/404',
-    name: '404',
-    component: () => import('@/pages/error/404/index.vue'),
-    meta: {
-      title: '404',
-    },
+    component: SIMPLE_LAYOUT,
+    children: [
+      {
+        path: '',
+        name: '404',
+        component: () => import('@/pages/error/404/index.vue'),
+        meta: {
+          title: '404',
+        },
+      },
+    ],
   },
   {
     path: '/500',
-    name: '500',
-    component: () => import('@/pages/error/500/index.vue'),
-    meta: {
-      title: '500',
-    },
+    component: SIMPLE_LAYOUT,
+    children: [
+      {
+        path: '',
+        name: '500',
+        component: () => import('@/pages/error/500/index.vue'),
+        meta: {
+          title: '500',
+        },
+      },
+    ],
   },
   {
     path: '/blog',

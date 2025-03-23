@@ -1,6 +1,6 @@
 import type { MenuListType } from '@/types/menu'
 
-import { fourDotsSpinnerSvg } from '@/assets/svg/loading'
+import { fourDotsSpinnerSvg } from '@/assets/svgs/loading'
 
 import { blogRouteList } from '@/router/modules/blog'
 
