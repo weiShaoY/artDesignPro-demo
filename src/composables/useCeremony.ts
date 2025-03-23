@@ -43,10 +43,14 @@ export function useCeremony() {
   // 根据节日列表显示节日祝福
   const openFestival = () => {
     // 没有节日数据，不显示
-    if (!currentFestivalData.value) { return }
+    if (!currentFestivalData.value) {
+      return
+    }
 
     // 礼花效果结束，不显示
-    if (!isShowFireworks.value) { return }
+    if (!isShowFireworks.value) {
+      return
+    }
 
     let triggers = 0
 

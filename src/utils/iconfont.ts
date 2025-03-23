@@ -83,6 +83,8 @@ export function getUnicode(charCode: string): string {
     return ''
   }
 
-  return charCode.charCodeAt(0).toString(16)
-.padStart(4, '0')
+  return charCode
+    .charCodeAt(0)
+    .toString(16)
+    .padStart(4, '0')
 }

@@ -13,21 +13,27 @@ export function noRepeat<T>(arr: T[]): T[] {
 
 // 查找数组最大值
 export function arrayMax(arr: number[]): number {
-  if (!arr.length) { throw new Error('Array is empty') }
+  if (!arr.length) {
+    throw new Error('Array is empty')
+  }
 
   return Math.max(...arr)
 }
 
 // 查找数组最小值
 export function arrayMin(arr: number[]): number {
-  if (!arr.length) { throw new Error('Array is empty') }
+  if (!arr.length) {
+    throw new Error('Array is empty')
+  }
 
   return Math.min(...arr)
 }
 
 // 数组分割
 export function chunk<T>(arr: T[], size: number = 1): T[][] {
-  if (size <= 0) { return [arr.slice()] }
+  if (size <= 0) {
+    return [arr.slice()]
+  }
 
   return Array.from({
     length: Math.ceil(arr.length / size),
@@ -66,7 +72,9 @@ export function dropRight<T>(arr: T[], n: number = 0): T[] {
 
 // 返回间隔 nth 的元素
 export function everyNth<T>(arr: T[], nth: number): T[] {
-  if (nth <= 0) { return [] }
+  if (nth <= 0) {
+    return []
+  }
 
   return arr.filter((_, i) => i % nth === nth - 1)
 }
@@ -165,7 +173,9 @@ export function getCookie(name: string): string | null {
 export function timestampToTime(timestamp: number = Date.now(), isMs: boolean = true): string {
   const date = new Date(isMs ? timestamp : timestamp * 1000)
 
-  return date.toISOString().replace('T', ' ').slice(0, 19)
+  return date.toISOString()
+    .replace('T', ' ')
+    .slice(0, 19)
 }
 
 /* DOM 操作 */

@@ -1,15 +1,15 @@
 <template>
   <div class="frame" :style="{ paddingLeft, paddingTop }">
     <!-- 左侧菜单 -->
-    <menu-left v-if="showLeftMenu || isDualMenu"></menu-left>
+    <MenuLeft v-if="showLeftMenu || isDualMenu"></MenuLeft>
 
     <!-- 搜索组件 -->
-    <search></search>
+    <Search></Search>
 
     <!-- 顶栏 -->
-    <top-bar>
-      <work-tab v-if="showWorkTab"></work-tab>
-    </top-bar>
+    <TopBar>
+      <WorkTab v-if="showWorkTab"></WorkTab>
+    </TopBar>
 
     <!-- 内容区域 -->
     <div class="container" :style="{ maxWidth: containerWidth }">
@@ -40,7 +40,7 @@
     </div>
 
     <!-- 个性化设置 -->
-    <setting></setting>
+    <Setting></Setting>
 
 
 

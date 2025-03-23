@@ -86,7 +86,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { useUserStore } from '@/store/modules/user'
+  import { useSettingStore } from '@/store/modules/setting'
   import { MenuListType } from '@/types/menu'
   import { Search } from '@element-plus/icons-vue'
   import blogMittBus from '@/utils/blogMittBus'
@@ -94,7 +94,9 @@
   import { formatMenuTitle } from '@/utils/menu'
 
   const router = useRouter()
-  const userStore = useUserStore()
+
+  const settingStore = useSettingStore()
+
   const menuList = computed(() => useMenuStore().getMenuList)
 
   const showSearchDialog = ref(false)
@@ -102,7 +104,7 @@
   const searchResult: any = ref([])
   const historyMaxLength = 5 // 历史记录最大长度
 
-  const historyResult = computed(() => userStore.searchHistory)
+  const historyResult = computed(() => settingStore.searchHistoryList)
 
   const searchInput = ref<HTMLInputElement | null>(null)
 
@@ -262,7 +264,7 @@
   // 添加历史记录
   const updateHistory = () => {
     if (Array.isArray(historyResult.value)) {
-      userStore.setSearchHistory(historyResult.value)
+      settingStore.setSearchHistoryList(historyResult.value)
     }
   }
 

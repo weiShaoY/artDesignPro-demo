@@ -26,9 +26,9 @@
           </div>
         </div>
         <!-- 快速入口 -->
-        <fast-enter v-if="width >= 1200" />
+        <FastEnter v-if="width >= 1200" />
         <!-- 面包屑 -->
-        <breadcrumb
+        <Breadcrumb
           v-if="(showCrumbs && isLeftMenu) || (showCrumbs && isDualMenu)"
           :style="{ paddingLeft: !showRefreshButton && !showMenuButton ? '10px' : '0' }"
         />
@@ -98,8 +98,16 @@
 
 <script setup lang="ts">
   import Breadcrumb from '../Breadcrumb/index.vue'
-  import Notice from '../Notice/index.vue'
+  
   import MixedMenu from '../MixedMenu/index.vue'
+
+  import FastEnter from '../FastEnter/index.vue'
+
+  import MenuTop from '../MenuTop/index.vue'
+
+
+
+
   import { MenuTypeEnum, MenuWidth, SystemThemeEnum } from '@/enums/appEnum'
   import { useSettingStore } from '@/store/modules/setting'
   import { useFullscreen } from '@vueuse/core'
@@ -118,7 +126,6 @@
   const menuOpen = computed(() => settingStore.menuOpen)
   const showCrumbs = computed(() => settingStore.showCrumbs)
 
-  const notice = ref(null)
   const systemThemeColor = computed(() => settingStore.systemThemeColor)
   const showSettingGuide = computed(() => settingStore.showSettingGuide)
   const menuList = computed(() => useMenuStore().getMenuList)

@@ -140,8 +140,15 @@ export const useSettingStore = defineStore('settingStore', () => {
     return festivalDate.value !== currentFestivalDate
   })
 
+  /**
+   *  搜索历史列表
+   */
+  const searchHistoryList = ref<BlogType.MenuListType[]>([])
+
   function initState() {
     let sys = getSysStorage()
+
+    console.log('%c Line:150 🌽 sys', 'color:#b03734', sys)
 
     if (sys) {
       sys = JSON.parse(sys)
@@ -175,6 +182,8 @@ export const useSettingStore = defineStore('settingStore', () => {
       dualMenuShowText.value = setting.dualMenuShowText
       setCustomRadius(customRadius.value)
       setElementThemeColor(setting.systemThemeColor)
+
+      searchHistoryList.value = setting.searchHistoryList || []
     }
     else {
       setCustomRadius(customRadius.value)
@@ -315,6 +324,13 @@ export const useSettingStore = defineStore('settingStore', () => {
     dualMenuShowText.value = show
   }
 
+  /**
+   *  设置搜索历史列表
+   */
+  function setSearchHistoryList(list: BlogType.MenuListType[]) {
+    searchHistoryList.value = list
+  }
+
   return {
     menuType,
     menuOpenWidth,
@@ -378,6 +394,8 @@ export const useSettingStore = defineStore('settingStore', () => {
     setShowFestivalText,
     setFestivalDate,
     setDualMenuShowText,
+    searchHistoryList,
+    setSearchHistoryList,
   }
 })
 
