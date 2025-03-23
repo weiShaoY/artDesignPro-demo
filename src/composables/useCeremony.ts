@@ -1,8 +1,15 @@
-import { useTimeoutFn, useIntervalFn } from '@vueuse/core'
-import { useDateFormat } from '@vueuse/core'
-import { useSettingStore } from '@/store/modules/setting'
 import { festivalList } from '@/config/ceremony'
-import mittBus from '@/utils/mittBus'
+
+import { useSettingStore } from '@/store/modules/setting'
+
+import blogMittBus from '@/utils/blogMittBus'
+
+import {
+  useDateFormat,
+  useIntervalFn,
+  useTimeoutFn,
+} from '@vueuse/core'
+
 import { computed } from 'vue'
 
 // 节日庆祝相关配置
@@ -11,6 +18,7 @@ export function useCeremony() {
 
   // 节日礼花效果是否已加载
   const holidayFireworksLoaded = computed(() => settingStore.holidayFireworksLoaded)
+
   // 节日礼花是否显示
   const isShowFireworks = computed(() => settingStore.isShowFireworks)
 
@@ -20,7 +28,8 @@ export function useCeremony() {
   // 判断当前日期是否是节日
   const currentFestivalData = computed(() => {
     const currentDate = useDateFormat(new Date(), 'YYYY-MM-DD').value
-    return festivalList.find((item) => item.date === currentDate)
+
+    return festivalList.find(item => item.date === currentDate)
   })
 
   // 节日庆祝相关配置
@@ -28,22 +37,23 @@ export function useCeremony() {
     INITIAL_DELAY: 300, // 初始延迟时间，单位毫秒
     FIREWORK_INTERVAL: 1000, // 烟花效果触发间隔，单位毫秒
     TEXT_DELAY: 2000, // 文本显示延迟时间，单位毫秒
-    MAX_TRIGGERS: 6 // 最大触发次数
+    MAX_TRIGGERS: 6, // 最大触发次数
   } as const
 
   // 根据节日列表显示节日祝福
   const openFestival = () => {
     // 没有节日数据，不显示
-    if (!currentFestivalData.value) return
+    if (!currentFestivalData.value) { return }
+
     // 礼花效果结束，不显示
-    if (!isShowFireworks.value) return
+    if (!isShowFireworks.value) { return }
 
     let triggers = 0
 
     const { start: startFireworks } = useTimeoutFn(() => {
       const { pause } = useIntervalFn(() => {
         // console.log(currentFestivalData.value?.image)
-        mittBus.emit('triggerFireworks', currentFestivalData.value?.image)
+        blogMittBus.emit('triggerFireworks', currentFestivalData.value?.image)
         triggers++
 
         if (triggers >= FESTIVAL_CONFIG.MAX_TRIGGERS) {
@@ -58,7 +68,9 @@ export function useCeremony() {
         }
       }, FESTIVAL_CONFIG.FIREWORK_INTERVAL)
 
-      fireworksInterval = { pause }
+      fireworksInterval = {
+        pause,
+      }
     }, FESTIVAL_CONFIG.INITIAL_DELAY)
 
     startFireworks()
@@ -83,6 +95,6 @@ export function useCeremony() {
     cleanup,
     holidayFireworksLoaded,
     currentFestivalData,
-    isShowFireworks
+    isShowFireworks,
   }
 }

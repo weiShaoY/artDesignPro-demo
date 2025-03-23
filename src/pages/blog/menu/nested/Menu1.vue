@@ -2,11 +2,11 @@
 
 <!------------------------------------    ------------------------------------------------->
 <script lang="ts" setup>
-  import mittBus from '@/utils/mittBus'
+  import blogMittBus from '@/utils/blogMittBus'
 
   // 简化后的处理函数
   const handleSingleLaunch = () => {
-    mittBus.emit('triggerFireworks')
+    blogMittBus.emit('triggerFireworks')
   }
 </script>
 

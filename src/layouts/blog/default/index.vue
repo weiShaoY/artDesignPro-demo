@@ -70,7 +70,7 @@
   import { useSettingStore } from '@/store/modules/setting'
   import { useWorkTabStore } from '@/store/modules/workTab'
 
-  import mittBus from '@/utils/mittBus'
+  import blogMittBus from '@/utils/blogMittBus'
 
   // 网络状态
   const { isOnline } = useNetwork()
@@ -143,7 +143,7 @@
     // 延迟3s
     setTimeout(() => {
       // 初始化打开搜索框
-      mittBus.emit('triggerFireworks')
+      blogMittBus.emit('triggerFireworks')
     }, 3000)
   })
 </script>

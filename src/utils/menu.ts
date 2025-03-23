@@ -1,5 +1,6 @@
+import type { MenuListType } from '@/types/menu'
+
 import { $t } from '@/language'
-import { MenuListType } from '@/types/menu'
 
 // 创建递归函数处理嵌套路由
 /**
@@ -8,7 +9,7 @@ import { MenuListType } from '@/types/menu'
  * @param parentPath 父级路径
  * @returns 处理后的菜单项
  */
-export const processRoute = (route: MenuListType, parentPath = ''): MenuListType => {
+export function processRoute(route: MenuListType, parentPath = ''): MenuListType {
   // 构建完整路径
   const currentPath = route.path
     ? route.meta?.isIframe
@@ -23,10 +24,11 @@ export const processRoute = (route: MenuListType, parentPath = ''): MenuListType
     name: route.name,
     path: currentPath,
     component: route.component,
-    meta: route.meta ?? {}, // 使用空值合并运算符
+    meta: route.meta ?? {
+    }, // 使用空值合并运算符
     children: Array.isArray(route.children)
-      ? route.children.map((child) => processRoute(child, currentPath))
-      : []
+      ? route.children.map(child => processRoute(child, currentPath))
+      : [],
   }
 }
 
@@ -34,14 +36,14 @@ export const processRoute = (route: MenuListType, parentPath = ''): MenuListType
  * 保存 iframe 路由到 sessionStorage 中
  * @param list iframe 路由列表
  */
-export const saveIframeRoutes = (list: MenuListType[]): void => {
+export function saveIframeRoutes(list: MenuListType[]): void {
   if (list.length > 0) {
     sessionStorage.setItem('iframeRoutes', JSON.stringify(list))
   }
 }
 
 // 获取 iframe 路由
-export const getIframeRoutes = () => {
+export function getIframeRoutes() {
   return JSON.parse(sessionStorage.getItem('iframeRoutes') || '[]')
 }
 
@@ -50,6 +52,6 @@ export const getIframeRoutes = () => {
  * @param title 菜单标题，可以是 i18n 的 key，也可以是字符串，比如：'用户列表'
  * @returns 格式化后的菜单标题
  */
-export const formatMenuTitle = (title: string) => {
+export function formatMenuTitle(title: string) {
   return title.startsWith('menus.') ? $t(title) : title
 }

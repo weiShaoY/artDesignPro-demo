@@ -5,7 +5,7 @@
 <script setup lang="ts">
   import { ref, onMounted, onUnmounted } from 'vue'
   import { useEventListener } from '@vueuse/core'
-  import mittBus from '@/utils/mittBus'
+  import blogMittBus from '@/utils/blogMittBus'
   import type { Handler } from 'mitt'
 
   // 对象池大小
@@ -381,7 +381,7 @@
     useEventListener(window, 'resize', resizeCanvas)
 
     // 监听触发烟花的事件
-    mittBus.on('triggerFireworks', ((event: unknown) => {
+    blogMittBus.on('triggerFireworks', ((event: unknown) => {
       const imageUrl = event as string | undefined
       if (imageUrl && imageCache[imageUrl]?.complete) {
         createFirework(imageUrl)
@@ -393,7 +393,7 @@
 
   onUnmounted(() => {
     cancelAnimationFrame(animationFrame)
-    mittBus.off('triggerFireworks')
+    blogMittBus.off('triggerFireworks')
   })
 </script>
 

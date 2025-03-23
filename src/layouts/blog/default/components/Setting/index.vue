@@ -340,7 +340,7 @@
   import { useSettingStore } from '@/store/modules/setting'
   import { SettingThemeList, ThemeList, SystemMainColor } from '@/config/setting'
   import { SystemThemeEnum, MenuThemeEnum, MenuTypeEnum } from '@/enums/appEnum'
-  import mittBus from '@/utils/mittBus'
+  import blogMittBus from '@/utils/blogMittBus'
   import { useTheme } from '@/composables/useTheme'
   import { useCeremony } from '@/composables/useCeremony'
   import { ContainerWidthEnum } from '@/enums/appEnum'
@@ -479,7 +479,7 @@
   )
 
   onMounted(() => {
-    mittBus.on('openSetting', openSetting)
+    blogMittBus.on('openSetting', openSetting)
 
     initSystemColor()
     listenerSystemTheme()

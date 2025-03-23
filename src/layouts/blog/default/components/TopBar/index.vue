@@ -104,7 +104,7 @@
   import { useSettingStore } from '@/store/modules/setting'
   import { useFullscreen } from '@vueuse/core'
   import { HOME_PAGE } from '@/router'
-  import mittBus from '@/utils/mittBus'
+  import blogMittBus from '@/utils/blogMittBus'
   import { useMenuStore } from '@/store/modules/menu'
   import { SystemInfo } from '@/config/setting'
 
@@ -174,7 +174,7 @@
   }
 
   const openSetting = () => {
-    mittBus.emit('openSetting')
+    blogMittBus.emit('openSetting')
 
     // 隐藏设置引导
     if (showSettingGuide.value) {
@@ -185,7 +185,7 @@
   }
 
   const openSearchDialog = () => {
-    mittBus.emit('openSearchDialog')
+    blogMittBus.emit('openSearchDialog')
   }
 
 

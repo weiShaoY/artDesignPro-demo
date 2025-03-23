@@ -89,7 +89,7 @@
   import { useUserStore } from '@/store/modules/user'
   import { MenuListType } from '@/types/menu'
   import { Search } from '@element-plus/icons-vue'
-  import mittBus from '@/utils/mittBus'
+  import blogMittBus from '@/utils/blogMittBus'
   import { useMenuStore } from '@/store/modules/menu'
   import { formatMenuTitle } from '@/utils/menu'
 
@@ -107,7 +107,7 @@
   const searchInput = ref<HTMLInputElement | null>(null)
 
   onMounted(() => {
-    mittBus.on('openSearchDialog', openSearchDialog)
+    blogMittBus.on('openSearchDialog', openSearchDialog)
     document.addEventListener('keydown', handleKeydown)
   })
 
