@@ -1,12 +1,20 @@
-import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import type { MenuListType } from '@/types/menu'
+
+import type { UserInfo } from '@/types/store'
+
 import { LanguageEnum } from '@/enums/appEnum'
+
 import { router } from '@/router'
-import { UserInfo } from '@/types/store'
-import { useSettingStore } from './setting'
-import { useWorkTabStore } from './workTab'
+
 import { getSysStorage } from '@/utils/storage'
-import { MenuListType } from '@/types/menu'
+
+import { defineStore } from 'pinia'
+
+import { computed, ref } from 'vue'
+
+import { useSettingStore } from './setting'
+
+import { useWorkTabStore } from './workTab'
 
 // interface UserState {
 //   language: LanguageEnum // 语言
@@ -22,24 +30,36 @@ import { MenuListType } from '@/types/menu'
 export const useUserStore = defineStore('userStore', () => {
   // State
   const language = ref<LanguageEnum>(LanguageEnum.ZH)
+
   const isLogin = ref<boolean>(false)
+
   const isLock = ref<boolean>(false)
+
   const lockPassword = ref<string>('')
-  const info = ref<Partial<UserInfo>>({})
+
+  const info = ref<Partial<UserInfo>>({
+  })
+
   const searchHistory = ref<MenuListType[]>([])
+
   const accessToken = ref<string>('')
+
   const refreshToken = ref<string>('')
 
   // Getters
   const getUserInfo = computed(() => info.value)
+
   const getSettingState = computed(() => useSettingStore().$state)
+
   const getWorkTabState = computed(() => useWorkTabStore().$state)
 
   // Actions
   const initState = () => {
     const sys = getSysStorage()
+
     if (sys) {
       const parsedSys = JSON.parse(sys)
+
       const {
         info: sysInfo,
         isLogin: sysIsLogin,
@@ -47,10 +67,11 @@ export const useUserStore = defineStore('userStore', () => {
         searchHistory: sysSearchHistory,
         isLock: sysIsLock,
         lockPassword: sysLockPassword,
-        refreshToken: sysRefreshToken
+        refreshToken: sysRefreshToken,
       } = parsedSys.user
 
-      info.value = sysInfo || {}
+      info.value = sysInfo || {
+      }
       isLogin.value = sysIsLogin || false
       isLock.value = sysIsLock || false
       language.value = sysLanguage || LanguageEnum.ZH
@@ -72,8 +93,8 @@ export const useUserStore = defineStore('userStore', () => {
         searchHistory: searchHistory.value,
         refreshToken: refreshToken.value,
         workTab: getWorkTabState.value,
-        setting: getSettingState.value
-      }
+        setting: getSettingState.value,
+      },
     })
   }
 
@@ -106,13 +127,15 @@ export const useUserStore = defineStore('userStore', () => {
     if (newRefreshToken) {
       refreshToken.value = newRefreshToken
     }
+
     sessionStorage.setItem('accessToken', newAccessToken)
     saveUserData()
   }
 
   const logOut = () => {
     setTimeout(() => {
-      info.value = {}
+      info.value = {
+      }
       isLogin.value = false
       isLock.value = false
       lockPassword.value = ''
@@ -147,13 +170,14 @@ export const useUserStore = defineStore('userStore', () => {
     setLockStatus,
     setLockPassword,
     setToken,
-    logOut
+    logOut,
   }
 })
 
 // 初始化版本信息
 function initVersion(version: string) {
   const vs = localStorage.getItem('version')
+
   if (!vs) {
     localStorage.setItem('version', version)
   }
@@ -162,11 +186,17 @@ function initVersion(version: string) {
 // 数据持久化存储
 function saveStoreStorage<T>(newData: T) {
   const version = import.meta.env.VITE_VERSION
+
   initVersion(version)
   const vs = localStorage.getItem('version') || version
+
   const storedData = JSON.parse(localStorage.getItem(`sys-v${vs}`) || '{}')
 
   // 合并新数据与现有数据
-  const mergedData = { ...storedData, ...newData }
+  const mergedData = {
+    ...storedData,
+    ...newData,
+  }
+
   localStorage.setItem(`sys-v${vs}`, JSON.stringify(mergedData))
 }

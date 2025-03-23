@@ -1,84 +1,60 @@
-import { defineStore } from 'pinia'
-import { ref } from 'vue'
-import { WorkTabType } from '@/types/store'
-import { HOME_PAGE } from '@/router/index'
+import type { WorkTabType } from '@/types/store'
+
 import { router } from '@/router'
+
+import { HOME_PAGE } from '@/router/index'
+
 import { getSysStorage } from '@/utils/storage'
 
+import { defineStore } from 'pinia'
+
+import { ref } from 'vue'
+
 export const useWorkTabStore = defineStore('workTabStore', () => {
-  /**
-   *  已打开的选项卡
-   */
-  const opened = ref<WorkTabType[]>([])
-  /**
-   *  当前激活的选项卡
-   */
-  const current = ref<Partial<WorkTabType>>({})
+  // 状态定义
+  const opened = ref<WorkTabType[]>([]) // 已打开的选项卡
+
+  const current = ref<Partial<WorkTabType>>({
+  }) // 当前激活的选项卡
+
+  const keepAliveExclude = ref<string[]>([]) // 需要排除缓存的组件名称
 
   /**
-   *  需要排除缓存的组件名称
+   * 将指定选项卡添加到 keepAlive 排除列表中，只有当该选项卡的 keepAlive 为 true 时才进行添加
+   * @param tab 选项卡对象
    */
-  const keepAliveExclude = ref<string[]>([])
-
-  // Actions
-
-  /**
-   * 初始化状态，从系统存储中加载工作台配置
-   */
-  const initState = () => {
-    const sysStorage = getSysStorage()
-    if (sysStorage) {
-      const sys = JSON.parse(sysStorage)
-      const { workTab } = sys.user
-      current.value = workTab.current || {}
-      opened.value = workTab.opened || []
-      checkFirstHomePage()
+  const addKeepAliveExclude = (tab: WorkTabType) => {
+    if (tab.keepAlive && tab.name && !keepAliveExclude.value.includes(tab.name)) {
+      keepAliveExclude.value.push(tab.name)
     }
   }
 
   /**
-   * 打开或激活一个选项卡
-   * @param tab 目标选项卡信息
+   * 将传入的一组选项卡的组件名称标记为排除缓存
+   * @param tabs 需要标记的选项卡数组
    */
-  const openTab = (tab: WorkTabType): void => {
-    removeKeepAliveExclude(tab.name as string)
-
-    const index = opened.value.findIndex((item) => item.path === tab.path)
-
-    if (index === -1) {
-      opened.value.push({ ...tab })
-    } else {
-      const existingTab = opened.value[index]
-      if (!areQueriesEqual(existingTab.query, tab.query)) {
-        opened.value[index] = {
-          ...existingTab,
-          query: tab.query,
-          title: tab.title || existingTab.title
-        }
+  const markTabsToRemove = (tabs: WorkTabType[]) => {
+    tabs.forEach((tab) => {
+      if (tab.name) {
+        addKeepAliveExclude(tab)
       }
-    }
-
-    current.value = opened.value[index === -1 ? opened.value.length - 1 : index]
+    })
   }
 
-  /**
-   * 辅助函数：比较两个查询参数是否相等
-   * @param query1 第一个查询参数
-   * @param query2 第二个查询参数
-   * @returns 是否相等
-   */
-  const areQueriesEqual = (query1: any, query2: any): boolean => {
-    return JSON.stringify(query1) === JSON.stringify(query2)
-  }
+  // 核心操作函数
 
   /**
    * 关闭指定的选项卡，并处理激活状态和路由跳转
    * @param path 要关闭的路由路径
    */
   const removeTab = (path: string) => {
-    const noCurrentTab = opened.value.find((tab) => tab.path === path)
-    const index = opened.value.findIndex((tab) => tab.path === path)
-    if (index === -1) return
+    const noCurrentTab = opened.value.find(tab => tab.path === path)
+
+    const index = opened.value.findIndex(tab => tab.path === path)
+
+    if (index === -1) {
+      return
+    }
 
     opened.value.splice(index, 1)
 
@@ -93,13 +69,14 @@ export const useWorkTabStore = defineStore('workTabStore', () => {
       if (current.value.name) {
         addKeepAliveExclude(current.value as WorkTabType)
       }
+
       const newIndex = index >= opened.value.length ? opened.value.length - 1 : index
+
       current.value = opened.value[newIndex]
       router.push(current.value.path as string)
-    } else {
-      if (noCurrentTab?.name) {
-        addKeepAliveExclude(noCurrentTab)
-      }
+    }
+    else if (noCurrentTab?.name) {
+      addKeepAliveExclude(noCurrentTab)
     }
   }
 
@@ -108,10 +85,11 @@ export const useWorkTabStore = defineStore('workTabStore', () => {
    * @param path 当前选项卡的路由路径
    */
   const removeLeft = (path: string) => {
-    const index = opened.value.findIndex((tab) => tab.path === path)
+    const index = opened.value.findIndex(tab => tab.path === path)
+
     if (index > 1) {
-      // 保留首页和当前标签
       const tabsToRemove = opened.value.slice(1, index)
+
       markTabsToRemove(tabsToRemove)
       opened.value.splice(1, index - 1)
     }
@@ -122,9 +100,11 @@ export const useWorkTabStore = defineStore('workTabStore', () => {
    * @param path 当前选项卡的路由路径
    */
   const removeRight = (path: string) => {
-    const index = opened.value.findIndex((tab) => tab.path === path)
+    const index = opened.value.findIndex(tab => tab.path === path)
+
     if (index !== -1 && index < opened.value.length - 1) {
       const tabsToRemove = opened.value.slice(index + 1)
+
       markTabsToRemove(tabsToRemove)
       opened.value.splice(index + 1)
     }
@@ -135,9 +115,12 @@ export const useWorkTabStore = defineStore('workTabStore', () => {
    * @param path 当前选项卡的路由路径
    */
   const removeOthers = (path: string) => {
-    const tabsToRemove = opened.value.filter((tab) => tab.path !== path && tab.path !== HOME_PAGE)
+    const tabsToRemove = opened.value.filter(
+      tab => tab.path !== path && tab.path !== HOME_PAGE,
+    )
+
     markTabsToRemove(tabsToRemove)
-    opened.value = opened.value.filter((tab) => tab.path === path || tab.path === HOME_PAGE)
+    opened.value = opened.value.filter(tab => tab.path === path || tab.path === HOME_PAGE)
   }
 
   /**
@@ -147,15 +130,68 @@ export const useWorkTabStore = defineStore('workTabStore', () => {
   const removeAll = (path: string) => {
     if (path !== HOME_PAGE) {
       markTabsToRemove(opened.value)
-      current.value = {}
+      current.value = {
+      }
       opened.value = []
       router.push(HOME_PAGE)
-    } else {
-      const tabsToRemove = opened.value.filter((tab) => tab.path !== HOME_PAGE)
-      markTabsToRemove(tabsToRemove)
-      opened.value = opened.value.filter((tab) => tab.path === HOME_PAGE)
-      if (opened.value.length === 0) router.push(HOME_PAGE)
     }
+    else {
+      const tabsToRemove = opened.value.filter(tab => tab.path !== HOME_PAGE)
+
+      markTabsToRemove(tabsToRemove)
+      opened.value = opened.value.filter(tab => tab.path === HOME_PAGE)
+      if (opened.value.length === 0) {
+        router.push(HOME_PAGE)
+      }
+    }
+  }
+
+  // 辅助函数
+  /**
+   * 辅助函数：比较两个查询参数是否相等
+   * @param query1 第一个查询参数
+   * @param query2 第二个查询参数
+   * @returns 是否相等
+   */
+  const areQueriesEqual = (query1: any, query2: any): boolean => {
+    return JSON.stringify(query1) === JSON.stringify(query2)
+  }
+
+  /**
+   * 从 keepAlive 排除列表中移除指定组件名称
+   * @param name 路由组件名称
+   */
+  const removeKeepAliveExclude = (name: string) => {
+    keepAliveExclude.value = keepAliveExclude.value.filter(item => item !== name)
+  }
+
+  /**
+   * 打开或激活一个选项卡
+   * @param tab 目标选项卡信息
+   */
+  const openTab = (tab: WorkTabType): void => {
+    removeKeepAliveExclude(tab.name as string)
+
+    const index = opened.value.findIndex(item => item.path === tab.path)
+
+    if (index === -1) {
+      opened.value.push({
+        ...tab,
+      })
+    }
+    else {
+      const existingTab = opened.value[index]
+
+      if (!areQueriesEqual(existingTab.query, tab.query)) {
+        opened.value[index] = {
+          ...existingTab,
+          query: tab.query,
+          title: tab.title || existingTab.title,
+        }
+      }
+    }
+
+    current.value = opened.value[index === -1 ? opened.value.length - 1 : index]
   }
 
   /**
@@ -168,33 +204,21 @@ export const useWorkTabStore = defineStore('workTabStore', () => {
   }
 
   /**
-   * 将指定选项卡添加到 keepAlive 排除列表中，只有当该选项卡的 keepAlive 为 true 时才进行添加
-   * @param tab 选项卡对象
+   * 初始化状态，从系统存储中加载工作台配置
    */
-  const addKeepAliveExclude = (tab: WorkTabType) => {
-    if (tab.keepAlive && tab.name && !keepAliveExclude.value.includes(tab.name)) {
-      keepAliveExclude.value.push(tab.name)
-    }
-  }
+  const initState = () => {
+    const sysStorage = getSysStorage()
 
-  /**
-   * 从 keepAlive 排除列表中移除指定组件名称
-   * @param name 路由组件名称
-   */
-  const removeKeepAliveExclude = (name: string) => {
-    keepAliveExclude.value = keepAliveExclude.value.filter((item) => item !== name)
-  }
+    if (sysStorage) {
+      const sys = JSON.parse(sysStorage)
 
-  /**
-   * 将传入的一组选项卡的组件名称标记为排除缓存
-   * @param tabs 需要标记的选项卡数组
-   */
-  const markTabsToRemove = (tabs: WorkTabType[]) => {
-    tabs.forEach((tab) => {
-      if (tab.name) {
-        addKeepAliveExclude(tab)
+      const { workTab } = sys.user
+
+      current.value = workTab.current || {
       }
-    })
+      opened.value = workTab.opened || []
+      checkFirstHomePage()
+    }
   }
 
   return {
@@ -211,6 +235,6 @@ export const useWorkTabStore = defineStore('workTabStore', () => {
     checkFirstHomePage,
     addKeepAliveExclude,
     removeKeepAliveExclude,
-    markTabsToRemove
+    markTabsToRemove,
   }
 })
