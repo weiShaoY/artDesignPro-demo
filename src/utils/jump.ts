@@ -13,9 +13,6 @@ export function openExternalLink(link: string) {
  * @param jumpToFirst 是否跳转到第一个子菜单
  */
 export function handleMenuJump(item: MenuListType, jumpToFirst: boolean = false) {
-  // debugger
-  console.log('%c Line:17 🥔 item', 'color:#f5ce50', item)
-
   // 处理外部链接
   const { link, isIframe } = item.meta
 
@@ -39,5 +36,3 @@ export function handleMenuJump(item: MenuListType, jumpToFirst: boolean = false)
   // 跳转到子菜单路径
   router.push(firstChild.path)
 }
-
-// ... existing code ...

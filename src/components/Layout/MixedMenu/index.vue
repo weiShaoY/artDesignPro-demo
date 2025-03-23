@@ -42,11 +42,15 @@
   const settingStore = useSettingStore()
   const menuopenwidth = computed(() => settingStore.getMenuOpenWidth)
 
-  defineProps({
+ const props= defineProps({
     list: {
       type: [Array] as PropType<MenuListType[]>,
       default: () => []
     }
+  })
+
+  watchEffect(() => {
+    console.log("%c Line:54 🍬 props.list", "color:#93c0a4", props.list);
   })
 
   const isActive = (item: MenuListType): boolean => {

@@ -1,7 +1,10 @@
+import type { MenuListType } from '@/types/menu'
+
 import { upgradeLogList } from '@/mock/upgradeLog'
-import { RoutesAlias } from './routesAlias'
-import { MenuListType } from '@/types/menu'
+
 import { WEB_LINKS } from '@/utils/links'
+
+import { RoutesAlias } from './routesAlias'
 
 /**
  * 菜单列表、异步路由
@@ -22,7 +25,7 @@ export const asyncRoutes: MenuListType[] = [
     meta: {
       title: 'menus.dashboard.title',
       icon: '&#xe721;',
-      keepAlive: false
+      keepAlive: false,
     },
     children: [
       {
@@ -32,8 +35,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Dashboard,
         meta: {
           title: 'menus.dashboard.console',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 102,
@@ -42,8 +45,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Analysis,
         meta: {
           title: 'menus.dashboard.analysis',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 103,
@@ -53,10 +56,10 @@ export const asyncRoutes: MenuListType[] = [
         meta: {
           title: 'menus.dashboard.ecommerce',
           keepAlive: true,
-          showTextBadge: 'new'
-        }
-      }
-    ]
+          showTextBadge: 'new',
+        },
+      },
+    ],
   },
   {
     id: 5,
@@ -66,7 +69,7 @@ export const asyncRoutes: MenuListType[] = [
     meta: {
       title: 'menus.widgets.title',
       icon: '&#xe81a;',
-      keepAlive: false
+      keepAlive: false,
     },
     children: [
       {
@@ -76,8 +79,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.IconList,
         meta: {
           title: 'menus.widgets.iconList',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 504,
@@ -86,8 +89,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.IconSelector,
         meta: {
           title: 'menus.widgets.iconSelector',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 505,
@@ -96,8 +99,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.ImageCrop,
         meta: {
           title: 'menus.widgets.imageCrop',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 506,
@@ -106,8 +109,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Excel,
         meta: {
           title: 'menus.widgets.excel',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 507,
@@ -116,8 +119,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Video,
         meta: {
           title: 'menus.widgets.video',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 508,
@@ -126,8 +129,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.CountTo,
         meta: {
           title: 'menus.widgets.countTo',
-          keepAlive: false
-        }
+          keepAlive: false,
+        },
       },
       {
         id: 509,
@@ -136,8 +139,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.WangEditor,
         meta: {
           title: 'menus.widgets.wangEditor',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 510,
@@ -146,8 +149,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Watermark,
         meta: {
           title: 'menus.widgets.watermark',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 511,
@@ -156,8 +159,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.ContextMenu,
         meta: {
           title: 'menus.widgets.contextMenu',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 512,
@@ -166,8 +169,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Qrcode,
         meta: {
           title: 'menus.widgets.qrcode',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 513,
@@ -176,8 +179,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Drag,
         meta: {
           title: 'menus.widgets.drag',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 514,
@@ -186,8 +189,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.TextScroll,
         meta: {
           title: 'menus.widgets.textScroll',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 515,
@@ -197,8 +200,8 @@ export const asyncRoutes: MenuListType[] = [
         meta: {
           title: 'menus.widgets.fireworks',
           keepAlive: true,
-          showTextBadge: 'Hot'
-        }
+          showTextBadge: 'Hot',
+        },
       },
       {
         id: 516,
@@ -210,10 +213,10 @@ export const asyncRoutes: MenuListType[] = [
           keepAlive: false,
           link: 'https://element-plus.org/zh-CN/component/overview.html',
           isIframe: true,
-          showBadge: true
-        }
-      }
-    ]
+          showBadge: true,
+        },
+      },
+    ],
   },
   {
     id: 126,
@@ -223,7 +226,7 @@ export const asyncRoutes: MenuListType[] = [
     meta: {
       title: 'menus.template.title',
       icon: '&#xe860;',
-      keepAlive: false
+      keepAlive: false,
     },
     children: [
       {
@@ -233,8 +236,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Cards,
         meta: {
           title: 'menus.template.cards',
-          keepAlive: false
-        }
+          keepAlive: false,
+        },
       },
       {
         id: 12603,
@@ -243,8 +246,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Banners,
         meta: {
           title: 'menus.template.banners',
-          keepAlive: false
-        }
+          keepAlive: false,
+        },
       },
       {
         id: 12604,
@@ -253,8 +256,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Charts,
         meta: {
           title: 'menus.template.charts',
-          keepAlive: false
-        }
+          keepAlive: false,
+        },
       },
       {
         id: 12609,
@@ -264,8 +267,8 @@ export const asyncRoutes: MenuListType[] = [
         meta: {
           title: 'menus.template.map',
           keepAlive: true,
-          showTextBadge: 'new'
-        }
+          showTextBadge: 'new',
+        },
       },
       {
         id: 12601,
@@ -274,8 +277,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Chat,
         meta: {
           title: 'menus.template.chat',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 12605,
@@ -284,8 +287,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Calendar,
         meta: {
           title: 'menus.template.calendar',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 12622,
@@ -295,10 +298,10 @@ export const asyncRoutes: MenuListType[] = [
         meta: {
           title: 'menus.template.pricing',
           keepAlive: true,
-          isHideTab: true
-        }
-      }
-    ]
+          isHideTab: true,
+        },
+      },
+    ],
   },
   {
     id: 4,
@@ -308,7 +311,7 @@ export const asyncRoutes: MenuListType[] = [
     meta: {
       title: 'menus.article.title',
       icon: '&#xe7ae;',
-      keepAlive: true
+      keepAlive: true,
     },
     children: [
       {
@@ -323,15 +326,15 @@ export const asyncRoutes: MenuListType[] = [
             {
               id: 2021,
               title: '新增',
-              auth_mark: 'add'
+              auth_mark: 'add',
             },
             {
               id: 2022,
               title: '编辑',
-              auth_mark: 'edit'
-            }
-          ]
-        }
+              auth_mark: 'edit',
+            },
+          ],
+        },
       },
 
       {
@@ -342,8 +345,8 @@ export const asyncRoutes: MenuListType[] = [
         meta: {
           title: 'menus.article.articleDetail',
           isHide: true,
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 205,
@@ -352,8 +355,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Comment,
         meta: {
           title: 'menus.article.comment',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 201,
@@ -367,12 +370,12 @@ export const asyncRoutes: MenuListType[] = [
             {
               id: 2010,
               title: '发布',
-              auth_mark: 'article/article-publish/add'
-            }
-          ]
-        }
-      }
-    ]
+              auth_mark: 'article/article-publish/add',
+            },
+          ],
+        },
+      },
+    ],
   },
   {
     id: 2,
@@ -382,7 +385,7 @@ export const asyncRoutes: MenuListType[] = [
     meta: {
       title: 'menus.user.title',
       icon: '&#xe86e;',
-      keepAlive: false
+      keepAlive: false,
     },
     children: [
       {
@@ -392,8 +395,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Account,
         meta: {
           title: 'menus.user.account',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 302,
@@ -402,8 +405,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Department,
         meta: {
           title: 'menus.user.department',
-          keepAlive: false
-        }
+          keepAlive: false,
+        },
       },
       {
         id: 303,
@@ -412,8 +415,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Role,
         meta: {
           title: 'menus.user.role',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 304,
@@ -424,10 +427,10 @@ export const asyncRoutes: MenuListType[] = [
           title: 'menus.user.userCenter',
           isHide: true,
           keepAlive: true,
-          isHideTab: true
-        }
-      }
-    ]
+          isHideTab: true,
+        },
+      },
+    ],
   },
   {
     id: 3,
@@ -437,7 +440,7 @@ export const asyncRoutes: MenuListType[] = [
     meta: {
       title: 'menus.menu.title',
       icon: '&#xe8a4;',
-      keepAlive: false
+      keepAlive: false,
     },
     children: [
       {
@@ -453,20 +456,20 @@ export const asyncRoutes: MenuListType[] = [
             {
               id: 4011,
               title: '新增',
-              auth_mark: 'add'
+              auth_mark: 'add',
             },
             {
               id: 4012,
               title: '编辑',
-              auth_mark: 'edit'
+              auth_mark: 'edit',
             },
             {
               id: 4013,
               title: '删除',
-              auth_mark: 'delete'
-            }
-          ]
-        }
+              auth_mark: 'delete',
+            },
+          ],
+        },
       },
       {
         id: 411,
@@ -482,20 +485,20 @@ export const asyncRoutes: MenuListType[] = [
             {
               id: 4111,
               title: '新增',
-              auth_mark: 'add'
+              auth_mark: 'add',
             },
             {
               id: 4112,
               title: '编辑',
-              auth_mark: 'edit'
+              auth_mark: 'edit',
             },
             {
               id: 4113,
               title: '删除',
-              auth_mark: 'delete'
-            }
-          ]
-        }
+              auth_mark: 'delete',
+            },
+          ],
+        },
       },
       {
         id: 402,
@@ -505,7 +508,7 @@ export const asyncRoutes: MenuListType[] = [
         meta: {
           title: 'menus.menu.nested',
           icon: '&#xe676;',
-          keepAlive: true
+          keepAlive: true,
         },
         children: [
           {
@@ -516,8 +519,8 @@ export const asyncRoutes: MenuListType[] = [
             meta: {
               title: 'menus.menu.menu1',
               icon: '&#xe676;',
-              keepAlive: true
-            }
+              keepAlive: true,
+            },
           },
           {
             id: 40202,
@@ -527,7 +530,7 @@ export const asyncRoutes: MenuListType[] = [
             meta: {
               title: 'menus.menu.menu2',
               icon: '&#xe676;',
-              keepAlive: true
+              keepAlive: true,
             },
             children: [
               {
@@ -538,10 +541,10 @@ export const asyncRoutes: MenuListType[] = [
                 meta: {
                   title: 'menus.menu.menu21',
                   icon: '&#xe676;',
-                  keepAlive: true
-                }
-              }
-            ]
+                  keepAlive: true,
+                },
+              },
+            ],
           },
           {
             id: 40203,
@@ -551,7 +554,7 @@ export const asyncRoutes: MenuListType[] = [
             meta: {
               title: 'menus.menu.menu3',
               icon: '&#xe676;',
-              keepAlive: true
+              keepAlive: true,
             },
             children: [
               {
@@ -562,8 +565,8 @@ export const asyncRoutes: MenuListType[] = [
                 meta: {
                   title: 'menus.menu.menu31',
                   icon: '&#xe676;',
-                  keepAlive: true
-                }
+                  keepAlive: true,
+                },
               },
               {
                 id: 4020302,
@@ -573,7 +576,7 @@ export const asyncRoutes: MenuListType[] = [
                 meta: {
                   title: 'menus.menu.menu32',
                   icon: '&#xe676;',
-                  keepAlive: true
+                  keepAlive: true,
                 },
                 children: [
                   {
@@ -584,16 +587,16 @@ export const asyncRoutes: MenuListType[] = [
                     meta: {
                       title: 'menus.menu.menu321',
                       icon: '&#xe676;',
-                      keepAlive: true
-                    }
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ]
+                      keepAlive: true,
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
     id: 18,
@@ -603,7 +606,7 @@ export const asyncRoutes: MenuListType[] = [
     meta: {
       title: 'menus.result.title',
       icon: '&#xe715;',
-      keepAlive: false
+      keepAlive: false,
     },
     children: [
       {
@@ -613,8 +616,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Success,
         meta: {
           title: 'menus.result.success',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 402,
@@ -623,10 +626,10 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Fail,
         meta: {
           title: 'menus.result.fail',
-          keepAlive: true
-        }
-      }
-    ]
+          keepAlive: true,
+        },
+      },
+    ],
   },
   {
     id: 8,
@@ -636,7 +639,7 @@ export const asyncRoutes: MenuListType[] = [
     meta: {
       title: 'menus.exception.title',
       icon: '&#xe820;',
-      keepAlive: false
+      keepAlive: false,
     },
     children: [
       {
@@ -646,8 +649,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Exception403,
         meta: {
           title: 'menus.exception.notFound',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 802,
@@ -656,8 +659,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Exception404,
         meta: {
           title: 'menus.exception.notFoundEn',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 803,
@@ -666,10 +669,10 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Exception500,
         meta: {
           title: 'menus.exception.serverError',
-          keepAlive: true
-        }
-      }
-    ]
+          keepAlive: true,
+        },
+      },
+    ],
   },
   {
     id: 9,
@@ -679,7 +682,7 @@ export const asyncRoutes: MenuListType[] = [
     meta: {
       title: 'menus.system.title',
       icon: '&#xe7b9;',
-      keepAlive: false
+      keepAlive: false,
     },
     children: [
       {
@@ -689,8 +692,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Setting,
         meta: {
           title: 'menus.system.setting',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 902,
@@ -699,8 +702,8 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Api,
         meta: {
           title: 'menus.system.api',
-          keepAlive: true
-        }
+          keepAlive: true,
+        },
       },
       {
         id: 903,
@@ -709,10 +712,10 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Log,
         meta: {
           title: 'menus.system.log',
-          keepAlive: true
-        }
-      }
-    ]
+          keepAlive: true,
+        },
+      },
+    ],
   },
   {
     id: 10,
@@ -722,7 +725,7 @@ export const asyncRoutes: MenuListType[] = [
     meta: {
       title: 'menus.safeguard.title',
       icon: '&#xe816;',
-      keepAlive: false
+      keepAlive: false,
     },
     children: [
       {
@@ -732,10 +735,10 @@ export const asyncRoutes: MenuListType[] = [
         component: RoutesAlias.Server,
         meta: {
           title: 'menus.safeguard.server',
-          keepAlive: true
-        }
-      }
-    ]
+          keepAlive: true,
+        },
+      },
+    ],
   },
   {
     id: 12,
@@ -745,7 +748,7 @@ export const asyncRoutes: MenuListType[] = [
     meta: {
       title: 'menus.help.title',
       icon: '&#xe719;',
-      keepAlive: false
+      keepAlive: false,
     },
     children: [
       {
@@ -756,11 +759,12 @@ export const asyncRoutes: MenuListType[] = [
           title: 'menus.help.document',
           link: WEB_LINKS.DOCS,
           isIframe: false,
-          keepAlive: false
-        }
-      }
-    ]
+          keepAlive: false,
+        },
+      },
+    ],
   },
+
   // 一级菜单
   {
     id: 11912,
@@ -772,7 +776,7 @@ export const asyncRoutes: MenuListType[] = [
       showTextBadge: `${upgradeLogList.value[0].version}`,
       icon: '&#xe712;',
       keepAlive: false,
-      isInMainContainer: true
-    }
-  }
+      isInMainContainer: true,
+    },
+  },
 ]

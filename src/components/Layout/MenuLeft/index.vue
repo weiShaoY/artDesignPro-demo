@@ -154,48 +154,44 @@
    */
   const menuList = computed(() => {
     const list = useMenuStore().getMenuList
+    console.log('%c Line:157 🍣 list', 'color:#465975', list)
 
     // 如果不是顶部左侧菜单或双列菜单，直接返回完整菜单列表
     if (!isTopLeftMenu.value && !isDualMenu.value) {
       return list
     }
 
-    //  /blog/document/elementui
-
-    // 处理 一级路由 并且是 iframe 路由
-    if (route.meta.isInMainContainer && route.meta.isIframe) {
-      // 遍历一级菜单查找匹配的子菜单
+    // 处理一级路由（包括 iframe 路由）
+    if (route.meta?.isInMainContainer) {
       for (const menu of list) {
         if (menu.path === route.path) {
-            return [menu]
+          return [menu]
         }
       }
-      // 如果没有找到匹配的子菜单，返回空数组
       return []
     }
-    
 
-
-    // 处理主容器内的一级菜单
-    if (route.meta.isInMainContainer) {
-      return list.filter((menu) => menu.meta.isInMainContainer)
-    }
-
-    //  处理 iframe 路由
-    if (route.meta.isIframe) {
-      return findIframeMenuList(route.path, list)
+    // 处理 iframe 路由
+    if (route.meta?.isIframe) {
+      for (const menu of list) {
+        if (menu.children) {
+          const iframeMenu = menu.children.find((child) => child.path === route.path)
+          if (iframeMenu) {
+            return menu.children
+          }
+        }
+      }
+      return []
     }
 
     // 获取当前路由的顶级路径
-    // const currentTopPath = `/${route.path.split('/')[1]}`
-    const currentTopPath = `/${route.path?.split('/').slice(1, 3).join('/') || ''}`
-    
+    const pathSegments = route.path?.split('/').filter(Boolean) || []
+    const currentTopPath = `/${pathSegments.slice(0, 2).join('/')}`
+
     // 返回当前顶级路径对应的子菜单
     const currentMenu = list.find((menu) => menu.path === currentTopPath)
-
-    return currentMenu?.children ?? []
+    return currentMenu?.children || []
   })
-
   /**
    *  查找 iframe 对应的二级菜单列表
    */
