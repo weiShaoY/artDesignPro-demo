@@ -1,30 +1,32 @@
-// 默认配置
-
-const defaultOpstions = {
+/**
+ *  echarts 默认配置
+ */
+const defaultOptions = {
   grid: {
     left: '0',
     right: '4%',
     bottom: '0%',
     top: '0',
-    containLabel: true
+    containLabel: true,
   },
-  tooltip: {},
+  tooltip: {
+  },
   yAxis: {
     axisLabel: {
       show: true,
-      color: '#8c8c8c'
+      color: '#8c8c8c',
     },
     axisTick: {
-      show: false
+      show: false,
     },
     axisLine: {
       show: true,
       lineStyle: {
         color: '#e8e8e8',
         width: 1,
-        type: 'solid'
-      }
-    }
+        type: 'solid',
+      },
+    },
   },
   xAxis: {
     axisLine: {
@@ -32,25 +34,27 @@ const defaultOpstions = {
       lineStyle: {
         color: '#e8e8e8',
         width: 1,
-        type: 'solid'
-      }
+        type: 'solid',
+      },
     },
     splitLine: {
       show: true,
       lineStyle: {
         color: '#e8e8e8',
         width: 0,
-        type: 'solid'
-      }
+        type: 'solid',
+      },
     },
     axisLabel: {
       show: true,
-      color: 'rgba(255,255,255, 0.6)'
+      color: 'rgba(255,255,255, 0.6)',
     },
     axisTick: {
-      show: false
-    }
-  }
+      show: false,
+    },
+  },
 }
 
-export { defaultOpstions }
+export {
+  defaultOptions,
+}

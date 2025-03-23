@@ -1,22 +1,30 @@
+import type { EChartsOption } from 'echarts'
+
 // src/utils/echarts/useECharts.ts
-import { unref, Ref, nextTick } from 'vue'
-import { EChartsOption } from 'echarts'
+import type { Ref } from 'vue'
+
 import echarts from '@/plugins/echarts'
-import { defaultOpstions } from './defaultOpstions'
+
+import { nextTick, unref } from 'vue'
+
+import { defaultOptions } from './defaultOptions'
 
 export function useECharts(
   elRef: Ref<HTMLDivElement>,
-  theme: 'light' | 'dark' | 'default' = 'light'
+  theme: 'light' | 'dark' | 'default' = 'light',
 ) {
   let chartInstance: echarts.ECharts | null = null
+
   let resizeHandler: () => void
 
   // 初始化echarts
   function initCharts() {
     const el = unref(elRef)
+
     if (!el) {
       return
     }
+
     chartInstance = echarts.init(el, theme)
     addResize()
   }
@@ -25,33 +33,36 @@ export function useECharts(
   function setOptions(options: EChartsOption | any) {
     // 默认配置
     if (!options.grid) {
-      options.grid = defaultOpstions.grid
+      options.grid = defaultOptions.grid
     }
 
     if (!options.tooltip) {
-      options.tooltip = defaultOpstions.tooltip
+      options.tooltip = defaultOptions.tooltip
     }
 
     if (options.yAxis) {
-      const { axisLine, axisTick } = defaultOpstions.yAxis
+      const { axisLine, axisTick } = defaultOptions.yAxis
 
       if (!options.yAxis.axisLine) {
         options.yAxis.axisLine = axisLine
       }
+
       if (!options.yAxis.axisTick) {
         options.yAxis.axisTick = axisTick
       }
     }
 
     if (options.xAxis) {
-      const { axisLine, splitLine, axisTick } = defaultOpstions.xAxis
+      const { axisLine, splitLine, axisTick } = defaultOptions.xAxis
 
       if (!options.xAxis.axisLine) {
         options.xAxis.axisLine = axisLine
       }
+
       if (!options.xAxis.splitLine) {
         options.xAxis.splitLine = splitLine
       }
+
       if (!options.xAxis.axisTick) {
         options.xAxis.axisTick = axisTick
       }
@@ -68,8 +79,11 @@ export function useECharts(
       setTimeout(() => {
         if (!chartInstance) {
           initCharts()
-          if (!chartInstance) return
+          if (!chartInstance) {
+            return
+          }
         }
+
         chartInstance.setOption(options)
       }, 30)
     })
@@ -80,6 +94,7 @@ export function useECharts(
     resizeHandler = () => {
       resize()
     }
+
     window.addEventListener('resize', resizeHandler)
   }
 
@@ -105,6 +120,6 @@ export function useECharts(
     addResize,
     removeResize,
     resize,
-    echarts
+    echarts,
   }
 }
