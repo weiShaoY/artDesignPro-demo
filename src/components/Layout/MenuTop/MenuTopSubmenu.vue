@@ -22,13 +22,14 @@
       :theme="theme"
     />
   </el-sub-menu>
-
+  
   <el-menu-item
     v-if="!isNotEmpty(item.children) && !item.meta.isHide"
     :index="item.path || item.meta.title"
     @click="goPage(item)"
     :level-item="level + 1"
   >
+  
     <template #title>
       <i class="menu-icon iconfont-sys" v-html="item.meta.icon"></i>
       <span>{{ formatMenuTitle(item.meta.title) }}</span>
@@ -61,6 +62,7 @@
   const emit = defineEmits(['close'])
 
   const goPage = (item: MenuListType) => {
+    
     closeMenu()
     handleMenuJump(item)
   }

@@ -51,7 +51,7 @@
 
         <!-- 菜单布局 -->
         <div v-if="width > 1000">
-          <p class="title" style="margin-top: 30px">{{ $t('setting.menuType.title') }}</p>
+          <p class="title" style="margin-top: 30px">菜单布局</p>
           <div class="menu-type">
             <div class="menu-type-wrap">
               <!-- 左侧菜单 -->
@@ -147,7 +147,7 @@
         </div>
 
         <!-- 菜单风格 -->
-        <p class="title" style="margin-top: 20px">{{ $t('setting.menu.title') }}</p>
+        <p class="title" style="margin-top: 20px">菜单风格</p>
         <div class="menu-theme-wrap">
           <div>
             <div

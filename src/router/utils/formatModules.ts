@@ -4,8 +4,6 @@
  *  @param  result - 格式化后的数组
  */
 export function formatModules(_modules: any, result: any[]) {
-  console.log('%c Line:9 🍪 _modules', 'color:#3f7cff', _modules)
-
   // 遍历_modules对象的属性
   Object.keys(_modules).forEach((key) => {
     /**

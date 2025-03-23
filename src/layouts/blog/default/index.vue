@@ -87,7 +87,8 @@
   const menuType = computed(() => settingStore.menuType)
   // 水印是否显示
   const watermarkVisible = computed(() => settingStore.watermarkVisible)
-  // 是否是双列菜单
+  
+ // 是否是双列菜单
   const isDualMenu = computed(() => settingStore.menuType === MenuTypeEnum.DUAL_MENU)
   // 容器宽度
   const containerWidth = computed(() => settingStore.containerWidth)

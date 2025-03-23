@@ -4,7 +4,7 @@
     <el-sub-menu v-if="hasChildren(item)" :index="item.path || item.meta.title" :level="level">
       <template #title>
         <MenuItemIcon :icon="item.meta.icon" :color="theme?.iconColor" />
-        <span class="menu-name">{{ formatMenuTitle(item.meta.title) }}</span>
+        <span class="menu-name">{{ item.meta.title}} </span>
         <div v-if="item.meta.showBadge" class="badge" style="right: 35px" />
       </template>
       <submenu
@@ -25,7 +25,7 @@
     >
       <MenuItemIcon :icon="item.meta.icon" :color="theme?.iconColor" />
       <template #title>
-        <span class="menu-name">{{ formatMenuTitle(item.meta.title) }}</span>
+        <span class="menu-name">{{ item.meta.title}} </span>
         <div v-if="item.meta.showBadge" class="badge" />
         <div v-if="item.meta.showTextBadge" class="text-badge">
           {{ item.meta.showTextBadge }}
@@ -38,8 +38,8 @@
 <script setup lang="ts">
   import { computed } from 'vue'
   import type { MenuListType } from '@/types/menu'
-  import { formatMenuTitle } from '@/utils/menu'
   import { handleMenuJump } from '@/utils/jump'
+import { debug } from 'console'
 
   // 类型定义
   interface Props {
@@ -71,6 +71,7 @@
 
   // 跳转页面
   const goPage = (item: MenuListType) => {
+    
     closeMenu()
     handleMenuJump(item)
   }

@@ -13,8 +13,8 @@ export default antfu({
         'warn',
         {
           singleline: 'below',
-          multiline: 'below'
-        }
+          multiline: 'below',
+        },
       ],
 
       // 强制每行的最大属性数
@@ -22,8 +22,8 @@ export default antfu({
         'warn',
         {
           singleline: { max: 1 },
-          multiline: { max: 1 }
-        }
+          multiline: { max: 1 },
+        },
       ],
 
       // 强制在多行元素的内容之前和之后进行换行
@@ -31,16 +31,16 @@ export default antfu({
         'warn',
         {
           ignoreWhenEmpty: true, // 忽略空元素
-          allowEmptyLines: true // 允许空行
-        }
+          allowEmptyLines: true, // 允许空行
+        },
       ],
 
       // vue 单行元素内容换行
       'vue/singleline-html-element-content-newline': [
         'warn',
         {
-          ignoreWhenNoAttributes: false
-        }
+          ignoreWhenNoAttributes: false,
+        },
       ],
 
       // 要求或禁止模板中同级标签之间的换行符
@@ -50,17 +50,17 @@ export default antfu({
           {
             blankLine: 'always',
             prev: '*',
-            next: '*'
-          }
-        ]
+            next: '*',
+          },
+        ],
       ],
 
       // 强制要求每个 prop 都有一个记录它的注释
       'vue/require-prop-comment': [
         'warn',
         {
-          type: 'JSDoc'
-        }
+          type: 'JSDoc',
+        },
       ],
 
       // 强制块标签换行
@@ -69,10 +69,10 @@ export default antfu({
         {
           singleline: 'always', // 单行标签后需要换行
           multiline: 'always', // 多行标签后也需要换行
-          maxEmptyLines: 1 // 设置空行的最大数量为 1
-        }
-      ]
-    }
+          maxEmptyLines: 1, // 设置空行的最大数量为 1
+        },
+      ],
+    },
   },
 
   typescript: {
@@ -109,12 +109,12 @@ export default antfu({
           ImportDeclaration: { multiline: true, minProperties: 3 },
           ExportDeclaration: { multiline: true, minProperties: 1 },
           ObjectExpression: 'always',
-          ObjectPattern: { multiline: true }
-        }
+          ObjectPattern: { multiline: true },
+        },
       ],
 
       // 强制使用一致的换行风格
-      curly: 'warn',
+      'curly': 'warn',
 
       // 行注释位置
       // 'line-comment-position': ['warn', { position: 'above' }],
@@ -128,8 +128,8 @@ export default antfu({
           allowBlockStart: true,
           allowObjectStart: true,
           allowArrayStart: true,
-          ignorePattern: 'eslint|jshint|jslint|istanbul|global|exported|jscs|组件|弹窗'
-        }
+          ignorePattern: 'eslint|jshint|jslint|istanbul|global|exported|jscs|组件|弹窗',
+        },
       ],
 
       // 在特定语句之前和之后添加空行
@@ -147,10 +147,10 @@ export default antfu({
             'export',
             'class',
             'try',
-            'return'
+            'return',
           ],
-          next: '*'
-        }
+          next: '*',
+        },
       ],
 
       // 强制所有的对象类型定义使用 type
@@ -161,8 +161,8 @@ export default antfu({
         'warn',
         'always',
         {
-          markers: ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')']
-        }
+          markers: ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')'],
+        },
       ],
 
       // 要求三元表达式始终使用多行格式，除了在 JSX 中忽略此规则
@@ -172,9 +172,9 @@ export default antfu({
       'max-statements-per-line': [
         'warn',
         {
-          max: 1
-        }
-      ]
-    }
-  }
+          max: 1,
+        },
+      ],
+    },
+  },
 })

@@ -3,7 +3,7 @@
     <div class="scroll-btn left" v-show="showLeftArrow" @click="scroll('left')">
       <el-icon><ArrowLeft /></el-icon>
     </div>
-
+1111111111111111111111
     <el-scrollbar
       ref="scrollbarRef"
       wrap-class="scrollbar-wrapper"
@@ -19,7 +19,7 @@
             v-if="!item.meta.isHide"
           >
             <i class="iconfont-sys" v-html="item.meta.icon"></i>
-            <span>{{ formatMenuTitle(item.meta.title) }}</span>
+            <span>{{ item.meta.title }}</span>
           </div>
         </template>
       </div>
@@ -37,7 +37,6 @@
   const route = useRoute()
   import { ref, onMounted } from 'vue'
   import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue'
-  import { formatMenuTitle } from '@/utils/menu'
   import { handleMenuJump } from '@/utils/jump'
 
   const settingStore = useSettingStore()
