@@ -161,21 +161,21 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-  .activeSubMenu > :deep(.el-sub-menu__title) {
-  color: var(--main-color) !important;
-  background-color: var(--el-color-primary-light-9);
-  background-image: var(--el-color-primary-custom-14);
+//   .activeSubMenu > :deep(.el-sub-menu__title) {
+//   color: var(--main-color) !important;
+//   background-color: var(--el-color-primary-light-9);
+//   background-image: var(--el-color-primary-custom-14);
 
-  &::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    content: '';
-    background: var(--main-color);
-  }
-}
+//   &::before {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: 4px;
+//     height: 100%;
+//     content: '';
+//     background: var(--main-color);
+//   }
+// }
 
 // .activeSubMenu > :deep(.el-sub-menu__title):hover {
 //   color: var(--main-color) !important;
