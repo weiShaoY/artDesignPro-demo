@@ -43,7 +43,7 @@ const showCrumbs = computed(() => settingStore.showCrumbs)
 
 const showSettingGuide = computed(() => settingStore.showSettingGuide)
 
-const menuList = computed(() => useMenuStore().getMenuList)
+const menuList = computed(() => useMenuStore().menuList)
 
 const menuType = computed(() => settingStore.menuType)
 

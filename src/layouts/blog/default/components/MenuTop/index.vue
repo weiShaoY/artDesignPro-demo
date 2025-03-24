@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { MenuListType } from '@/types/menu'
 
 import MenuTopSubmenu from './MenuTopSubmenu.vue'
 
@@ -8,7 +7,7 @@ defineProps({
    *   菜单列表
    */
   list: {
-    type: [Array] as PropType<MenuListType[]>,
+    type: [Array] as PropType<BlogType.MenuListType[]>,
     default: () => [],
   },
 

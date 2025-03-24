@@ -99,6 +99,10 @@ declare namespace BlogType {
      */
     children?: AppRouteRecordRaw[]
   }
+
+  /**
+   *  博客模块菜单列表菜单项类型
+   */
   type MenuListType = AppRouteRecordRaw & {
 
     /**

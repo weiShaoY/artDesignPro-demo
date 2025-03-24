@@ -1,30 +1,25 @@
-import type { MenuListType } from '@/types/menu'
-
 import { defineStore } from 'pinia'
 
 export const useMenuStore = defineStore('menuStore', () => {
-  // State
-  const menuList = ref<MenuListType[]>([])
+  /**
+   *  菜单列表
+   */
+  const menuList = ref<BlogType.MenuListType[]>([])
 
+  /**
+   *  菜单宽度
+   */
   const menuWidth = ref<string>('')
 
-  // Getters
-  const getMenuList = computed(() => menuList.value)
-
-  // Actions
-  const setMenuList = (list: MenuListType[]) => {
-    menuList.value = list
-  }
-
-  const setMenuWidth = (width: string) => {
-    menuWidth.value = width
-  }
-
   return {
+    /**
+     *  菜单列表
+     */
     menuList,
+
+    /**
+     *  菜单宽度
+     */
     menuWidth,
-    getMenuList,
-    setMenuList,
-    setMenuWidth,
   }
 })

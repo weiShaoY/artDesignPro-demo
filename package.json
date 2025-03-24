@@ -56,7 +56,6 @@
     "eslint": "^9.14.0",
     "eslint-plugin-format": "^1.0.1",
     "globals": "^16.0.0",
-    "lint-staged": "^15.2.10",
     "prettier": "^3.3.3",
     "rollup-plugin-visualizer": "^5.12.0",
     "sass": "^1.86.0",
@@ -73,27 +72,6 @@
     "vue-demi": "^0.14.9",
     "vue-img-cutter": "^3.0.5",
     "vue-tsc": "~2.2.8"
-
-  },
-  "lint-staged": {
-    "*.{js,ts}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{cjs,json}": [
-      "prettier --write"
-    ],
-    "*.{vue,html}": [
-      "eslint --fix",
-      "prettier --write",
-      "stylelint --fix --allow-empty-input"
-    ],
-    "*.{scss,css}": [
-      "stylelint --fix --allow-empty-input",
-      "prettier --write"
-    ],
-    "*.md": [
-      "prettier --write"
-    ]
   }
+
 }

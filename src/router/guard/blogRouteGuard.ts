@@ -179,7 +179,7 @@ function handleBlogMenuList(router: Router, delay: number = 300): Promise<{ clos
   console.log('%c Line:178 🥓 menuList', 'color:#93c0a4', menuList)
 
   // 设置菜单列表
-  useMenuStore().setMenuList(menuList)
+  useMenuStore().menuList = menuList
 
   menuList.forEach((route: any) => {
     // 递归处理

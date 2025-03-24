@@ -59,7 +59,7 @@ const defaultOpenedsArray = ref([])
  *  计算一级菜单列表
  */
 const firstLevelMenus = computed(() => {
-  return useMenuStore().getMenuList
+  return useMenuStore().menuList
 })
 
 // 打印一级菜单列表
@@ -68,7 +68,7 @@ const firstLevelMenus = computed(() => {
  *  计算当前显示的菜单列表
  */
 const menuList = computed(() => {
-  const list = useMenuStore().getMenuList
+  const list = useMenuStore().menuList
 
   // 如果不是顶部左侧菜单或双列菜单，直接返回完整菜单列表
   if (!isTopLeftMenu.value && !isDualMenu.value) {

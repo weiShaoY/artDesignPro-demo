@@ -7,7 +7,7 @@ import { useMenuStore } from '@/store/modules/menu'
 
 import { ElMessage, ElMessageBox } from 'element-plus'
 
-const menuList = computed(() => useMenuStore().getMenuList)
+const menuList = computed(() => useMenuStore().menuList)
 
 const dialogVisible = ref(false)
 
@@ -31,8 +31,6 @@ const form = reactive({
   authIcon: '',
   authSort: 1,
 })
-
-const iconType = ref(IconTypeEnum.UNICODE)
 
 const labelPosition = ref('menu')
 

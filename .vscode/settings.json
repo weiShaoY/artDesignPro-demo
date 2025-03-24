@@ -1,6 +1,5 @@
 {
-  "volar.inlayHints.eventArgumentInInlineHandlers": true,
-  "i18n-ally.localesPaths": ["src/language", "src/language/locales"],
-  "i18n-ally.sourceLanguage": "zh",
-  "i18n-ally.keystyle": "nested"
+
+  "typescript.tsserver.maxMemory": 32768,
+  "typescript.tsserver.nodePath": "C:\\APP\\Node\\node.exe"
 }
