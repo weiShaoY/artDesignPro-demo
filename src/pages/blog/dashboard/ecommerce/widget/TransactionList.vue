@@ -1,4 +1,4 @@
-<template setup lang="ts">
+<script setup lang="ts">
 const dataList = [
   {
     title: '新订单 #38291',

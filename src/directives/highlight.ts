@@ -1,6 +1,8 @@
-import { App, Directive } from 'vue'
-import hljs from 'highlight.js'
+import type { App, Directive } from 'vue'
+
 import { ElMessage } from 'element-plus'
+
+import hljs from 'highlight.js'
 
 /**
  * 高亮代码
@@ -15,38 +17,48 @@ function highlightCode(block: HTMLElement) {
 // 插入行号
 function insertLineNumbers(block: HTMLElement) {
   const lines = block.innerHTML.split('\n')
+
   const numberedLines = lines
     .map((line, index) => {
       return `<span class="line-number">${index + 1}</span> ${line}`
     })
     .join('\n')
+
   block.innerHTML = numberedLines
 }
+
 // 添加复制按钮：调整 DOM 结构，将代码部分包裹在 .code-wrapper 内
 function addCopyButton(block: HTMLElement) {
   const copyButton = document.createElement('i')
+
   copyButton.className = 'copy-button iconfont-sys'
   copyButton.innerHTML = '&#xe7b2;'
   copyButton.onclick = () => {
     // 过滤掉行号，只复制代码内容
+    // eslint-disable-next-line unicorn/prefer-dom-node-text-content
     const codeContent = block.innerText.replace(/^\d+\s+/gm, '')
+
     navigator.clipboard.writeText(codeContent).then(() => {
       ElMessage.success('复制成功')
     })
   }
 
   const preElement = block.parentElement
+
   if (preElement) {
     let codeWrapper: HTMLElement
+
     // 如果代码块还没有被包裹，则创建包裹容器
     if (!block.parentElement.classList.contains('code-wrapper')) {
       codeWrapper = document.createElement('div')
       codeWrapper.className = 'code-wrapper'
       preElement.replaceChild(codeWrapper, block)
       codeWrapper.appendChild(block)
-    } else {
+    }
+    else {
       codeWrapper = block.parentElement
     }
+
     // 将复制按钮添加到 pre 元素（而非 codeWrapper 内），这样它不会随滚动条滚动
     preElement.appendChild(copyButton)
   }
@@ -67,10 +79,12 @@ const highlightDirective: Directive<HTMLElement> = {
 
       if (blocks.length <= 10) {
         // 如果代码块数量少于等于10，直接处理所有代码块
-        blocks.forEach((block) => processBlock(block))
-      } else {
+        blocks.forEach(block => processBlock(block))
+      }
+      else {
         // 定义每次处理的代码块数
         const batchSize = 10
+
         let currentIndex = 0
 
         const processBatch = () => {
@@ -92,7 +106,7 @@ const highlightDirective: Directive<HTMLElement> = {
         processBatch()
       }
     }, 200)
-  }
+  },
 }
 
 export function setupHighlightDirective(app: App) {

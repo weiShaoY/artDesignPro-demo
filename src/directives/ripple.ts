@@ -1,4 +1,8 @@
-import type { App, Directive, DirectiveBinding } from 'vue'
+import type {
+  App,
+  Directive,
+  DirectiveBinding,
+} from 'vue'
 
 /**
  * 水波纹指令
@@ -11,14 +15,15 @@ import type { App, Directive, DirectiveBinding } from 'vue'
  *   自定义水波纹颜色
  * </el-button>
  */
-export interface RippleOptions {
+export type RippleOptions = {
   color?: string
 }
 
 export const vRipple: Directive = {
   mounted(el: HTMLElement, binding: DirectiveBinding) {
     // 获取指令的配置参数
-    const options: RippleOptions = binding.value || {}
+    const options: RippleOptions = binding.value || {
+    }
 
     // 设置元素为相对定位，并隐藏溢出部分
     el.style.position = 'relative'
@@ -27,17 +32,23 @@ export const vRipple: Directive = {
     // 点击事件处理
     el.addEventListener('mousedown', (e: MouseEvent) => {
       const rect = el.getBoundingClientRect()
+
       const left = e.clientX - rect.left
+
       const top = e.clientY - rect.top
 
       // 创建水波纹元素
       const ripple = document.createElement('div')
+
       const diameter = Math.max(el.clientWidth, el.clientHeight)
+
       const radius = diameter / 2
 
       // 根据直径计算动画时间（直径越大，动画时间越长）
       const baseTime = 600 // 基础动画时间（毫秒）
+
       const scaleFactor = 0.5 // 缩放因子
+
       const animationDuration = baseTime + diameter * scaleFactor
 
       // 设置水波纹的尺寸和位置
@@ -50,9 +61,11 @@ export const vRipple: Directive = {
 
       // 判断是否为有色按钮（Element Plus 按钮类型）
       const buttonTypes = ['primary', 'info', 'warning', 'danger', 'success'].map(
-        (type) => `el-button--${type}`
+        type => `el-button--${type}`,
       )
-      const isColoredButton = buttonTypes.some((type) => el.classList.contains(type))
+
+      const isColoredButton = buttonTypes.some(type => el.classList.contains(type))
+
       const defaultColor = isColoredButton
         ? 'rgba(255, 255, 255, 0.35)' // 有色按钮使用白色水波纹
         : 'var(--el-color-primary-light-7)' // 默认按钮使用主题色水波纹
@@ -77,7 +90,7 @@ export const vRipple: Directive = {
         ripple.remove()
       }, animationDuration + 500) // 增加500ms缓冲时间
     })
-  }
+  },
 }
 
 export function setupRippleDirective(app: App) {

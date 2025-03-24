@@ -6,7 +6,7 @@ import App from './App.vue'
 
 import { registerGlobComp } from './components' // 注册全局组件
 
-import { setupGlobDirectives } from './directives'
+import { setupDirectives } from './directives'
 
 import { setupNProgress } from './plugins'
 
@@ -51,7 +51,9 @@ async function setupApp() {
   initStore(app)
   initRouter(app)
   registerGlobComp(app)
-  setupGlobDirectives(app)
+
+  // 设置指令
+  setupDirectives(app)
 
   for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
