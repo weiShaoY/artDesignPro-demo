@@ -1,14 +1,10 @@
 <script setup lang="ts">
 
-// 切换主题
-import { useTheme } from '@/composables/useTheme'
-
 import { SystemInfo } from '@/config/setting'
 
 import {
   MenuTypeEnum,
   MenuWidth,
-  SystemThemeEnum,
 } from '@/enums/appEnum'
 
 import { HOME_PAGE } from '@/router'
@@ -18,6 +14,8 @@ import { useMenuStore } from '@/store/modules/menu'
 import { useSettingStore } from '@/store/modules/setting'
 
 import { blogMittBus } from '@/utils'
+
+import { themeAnimation } from '@/utils/theme/animation'
 
 import { useFullscreen } from '@vueuse/core'
 
@@ -120,11 +118,6 @@ function openSearchDialog() {
   blogMittBus.emit('openSearchDialog')
 }
 
-function toggleTheme() {
-  const { LIGHT, DARK } = SystemThemeEnum
-
-  useTheme().switchTheme(useSettingStore().systemThemeType === LIGHT ? DARK : LIGHT)
-}
 </script>
 
 <template>
@@ -323,7 +316,7 @@ function toggleTheme() {
         <!-- 切换主题 -->
         <div
           class="btn-box"
-          @click="toggleTheme"
+          @click="themeAnimation"
         >
           <div
             class="btn theme-btn"

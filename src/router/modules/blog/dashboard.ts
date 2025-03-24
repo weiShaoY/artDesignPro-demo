@@ -6,7 +6,7 @@ const dashboardRoute: BlogType.AppRouteRecordRaw = {
   component: BLOG_DEFAULT_LAYOUT,
   meta: {
     title: '仪表盘',
-    icon: '&#xe721;',
+    icon: 'blog-menu-creativity',
     keepAlive: false,
   },
   children: [
@@ -17,6 +17,7 @@ const dashboardRoute: BlogType.AppRouteRecordRaw = {
       meta: {
         title: '工作台',
         keepAlive: true,
+        icon: 'blog-menu-creativity',
       },
     },
     {

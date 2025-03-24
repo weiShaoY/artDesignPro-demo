@@ -1,19 +1,26 @@
-
-
 <!------------------------------------    ------------------------------------------------->
 <script lang="ts" setup>
-  import { blogMittBus } from '@/utils'
+import { blogMittBus } from '@/utils'
 
-  // 简化后的处理函数
-  const handleSingleLaunch = () => {
-    blogMittBus.emit('triggerFireworks')
-  }
+// 简化后的处理函数
+function handleSingleLaunch() {
+  blogMittBus.emit('triggerFireworks')
+}
 </script>
 
 <template>
-<div class="page-content">
-    <h1>菜单-1</h1>
-    <button @click="handleSingleLaunch">打开烟花</button>
+  <div
+    class="page-content"
+  >
+    <h1>
+      菜单-1
+    </h1>
+
+    <button
+      @click="handleSingleLaunch"
+    >
+      打开烟花
+    </button>
   </div>
 </template>
 

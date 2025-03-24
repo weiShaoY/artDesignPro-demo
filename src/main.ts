@@ -40,6 +40,8 @@ import '@styles/dark.scss' // 系统主题
 
 import '@utils/console.ts' // 控制台输出内容
 
+import '@styles/theme-animation.scss' // 主题切换动画
+
 import '@/themes/index'
 
 async function setupApp() {

@@ -20,7 +20,7 @@ import { useSettingStore } from '@/store/modules/setting'
 import { blogMenuJump } from '@/utils/blogMenuJump'
 
 // 导入子菜单组件
-import Submenu from '../Submenu/submenu.vue'
+import Submenu from '../Submenu/index.vue'
 
 // 使用路由和路由实例
 const route = useRoute()

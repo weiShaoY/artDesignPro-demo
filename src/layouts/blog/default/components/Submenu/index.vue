@@ -5,42 +5,6 @@ import { blogMenuJump } from '@/utils/blogMenuJump'
 
 import { computed } from 'vue'
 
-// 类型定义
-type Props = {
-
-  /**
-   *   菜单标题
-   */
-  title?: string
-
-  /**
-   *   菜单列表
-   */
-  list?: MenuListType[]
-
-  /**
-   *   菜单主题
-   */
-  theme?: {
-
-    /**
-     *   菜单图标颜色
-     */
-    iconColor?: string
-  }
-
-  /**
-   *   是否是移动端
-   */
-  isMobile?: boolean
-
-  /**
-   *   菜单层级
-   */
-  level?: number
-}
-
-// Props定义
 const props = withDefaults(defineProps<Props>(), {
   title: '',
   list: () => [],
@@ -55,17 +19,43 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
+// 类型定义
+type Props = {
+
+  /** 菜单标题 */
+  title?: string
+
+  /** 菜单列表 */
+  list?: MenuListType[]
+
+  /** 菜单主题 */
+  theme?: {
+
+    /** 菜单图标颜色 */
+    iconColor?: string
+  }
+
+  /** 是否是移动端 */
+  isMobile?: boolean
+
+  /** 菜单层级 */
+  level?: number
+}
+const route = useRoute()
+
+console.log('%c Line:45 🌮 route', 'color:#93c0a4', route)
+
 // 计算属性
 const filteredMenuItems = computed(() => filterRoutes(props.list))
+
+// 关闭菜单
+const closeMenu = () => emit('close')
 
 // 跳转页面
 function goPage(item: MenuListType) {
   closeMenu()
   blogMenuJump(item)
 }
-
-// 关闭菜单
-const closeMenu = () => emit('close')
 
 // 判断是否有子菜单
 function hasChildren(item: MenuListType): boolean {
@@ -81,38 +71,13 @@ function filterRoutes(items: MenuListType[]): MenuListType[] {
       children: item.children ? filterRoutes(item.children) : undefined,
     }))
 }
+
 </script>
 
 <script lang="ts">
-/**
- *  抽取图标组件
- */
-const MenuItemIcon = defineComponent({
-  name: 'MenuItemIcon',
-  props: {
-    /**
-     *   菜单图标
-     */
-    icon: String,
-
-    /**
-     *   菜单图标颜色
-     */
-    color: String,
-  },
-  setup(props) {
-    return () =>
-      h('i', {
-        class: 'menu-icon iconfont-sys',
-        style: props.color
-          ? {
-              color: props.color,
-            }
-          : undefined,
-        innerHTML: props.icon,
-      })
-  },
-})
+export default {
+  name: 'Submenu', // 给组件命名
+} // 只需在这再加个name即可
 </script>
 
 <template>
@@ -125,13 +90,16 @@ const MenuItemIcon = defineComponent({
       v-if="hasChildren(item)"
       :index="item.path || item.meta.title"
       :level="level"
+      :class="{ activeSubMenu: route.path.includes(item.path) }"
     >
       <template
         #title
       >
-        <MenuItemIcon
+        <SvgIcon
+          v-if="item.meta.icon"
           :icon="item.meta.icon"
-          :color="theme?.iconColor"
+          :size="26"
+          class="mr-2"
         />
 
         <span
@@ -145,13 +113,14 @@ const MenuItemIcon = defineComponent({
         />
       </template>
 
-      <submenu
+      <Submenu
         :list="item.children"
         :is-mobile="isMobile"
         :level="level + 1"
         :theme="theme"
         @close="closeMenu"
       />
+
     </el-sub-menu>
 
     <!-- 普通菜单项 -->
@@ -161,9 +130,11 @@ const MenuItemIcon = defineComponent({
       :level-item="level + 1"
       @click="goPage(item)"
     >
-      <MenuItemIcon
+      <SvgIcon
+        v-if="item.meta.icon"
         :icon="item.meta.icon"
-        :color="theme?.iconColor"
+        :size="26"
+        class="mr-2"
       />
 
       <template
@@ -188,3 +159,27 @@ const MenuItemIcon = defineComponent({
     </el-menu-item>
   </template>
 </template>
+
+<style lang="scss" scoped>
+  .activeSubMenu > :deep(.el-sub-menu__title) {
+  color: var(--main-color) !important;
+  background-color: var(--el-color-primary-light-9);
+  background-image: var(--el-color-primary-custom-14);
+
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    content: '';
+    background: var(--main-color);
+  }
+}
+
+// .activeSubMenu > :deep(.el-sub-menu__title):hover {
+//   color: var(--main-color) !important;
+//   background: var(--el-color-primary-light-9) !important;
+//   background-image: var(--el-color-primary-custom-14) !important;
+// }
+</style>
