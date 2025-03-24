@@ -5,7 +5,7 @@ import type { LocationQueryRaw } from 'vue-router'
 
 import type { MenuItemType } from '../MenuRight/index.vue'
 
-import { useWorkTabStore } from '@/store/modules/workTab1'
+import { useWorkTabStore } from '@/store/modules/workTab'
 
 import {
   ArrowDown,
