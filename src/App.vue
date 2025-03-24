@@ -3,7 +3,6 @@ import zh from 'element-plus/es/locale/lang/zh-cn'
 
 import { initState, saveUserData } from './utils/storage'
 
-
 const elSize = computed(() => (document.body.clientWidth >= 500 ? 'large' : 'default'))
 
 onBeforeMount(() => {
@@ -18,7 +17,7 @@ onMounted(() => {
 
 // 提升暗黑主题下页面刷新视觉体验
 function setBodyClass(addClass: boolean) {
-  let el = document.getElementsByTagName('body')[0]
+  const el = document.getElementsByTagName('body')[0]
 
   if (addClass) {
     el.setAttribute('class', 'theme-change')

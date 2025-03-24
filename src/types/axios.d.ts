@@ -1,6 +1,6 @@
 export type ErrorMessageMode = 'none' | 'modal' | 'message' | undefined
 
-export interface RequestOptions {
+export type RequestOptions = {
   joinParamsToUrl?: boolean
   formatDate?: boolean
   isTransformResponse?: boolean
@@ -14,7 +14,7 @@ export interface RequestOptions {
 }
 
 // 基础接口返回的数据结构
-export interface BaseResult<T = any> {
+export type BaseResult<T = any> = {
   code: number // 状态码
   message: string // 消息
   data: T // 数据
@@ -22,10 +22,10 @@ export interface BaseResult<T = any> {
 }
 
 // 分页数据结构，继承基础结果结构
-export interface PaginationResult<T> extends BaseResult {
+export type PaginationResult<T> = {
   currentPage: number // 当前页
   pageSize: number // 每页条数
   lastPage: number // 总页数
   total: number // 总条数
   data: T
-}
+} & BaseResult

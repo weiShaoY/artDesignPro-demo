@@ -67,12 +67,13 @@ function assignIdsAndSortRoutes(routeList: BlogType.MenuListType[], parentId: nu
     }
 
     // 如果当前路由有权限列表，为每个权限项添加唯一ID
-    if (route.meta?.authList) {
-      route.meta.authList = route.meta.authList.map((auth: any, authIndex: number) => ({
-        ...auth,
-        id: id * 100 + (authIndex + 1),
-      }))
-    }
+    // if (route.meta?.authList) {
+    //   console.log("%c Line:71 🍋 route.meta", "color:#33a5ff", route.meta);
+    //   route.meta.authList = route.meta.authList.map((auth: any, authIndex: number) => ({
+    //     ...auth,
+    //     id: id * 100 + (authIndex + 1),
+    //   }))
+    // }
 
     // 返回处理后的路由对象
     return {
@@ -174,6 +175,8 @@ function handleBlogMenuList(router: Router, delay: number = 300): Promise<{ clos
   })
 
   const menuList = assignIdsAndSortRoutes(blogRouteList)
+
+  console.log('%c Line:178 🥓 menuList', 'color:#93c0a4', menuList)
 
   // 设置菜单列表
   useMenuStore().setMenuList(menuList)

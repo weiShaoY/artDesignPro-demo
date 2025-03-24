@@ -1,7 +1,14 @@
 <!-- 响应式输入框 -->
 <script setup lang="ts">
 defineProps({
+  /**
+   *  @description: 标签
+   */
   label: String,
+
+  /**
+   *  @description: prop
+   */
   prop: String,
 })
 
