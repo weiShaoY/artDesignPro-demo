@@ -17,7 +17,7 @@ import { useMenuStore } from '@/store/modules/menu'
 
 import { useSettingStore } from '@/store/modules/setting'
 
-import blogMittBus from '@/utils/blogMittBus'
+import { blogMittBus } from '@/utils'
 
 import { useFullscreen } from '@vueuse/core'
 

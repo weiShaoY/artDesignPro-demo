@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Handler } from 'mitt'
 
-import blogMittBus from '@/utils/blogMittBus'
+import { blogMittBus } from '@/utils'
 
 import bp from '@imgs/ceremony/hb.png'
 

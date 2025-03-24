@@ -18,7 +18,7 @@ import {
 
 import { useSettingStore } from '@/store/modules/setting'
 
-import blogMittBus from '@/utils/blogMittBus'
+import { blogMittBus } from '@/utils'
 
 const props = defineProps([
   /**

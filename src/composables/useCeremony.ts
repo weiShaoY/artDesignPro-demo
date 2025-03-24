@@ -2,7 +2,7 @@ import { festivalList } from '@/config/ceremony'
 
 import { useSettingStore } from '@/store/modules/setting'
 
-import blogMittBus from '@/utils/blogMittBus'
+import { blogMittBus } from '@/utils'
 
 import {
   useDateFormat,

@@ -6,6 +6,5 @@
  */
 import mitt from 'mitt'
 
-const blogMittBus = mitt()
+export const blogMittBus = mitt()
 
-export default blogMittBus

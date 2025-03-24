@@ -2,7 +2,7 @@
 
 <!------------------------------------    ------------------------------------------------->
 <script lang="ts" setup>
-  import blogMittBus from '@/utils/blogMittBus'
+  import { blogMittBus } from '@/utils'
 
   // 简化后的处理函数
   const handleSingleLaunch = () => {

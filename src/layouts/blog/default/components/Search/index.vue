@@ -89,7 +89,7 @@
   import { useSettingStore } from '@/store/modules/setting'
   import { MenuListType } from '@/types/menu'
   import { Search } from '@element-plus/icons-vue'
-  import blogMittBus from '@/utils/blogMittBus'
+  import { blogMittBus } from '@/utils'
   import { useMenuStore } from '@/store/modules/menu'
 
   const router = useRouter()

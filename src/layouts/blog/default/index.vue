@@ -5,9 +5,9 @@ import { useMenuStore } from '@/store/modules/menu'
 
 import { useSettingStore } from '@/store/modules/setting'
 
-import { useWorkTabStore } from '@/store/modules/workTab'
+import { useWorkTabStore } from '@/store/modules/workTab1'
 
-import blogMittBus from '@/utils/blogMittBus'
+import { blogMittBus } from '@/utils'
 
 import {
   computed,
