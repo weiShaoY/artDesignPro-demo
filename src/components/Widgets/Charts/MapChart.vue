@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { SystemThemeEnum } from '@/enums/appEnum'
+import chinaMapJson from '@/assets/jsons/chinaMap.json'
 
-import chinaMapJson from '@/mock/json/chinaMap.json'
+import { SystemThemeEnum } from '@/enums/appEnum'
 
 import { useSettingStore } from '@/store/modules/setting'
 
