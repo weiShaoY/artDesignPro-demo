@@ -41,8 +41,6 @@ const menuOpen = computed(() => settingStore.menuOpen)
 
 const showCrumbs = computed(() => settingStore.showCrumbs)
 
-const systemThemeColor = computed(() => settingStore.systemThemeColor)
-
 const showSettingGuide = computed(() => settingStore.showSettingGuide)
 
 const menuList = computed(() => useMenuStore().getMenuList)
@@ -276,43 +274,20 @@ function openSearchDialog() {
         </div>
 
         <!-- 设置 -->
+
         <div
           class="btn-box"
           @click="openSetting"
         >
-          <el-popover
-            :visible="showSettingGuide"
-            placement="bottom-start"
-            :width="190"
-            :offset="0"
+          <div
+            class="btn theme-btn"
           >
-            <template
-              #reference
-            >
-              <div
-                class="btn setting-btn"
-              >
-                <i
-                  class="iconfont-sys"
-                >&#xe6d0;</i>
-              </div>
-            </template>
-
-            <template
-              #default
-            >
-              <p>
-                点击这里查看<span
-                  :style="{ color: systemThemeColor }"
-                > 主题风格 </span>
-                、
-                <span
-                  :style="{ color: systemThemeColor }"
-                > 开启顶栏菜单 </span>等更多配置
-              </p>
-            </template>
-          </el-popover>
+            <i
+              class="iconfont-sys"
+            >&#xe6d0;</i>
+          </div>
         </div>
+
         <!-- 切换主题 -->
         <div
           class="btn-box"

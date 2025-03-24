@@ -38,7 +38,7 @@ import '@styles/el-dark.scss' // Element 自定义主题（暗色）
 
 import '@styles/dark.scss' // 系统主题
 
-import '@utils/console.ts' // 控制台输出内容
+import '@utils/console.ts' // 控制台欢迎信息
 
 import '@styles/theme-animation.scss' // 主题切换动画
 

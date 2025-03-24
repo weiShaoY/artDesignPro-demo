@@ -1,9 +1,11 @@
+import type { MenuListType } from '@/types/menu'
+
 import { defineStore } from 'pinia'
-import { MenuListType } from '@/types/menu'
 
 export const useMenuStore = defineStore('menuStore', () => {
   // State
   const menuList = ref<MenuListType[]>([])
+
   const menuWidth = ref<string>('')
 
   // Getters
@@ -23,6 +25,6 @@ export const useMenuStore = defineStore('menuStore', () => {
     menuWidth,
     getMenuList,
     setMenuList,
-    setMenuWidth
+    setMenuWidth,
   }
 })
