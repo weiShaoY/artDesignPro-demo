@@ -10,7 +10,7 @@
     >
       <el-input
         v-model.trim="searchVal"
-        :placeholder="$t('search.placeholder')"
+        placeholder="搜索页面"
         @input="search"
         @blur="searchBlur"
         ref="searchInput"
@@ -37,7 +37,7 @@
               highlighted: isHighlighted(pIndex, cIndex)
             }"
           >
-            {{ formatMenuTitle(cItem.meta.title) }}
+            {{ cItem.meta.title }}
             <i class="selected-icon iconfont-sys" v-show="isHighlighted(pIndex, cIndex)"
               >&#xe6e6;</i
             >
@@ -50,7 +50,7 @@
         class="history-box"
         v-show="!searchVal && searchResult.length === 0 && historyResult.length > 0"
       >
-        <p class="title">{{ $t('search.historyTitle') }}</p>
+        <p class="title">搜索历史</p>
         <div class="history-result">
           <div
             class="box"
@@ -62,7 +62,7 @@
             @click="searchGoPage(item)"
             @mouseenter="historyHIndex = index"
           >
-            {{ formatMenuTitle(item.meta.title) }}
+            {{ item.meta.title}}
             <i class="selected-icon iconfont-sys" @click.stop="deleteHistory(index)">&#xe83a;</i>
           </div>
         </div>
@@ -73,11 +73,11 @@
           <div>
             <i class="iconfont-sys">&#xe864;</i>
             <i class="iconfont-sys">&#xe867;</i>
-            <span>{{ $t('search.switchKeydown') }}</span>
+            <span>切换</span>
           </div>
           <div>
             <i class="iconfont-sys">&#xe6e6;</i>
-            <span>{{ $t('search.selectKeydown') }}</span>
+            <span>选择</span>
           </div>
         </div>
       </template>
@@ -91,7 +91,6 @@
   import { Search } from '@element-plus/icons-vue'
   import blogMittBus from '@/utils/blogMittBus'
   import { useMenuStore } from '@/store/modules/menu'
-  import { formatMenuTitle } from '@/utils/menu'
 
   const router = useRouter()
 
@@ -153,7 +152,7 @@
       if (item.meta.isHide) return null
 
       // 将 item.meta.title 转换为小写进行比较
-      const lowerItemTitle = formatMenuTitle(item.meta.title).toLowerCase()
+      const lowerItemTitle =item.meta.title.toLowerCase()
       // 查找子项并过滤符合条件的子项
       const children = item.children ? fuzzyQueryList(item.children, val) : []
 

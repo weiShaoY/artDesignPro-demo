@@ -10,7 +10,7 @@
         :style="{ color: theme?.iconColor }"
         v-html="item.meta.icon"
       ></i>
-      <span>{{ formatMenuTitle(item.meta.title) }}</span>
+      <span>{{ item.meta.title }}</span>
     </template>
     <!-- 递归菜单 -->
     <MenuTopSubmenu
@@ -31,7 +31,7 @@
   >
     <template #title>
       <i class="menu-icon iconfont-sys" v-html="item.meta.icon"></i>
-      <span>{{ formatMenuTitle(item.meta.title) }}</span>
+      <span>{{ item.meta.title }}</span>
       <div class="badge" v-if="item.meta.showBadge"></div>
     </template>
   </el-menu-item>
@@ -40,7 +40,6 @@
 <script lang="ts" setup>
   import { MenuListType } from '@/types/menu'
   import { handleMenuJump } from '@/utils/jump'
-  import { formatMenuTitle } from '@/utils/menu'
 
   defineProps({
     item: {

@@ -8,7 +8,7 @@
       <template #default>
         <el-table-column label="菜单名称">
           <template #default="scope">
-            {{ formatMenuTitle(scope.row.meta?.title) }}
+            {{ scope.row.meta?.title }}
           </template>
         </el-table-column>
         <el-table-column prop="path" label="路由" />
@@ -173,7 +173,6 @@
   import type { FormInstance, FormRules } from 'element-plus'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import { IconTypeEnum } from '@/enums/appEnum'
-  import { formatMenuTitle } from '@/utils/menu'
 
   const menuList = computed(() => useMenuStore().getMenuList)
 
@@ -286,7 +285,7 @@
         if (type === 'menu') {
           // 菜单数据回显
           // console.log(row.meta)
-          form.name = formatMenuTitle(row.meta.title)
+          form.name = row.meta.title
           form.path = row.path
           form.label = row.name
           form.icon = row.meta.icon

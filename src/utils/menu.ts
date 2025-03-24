@@ -1,6 +1,5 @@
 import type { MenuListType } from '@/types/menu'
 
-import { $t } from '@/language'
 
 // 创建递归函数处理嵌套路由
 /**
@@ -47,11 +46,3 @@ export function getIframeRoutes() {
   return JSON.parse(sessionStorage.getItem('iframeRoutes') || '[]')
 }
 
-/**
- * 格式化菜单标题
- * @param title 菜单标题，可以是 i18n 的 key，也可以是字符串，比如：'用户列表'
- * @returns 格式化后的菜单标题
- */
-export function formatMenuTitle(title: string) {
-  return title.startsWith('menus.') ? $t(title) : title
-}

@@ -1,7 +1,8 @@
-/// <reference types="vite/client" />
+// / <reference types="vite/client" />
 
 declare module '*.vue' {
-  import { DefineComponent } from 'vue'
+  import type { DefineComponent } from 'vue'
+
   const component: DefineComponent<object, object, any>
   export default component
 }
@@ -18,13 +19,13 @@ declare module 'qrcode.vue' {
   export type Level = 'L' | 'M' | 'Q' | 'H'
   export type RenderAs = 'canvas' | 'svg'
   export type GradientType = 'linear' | 'radial'
-  export interface ImageSettings {
+  export type ImageSettings = {
     src: string
     height: number
     width: number
     excavate: boolean
   }
-  export interface QRCodeProps {
+  export type QRCodeProps = {
     value: string
     size?: number
     level?: Level
@@ -39,13 +40,4 @@ declare module 'qrcode.vue' {
 // 环境变量提示
 // interface ImportMetaEnv {
 //   VITE_BASE_API_URL: string
-// }
-
-// 导入 vue-i18n 的类型定义
-// import 'vue-i18n';
-
-// declare module 'vue' {
-//   interface ComponentCustomProperties {
-//     $t: typeof import('vue-i18n').t;
-//   }
 // }

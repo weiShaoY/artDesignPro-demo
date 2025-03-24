@@ -2,7 +2,6 @@ import type { Router } from 'vue-router'
 
 import { SystemInfo } from '@/config/setting'
 
-import { formatMenuTitle } from '@/utils/menu'
 
 /**
  * 创建文档标题守卫
@@ -15,7 +14,7 @@ export function createDocumentTitleGuard(router: Router) {
 
     if (title) {
       setTimeout(() => {
-        document.title = `${formatMenuTitle(String(title))} - ${SystemInfo.name}`
+        document.title = `${title} - ${SystemInfo.name}`
       }, 150)
     }
   })

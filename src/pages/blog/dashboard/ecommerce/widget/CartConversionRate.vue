@@ -5,7 +5,7 @@
     label="购物车转化率"
     :percentage="1.2"
     :height="13.5"
-    :chartData="[120, 132, 101, 134, 90, 230, 210]"
-    :showAreaColor="true"
+    :chart-data="[120, 132, 101, 134, 90, 230, 210]"
+    :show-area-color="true"
   />
 </template>

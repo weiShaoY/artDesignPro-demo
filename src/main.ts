@@ -8,8 +8,6 @@ import { registerGlobComp } from './components' // 注册全局组件
 
 import { setupGlobDirectives } from './directives'
 
-import language from './language'
-
 import { setupNProgress } from './plugins'
 
 import { initRouter } from './router' // Router
@@ -54,8 +52,6 @@ async function setupApp() {
   initRouter(app)
   registerGlobComp(app)
   setupGlobDirectives(app)
-
-  app.use(language)
 
   for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
