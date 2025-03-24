@@ -2,12 +2,10 @@ import type { MenuListType } from '@/types/menu'
 
 import { router } from '@/router'
 
-// 打开外部链接
-
-  /**
-   *  打开外部链接
-   */
- function openExternalLink(link: string) {
+/**
+ *  打开外部链接
+ */
+function openExternalLink(link: string) {
   window.open(link, '_blank')
 }
 

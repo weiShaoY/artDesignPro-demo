@@ -5,7 +5,7 @@ import { useMenuStore } from '@/store/modules/menu'
 
 import { useSettingStore } from '@/store/modules/setting'
 
-import { useWorkTabStore } from '@/store/modules/ccc'
+import { useWorkTabStore } from '@/store/modules/workTab'
 
 import { blogMittBus } from '@/utils'
 

@@ -1,6 +1,6 @@
 import { useSettingStore } from '@/store/modules/setting'
 
-import { useWorkTabStore } from '@/store/modules/workTab1'
+import { useWorkTabStore } from '@/store/modules/workTab'
 
 import { ElMessage } from 'element-plus'
 

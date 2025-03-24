@@ -1,33 +1,9 @@
-<template>
-  <div class="comment-module">
-    <form @submit.prevent="addComment">
-      <div>
-        <input v-model="newComment.author" placeholder="你的名称" required />
-        <textarea v-model="newComment.content" placeholder="简单说两句..." required></textarea>
-        <button class="btn" type="submit">发布</button>
-      </div>
-    </form>
-
-    <ul>
-      <div class="comment-header">评论 {{ commentList.length }}</div>
-      <CommentItem
-        class="comment-item"
-        v-for="comment in commentList.slice().reverse()"
-        :key="comment.id"
-        :comment="comment"
-        :show-reply-form="showReplyForm"
-        @toggle-reply="toggleReply"
-        @add-reply="addReply"
-      />
-    </ul>
-  </div>
-</template>
-
 <script setup lang="ts">
-  import { ref } from 'vue'
-  import CommentItem from './CommentItem.vue'
+import { ref } from 'vue'
 
-   interface Comment {
+import CommentItem from './CommentItem.vue'
+
+type Comment = {
   id: number
   author: string
   content: string
@@ -35,7 +11,7 @@
   replies: Comment[]
 }
 
- const commentList = ref<Comment[]>([
+const commentList = ref<Comment[]>([
   {
     id: 1,
     author: '白夜',
@@ -53,11 +29,11 @@
             author: '光芒',
             content: '希望优化能跟上，不然这么好的画面如果卡顿就可惜了。',
             timestamp: '2024-09-04 09:30',
-            replies: []
-          }
-        ]
-      }
-    ]
+            replies: [],
+          },
+        ],
+      },
+    ],
   },
   {
     id: 2,
@@ -76,11 +52,11 @@
             author: '流光',
             content: '我是打算升级配置，等这款游戏就是了。',
             timestamp: '2024-09-04 10:40',
-            replies: []
-          }
-        ]
-      }
-    ]
+            replies: [],
+          },
+        ],
+      },
+    ],
   },
   {
     id: 3,
@@ -99,137 +75,191 @@
             author: '梦境',
             content: '希望发售后能优化一下安装包体积。',
             timestamp: '2024-09-04 11:30',
-            replies: []
-          }
-        ]
-      }
-    ]
-  }
+            replies: [],
+          },
+        ],
+      },
+    ],
+  },
 ])
 
+const newComment = ref<Partial<Comment>>({
+  author: '',
+  content: '',
+})
 
-  const newComment = ref<Partial<Comment>>({
-    author: '',
-    content: ''
-  })
+const showReplyForm = ref<number | null>(null)
 
-  const showReplyForm = ref<number | null>(null)
+function addComment() {
+  if (newComment.value.author && newComment.value.content) {
+    commentList.value.push({
+      id: Date.now(),
+      author: newComment.value.author,
+      content: newComment.value.content,
+      timestamp: new Date().toISOString(),
+      replies: [],
+    })
+    newComment.value.author = ''
+    newComment.value.content = ''
+  }
+  else {
+    alert('请填写完整的评论信息')
+  }
+}
 
-  const addComment = () => {
-    if (newComment.value.author && newComment.value.content) {
-      commentList.value.push({
-        id: Date.now(),
-        author: newComment.value.author,
-        content: newComment.value.content,
-        timestamp: new Date().toISOString(),
-        replies: []
-      })
-      newComment.value.author = ''
-      newComment.value.content = ''
-    } else {
-      alert('请填写完整的评论信息')
+function addReply(commentId: number, replyAuthor: string, replyContent: string) {
+  const comment = findComment(commentList.value, commentId)
+
+  if (comment && replyAuthor && replyContent) {
+    comment.replies.push({
+      id: Date.now(),
+      author: replyAuthor,
+      content: replyContent,
+      timestamp: new Date().toISOString(),
+      replies: [],
+    })
+    showReplyForm.value = null
+  }
+  else {
+    alert('请填写完整的回复信息')
+  }
+}
+
+function toggleReply(commentId: number) {
+  showReplyForm.value = showReplyForm.value === commentId ? null : commentId
+}
+
+function findComment(commentList: Comment[], commentId: number): Comment | undefined {
+  for (const comment of commentList) {
+    if (comment.id === commentId) {
+      return comment
+    }
+
+    const found = findComment(comment.replies, commentId)
+
+    if (found) {
+      return found
     }
   }
 
-  const addReply = (commentId: number, replyAuthor: string, replyContent: string) => {
-    const comment = findComment(commentList.value, commentId)
-    if (comment && replyAuthor && replyContent) {
-      comment.replies.push({
-        id: Date.now(),
-        author: replyAuthor,
-        content: replyContent,
-        timestamp: new Date().toISOString(),
-        replies: []
-      })
-      showReplyForm.value = null
-    } else {
-      alert('请填写完整的回复信息')
-    }
-  }
-
-  const toggleReply = (commentId: number) => {
-    showReplyForm.value = showReplyForm.value === commentId ? null : commentId
-  }
-
-  const findComment = (commentList: Comment[], commentId: number): Comment | undefined => {
-    for (const comment of commentList) {
-      if (comment.id === commentId) {
-        return comment
-      }
-      const found = findComment(comment.replies, commentId)
-      if (found) {
-        return found
-      }
-    }
-    return undefined
-  }
+  return undefined
+}
 </script>
+
+<template>
+  <div
+    class="comment-module"
+  >
+    <form
+      @submit.prevent="addComment"
+    >
+      <div>
+        <input
+          v-model="newComment.author"
+          placeholder="你的名称"
+          required
+        >
+
+        <textarea
+          v-model="newComment.content"
+          placeholder="简单说两句..."
+          required
+        />
+
+        <button
+          class="btn"
+          type="submit"
+        >
+          发布
+        </button>
+      </div>
+    </form>
+
+    <ul>
+      <div
+        class="comment-header"
+      >
+        评论 {{ commentList.length }}
+      </div>
+
+      <CommentItem
+        v-for="comment in commentList.slice().reverse()"
+        :key="comment.id"
+        class="comment-item"
+        :comment="comment"
+        :show-reply-form="showReplyForm"
+        @toggle-reply="toggleReply"
+        @add-reply="addReply"
+      />
+    </ul>
+  </div>
+</template>
 
 <style scoped lang="scss">
   .comment-module {
-    .comment-header {
-      padding-bottom: 20px;
-      font-size: 18px;
-      font-weight: 500;
-      color: var(--art-gray-900);
-    }
+  .comment-header {
+    padding-bottom: 20px;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--art-gray-900);
+  }
 
-    .comment-item {
-      padding-bottom: 10px;
-      margin-bottom: 20px;
-      border-bottom: 1px solid var(--art-border-dashed-color);
-    }
+  .comment-item {
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--art-border-dashed-color);
+  }
 
-    form {
-      margin-bottom: 40px !important;
-    }
+  form {
+    margin-bottom: 40px !important;
+  }
 
-    :deep(form) {
-      position: relative;
-      box-sizing: border-box;
-      width: 100%;
-      padding-bottom: 50px;
-      margin: auto;
+  :deep(form) {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    padding-bottom: 50px;
+    margin: auto;
 
-      > div {
-        input,
-        textarea {
-          box-sizing: border-box;
-          display: block;
-          width: 100%;
-          margin-top: 10px;
-          border: 1px solid var(--art-border-dashed-color);
-          outline: none;
-        }
+    > div {
+      input,
+      textarea {
+        box-sizing: border-box;
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+        border: 1px solid var(--art-border-dashed-color);
+        outline: none;
+      }
 
-        input {
-          height: 36px;
-          padding-left: 10px;
-        }
+      input {
+        height: 36px;
+        padding-left: 10px;
+      }
 
-        textarea {
-          height: 100px;
-          padding: 10px;
-        }
+      textarea {
+        height: 100px;
+        padding: 10px;
+      }
 
-        .btn {
-          position: absolute;
-          right: 0;
-          bottom: 0;
-          display: inline-block;
-          width: 60px;
-          height: 32px;
-          margin-top: 15px;
-          font-size: 14px;
-          line-height: 30px;
-          color: #fff;
-          text-align: center;
-          cursor: pointer;
-          background-color: var(--main-color);
-          border: 0;
-          border-radius: 4px;
-        }
+      .btn {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        display: inline-block;
+        width: 60px;
+        height: 32px;
+        margin-top: 15px;
+        font-size: 14px;
+        line-height: 30px;
+        color: #fff;
+        text-align: center;
+        cursor: pointer;
+        background-color: var(--main-color);
+        border: 0;
+        border-radius: 4px;
       }
     }
   }
+}
 </style>

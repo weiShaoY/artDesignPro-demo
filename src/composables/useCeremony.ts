@@ -16,6 +16,18 @@ import { computed } from 'vue'
 export function useCeremony() {
   const settingStore = useSettingStore()
 
+  // 判断当前日期是否是节日
+  const currentFestivalData = computed(() => {
+    const currentDate = useDateFormat(new Date(), 'YYYY-MM-DD').value
+
+    return festivalList.find(item => item.date === currentDate)
+  })
+
+  // 设置节日日期
+  const setFestivalDate = () => {
+    settingStore.setFestivalDate(currentFestivalData.value?.date || '')
+  }
+
   // 节日礼花效果是否已加载
   const holidayFireworksLoaded = computed(() => settingStore.holidayFireworksLoaded)
 
@@ -24,13 +36,6 @@ export function useCeremony() {
 
   // 烟花间隔引用，用于清理
   let fireworksInterval: { pause: () => void } | null = null
-
-  // 判断当前日期是否是节日
-  const currentFestivalData = computed(() => {
-    const currentDate = useDateFormat(new Date(), 'YYYY-MM-DD').value
-
-    return festivalList.find(item => item.date === currentDate)
-  })
 
   // 节日庆祝相关配置
   const FESTIVAL_CONFIG = {
@@ -87,11 +92,6 @@ export function useCeremony() {
       settingStore.setShowFestivalText(false)
       setFestivalDate()
     }
-  }
-
-  // 设置节日日期
-  const setFestivalDate = () => {
-    settingStore.setFestivalDate(currentFestivalData.value?.date || '')
   }
 
   return {
