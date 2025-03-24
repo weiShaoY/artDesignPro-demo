@@ -15,7 +15,7 @@
           <div
             class="item"
             :class="{ active: isActive(item) }"
-            @click="handleMenuJump(item, true)"
+            @click="blogMenuJump(item, true)"
             v-if="!item.meta.isHide"
           >
             <i class="iconfont-sys" v-html="item.meta.icon"></i>
@@ -37,7 +37,7 @@
   const route = useRoute()
   import { ref, onMounted } from 'vue'
   import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue'
-  import { handleMenuJump } from '@/utils/jump'
+  import { blogMenuJump } from '@/utils/blogMenuJump'
 
   const settingStore = useSettingStore()
   const menuopenwidth = computed(() => settingStore.getMenuOpenWidth)

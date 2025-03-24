@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { MenuListType } from '@/types/menu'
 
-import { handleMenuJump } from '@/utils/jump'
+import { blogMenuJump } from '@/utils/blogMenuJump'
 
 import { computed } from 'vue'
 
@@ -61,7 +61,7 @@ const filteredMenuItems = computed(() => filterRoutes(props.list))
 // 跳转页面
 function goPage(item: MenuListType) {
   closeMenu()
-  handleMenuJump(item)
+  blogMenuJump(item)
 }
 
 // 关闭菜单

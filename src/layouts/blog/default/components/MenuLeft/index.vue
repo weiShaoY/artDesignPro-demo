@@ -17,7 +17,7 @@ import { useMenuStore } from '@/store/modules/menu'
 import { useSettingStore } from '@/store/modules/setting'
 
 // 导入菜单跳转处理函数
-import { handleMenuJump } from '@/utils/jump'
+import { blogMenuJump } from '@/utils/blogMenuJump'
 
 // 导入子菜单组件
 import Submenu from '../Submenu/submenu.vue'
@@ -235,7 +235,7 @@ function setDualMenuMode() {
           <li
             v-for="menu in firstLevelMenus"
             :key="menu.path"
-            @click="handleMenuJump(menu, true)"
+            @click="blogMenuJump(menu, true)"
           >
             <el-tooltip
               class="box-item"

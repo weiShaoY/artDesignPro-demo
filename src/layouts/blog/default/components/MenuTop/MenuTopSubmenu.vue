@@ -39,7 +39,7 @@
 
 <script lang="ts" setup>
   import { MenuListType } from '@/types/menu'
-  import { handleMenuJump } from '@/utils/jump'
+  import { blogMenuJump } from '@/utils/blogMenuJump'
 
   defineProps({
     item: {
@@ -61,7 +61,7 @@
 
   const goPage = (item: MenuListType) => {
     closeMenu()
-    handleMenuJump(item)
+    blogMenuJump(item)
   }
 
   const closeMenu = () => {

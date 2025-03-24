@@ -1,4 +1,4 @@
-export interface ArticleType {
+export type ArticleType = {
   id?: number
   blog_class: string
   title: string
@@ -10,7 +10,7 @@ export interface ArticleType {
   type_name?: string
 }
 
-export interface ArticleCategoryType {
+export type ArticleCategoryType = {
   id: number
   name: string
   icon: string

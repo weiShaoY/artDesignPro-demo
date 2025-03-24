@@ -3,16 +3,20 @@ import type { MenuListType } from '@/types/menu'
 import { router } from '@/router'
 
 // 打开外部链接
-export function openExternalLink(link: string) {
+
+  /**
+   *  打开外部链接
+   */
+ function openExternalLink(link: string) {
   window.open(link, '_blank')
 }
 
 /**
- * 菜单跳转
+ * 博客模块菜单跳转
  * @param item 菜单项
  * @param jumpToFirst 是否跳转到第一个子菜单
  */
-export function handleMenuJump(item: MenuListType, jumpToFirst: boolean = false) {
+export function blogMenuJump(item: MenuListType, jumpToFirst: boolean = false) {
   // 处理外部链接
   const { link, isIframe } = item.meta
 
