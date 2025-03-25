@@ -95,8 +95,8 @@ function filterRouteList(items: BlogType.MenuListType[]): BlogType.MenuListType[
 
 <script lang="ts">
 export default {
-  name: 'Submenu', // 给组件命名
-} // 只需在这再加个name即可
+  name: 'Submenu',
+}
 </script>
 
 <template>

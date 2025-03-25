@@ -1,66 +1,89 @@
 <script lang="ts" setup>
-
 import { blogMenuJump } from '@/utils/blogMenuJump'
 
+/**
+ * 组件属性类型定义
+ */
 type PropsType = {
 
   /**
-   *  菜单列表
+   * 菜单项数据对象
+   * 包含菜单路径、名称、图标、子菜单等完整信息
    */
   item: BlogType.MenuListType
 
   /**
-   *  菜单主题
+   * 主题配置对象
    */
   theme?: {
 
     /**
-     *  菜单图标颜色
+     * 菜单图标颜色
      */
     iconColor?: string
   }
 
   /**
-   *  是否是移动端
+   * 是否移动端模式
+   * @default false
    */
   isMobile?: boolean
 
   /**
-   *  菜单层级
+   * 当前菜单层级
+   * 从0开始计数，0表示一级菜单
+   * @default 0
    */
   level?: number
 }
 
+// 设置属性默认值
 withDefaults(defineProps<PropsType>(), {
-
   /**
-   *   主题
+   * 主题配置默认值
    */
   theme: () => ({
   }),
 
   /**
-   *   是否是移动端
+   * 默认非移动端模式
    */
   isMobile: false,
 
   /**
-   *  菜单层级
+   * 默认菜单层级为0(一级菜单)
    */
   level: 0,
 })
 
+/**
+ * 组件事件定义
+ * @function close - 关闭菜单事件(主要用于移动端)
+ */
 const emit = defineEmits(['close'])
 
+/**
+ * 跳转到菜单对应页面
+ * @param item - 要跳转的菜单项
+ */
 function goPage(item: BlogType.MenuListType) {
-  closeMenu()
-  blogMenuJump(item)
+  closeMenu() // 先关闭菜单
+  blogMenuJump(item) // 执行页面跳转
 }
 
+/**
+ * 关闭当前菜单
+ * 主要用于移动端点击菜单项后自动收起菜单
+ */
 function closeMenu() {
-  emit('close')
+  emit('close') // 触发close事件
 }
 
+/**
+ * 判断菜单是否有子项
+ * @param  children - 子菜单数组
+ * @returns  是否有子菜单项
+ */
 function isNotEmpty(children: BlogType.MenuListType[] | undefined) {
   return children && children.length > 0
 }

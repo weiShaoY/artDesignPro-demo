@@ -9,12 +9,12 @@
       @close="closeSearchDialog"
     >
       <el-input
+        ref="searchInput"
         v-model.trim="searchVal"
         placeholder="搜索页面"
+        :prefix-icon="Search"
         @input="search"
         @blur="searchBlur"
-        ref="searchInput"
-        :prefix-icon="Search"
         @keydown.up.prevent="highlightPrevious"
         @keydown.down.prevent="highlightNext"
         @keydown.enter.prevent="selectHighlighted"
@@ -26,40 +26,47 @@
         </template>
       </el-input>
 
-      <div class="result" v-show="searchResult.length">
-        <div class="box" v-for="(item, pIndex) in searchResult" :key="pIndex">
+      <div
+        v-show="searchResult.length"
+        class="result"
+      >
+        <div
+          v-for="(item, pIndex) in searchResult"
+          :key="pIndex"
+          class="box"
+        >
           <div
             v-for="(cItem, cIndex) in item.children"
             :key="cIndex"
-            @click="searchGoPage(cItem)"
-            @mouseenter="highlightOnHover(pIndex, cIndex)"
             :class="{
               highlighted: isHighlighted(pIndex, cIndex)
             }"
+            @click="searchGoPage(cItem)"
+            @mouseenter="highlightOnHover(pIndex, cIndex)"
           >
             {{ cItem.meta.title }}
             <i
-              class="selected-icon iconfont-sys"
               v-show="isHighlighted(pIndex, cIndex)"
-              >&#xe6e6;</i
+              class="selected-icon iconfont-sys"
             >
+              &#xe6e6;
+            </i>
           </div>
         </div>
       </div>
 
       <!-- 搜索历史 -->
       <div
+        v-show="!searchVal && searchResult.length === 0 && historyResult.length > 0"
         class="history-box"
-        v-show="
-          !searchVal && searchResult.length === 0 && historyResult.length > 0
-        "
       >
         <p class="title">搜索历史</p>
+
         <div class="history-result">
           <div
-            class="box"
             v-for="(item, index) in historyResult"
             :key="index"
+            class="box"
             :class="{
               highlighted: historyHIndex === index
             }"
@@ -67,11 +74,16 @@
             @mouseenter="historyHIndex = index"
           >
             {{ item.meta.title }}
+            <span>
+              {{ item.meta.title }}
+            </span>
+
             <i
               class="selected-icon iconfont-sys"
               @click.stop="deleteHistory(index)"
-              >&#xe83a;</i
             >
+              &#xe83a;
+            </i>
           </div>
         </div>
       </div>
@@ -79,12 +91,12 @@
       <template #footer>
         <div class="dialog-footer">
           <div>
-            <i class="iconfont-sys">&#xe864;</i>
-            <i class="iconfont-sys">&#xe867;</i>
+            <i class="iconfont-sys"> &#xe864; </i>
+            <i class="iconfont-sys"> &#xe867; </i>
             <span>切换</span>
           </div>
           <div>
-            <i class="iconfont-sys">&#xe6e6;</i>
+            <i class="iconfont-sys"> &#xe6e6; </i>
             <span>选择</span>
           </div>
         </div>
@@ -262,7 +274,7 @@ const isHighlighted = (parentIndex: number, childIndex?: number) => {
   return childIndex === undefined
     ? highlightedParentIndex === parentIndex && highlightedChildIndex === -1
     : highlightedParentIndex === parentIndex &&
-        highlightedChildIndex === childIndex
+    highlightedChildIndex === childIndex
 }
 
 const searchBlur = () => {

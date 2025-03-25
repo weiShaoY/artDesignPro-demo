@@ -44,32 +44,7 @@ const beforeMenuType = ref<MenuTypeEnum>()
 
 const hasChangedMenu = ref(false) // 添加标记来跟踪是否已经改变过菜单
 
-watch(width, (newWidth: number) => {
-  if (newWidth < 1000) {
-    if (!hasChangedMenu.value) {
-      beforeMenuType.value = menuType.value
-      setMenuType(MenuTypeEnum.LEFT)
-      store.setMenuOpen(false)
-      hasChangedMenu.value = true
-    }
-  }
-  else {
-    if (hasChangedMenu.value && beforeMenuType.value) {
-      setMenuType(beforeMenuType.value)
-      store.setMenuOpen(true)
-      hasChangedMenu.value = false
-    }
-  }
-})
-
-watch(
-  () => props.open,
-  (val: boolean) => (showDrawer.value = val),
-)
-
 const settingThemeList = SettingThemeList
-
-console.log('%c Line:71 🥐 settingThemeList', 'color:#fca650', settingThemeList)
 
 const menuThemeList = ThemeList
 
@@ -184,6 +159,28 @@ const containerWidthList = [
   },
 ]
 
+watch(width, (newWidth: number) => {
+  if (newWidth < 1000) {
+    if (!hasChangedMenu.value) {
+      beforeMenuType.value = menuType.value
+      setMenuType(MenuTypeEnum.LEFT)
+      store.setMenuOpen(false)
+      hasChangedMenu.value = true
+    }
+  }
+  else {
+    if (hasChangedMenu.value && beforeMenuType.value) {
+      setMenuType(beforeMenuType.value)
+      store.setMenuOpen(true)
+      hasChangedMenu.value = false
+    }
+  }
+})
+
+watch(
+  () => props.open,
+  (val: boolean) => (showDrawer.value = val),
+)
 watch(
   () => store.showWorkTab,
   (e: boolean) => {
