@@ -1,12 +1,22 @@
 <script setup lang="ts">
+
+/**
+ *  导入枚举类型
+ */
 import { MenuTypeEnum, MenuWidth } from '@/enums/appEnum'
 
+/**
+ *  导入状态管理模块
+ */
 import { useMenuStore } from '@/store/modules/menu'
 
 import { useSettingStore } from '@/store/modules/setting'
 
 import { useWorkTabStore } from '@/store/modules/workTab'
 
+/**
+ *  导入工具函数
+ */
 import { blogMittBus } from '@/utils'
 
 import {
@@ -16,6 +26,9 @@ import {
   watch,
 } from 'vue'
 
+/**
+ *  导入组件
+ */
 import Fireworks from './components/Fireworks/index.vue'
 
 import MenuLeft from './components/MenuLeft/index.vue'
@@ -30,57 +43,87 @@ import Watermark from './components/Watermark/index.vue'
 
 import WorkTab from './components/WorkTab/index.vue'
 
+/**
+ *  导入样式文件
+ */
 import '@/assets/styles/transition.scss'
 
-// 网络状态
+/**
+ *  网络状态监控
+ */
 const { isOnline } = useNetwork()
 
-// 获取菜单和设置信息的 store
+/**
+ *  获取全局状态存储
+ */
 const settingStore = useSettingStore()
 
 const menuStore = useMenuStore()
 
 const workTabStore = useWorkTabStore()
 
-// 是否显示左侧菜单
+/**
+ *  计算菜单打开状态
+ */
+const menuOpen = computed(() => settingStore.menuOpen)
+
+/**
+ *  计算工作标签显示状态
+ */
+const showWorkTab = computed(() => settingStore.showWorkTab)
+
+/**
+ *  计算页面刷新状态
+ */
+const refresh = computed(() => settingStore.refresh)
+
+/**
+ *  计算页面过渡动画设置
+ */
+const pageTransition = computed(() => settingStore.pageTransition)
+
+/**
+ *  计算当前菜单类型
+ */
+const menuType = computed(() => settingStore.menuType)
+
+/**
+ *  计算水印显示状态
+ */
+const watermarkVisible = computed(() => settingStore.watermarkVisible)
+
+/**
+ *  判断是否为双列菜单
+ */
+const isDualMenu = computed(() => settingStore.menuType === MenuTypeEnum.DUAL_MENU)
+
+/**
+ *  计算容器宽度
+ */
+const containerWidth = computed(() => settingStore.containerWidth)
+
+/**
+ *  获取需要排除缓存的组件列表
+ */
+const keepAliveExclude = computed(() => workTabStore.keepAliveExclude)
+
+/**
+ *  判断是否需要显示左侧菜单
+ */
 const showLeftMenu = computed(
   () => menuType.value === MenuTypeEnum.LEFT || menuType.value === MenuTypeEnum.TOP_LEFT,
 )
 
-// 菜单是否打开
-const menuOpen = computed(() => settingStore.menuOpen)
-
-// 是否显示工作标签
-const showWorkTab = computed(() => settingStore.showWorkTab)
-
-// 是否需要刷新
-const refresh = computed(() => settingStore.refresh)
-
-// 页面动画
-const pageTransition = computed(() => settingStore.pageTransition)
-
-// 菜单类型
-const menuType = computed(() => settingStore.menuType)
-
-// 水印是否显示
-const watermarkVisible = computed(() => settingStore.watermarkVisible)
-
-// 是否是双列菜单
-const isDualMenu = computed(() => settingStore.menuType === MenuTypeEnum.DUAL_MENU)
-
-// 容器宽度
-const containerWidth = computed(() => settingStore.containerWidth)
-
-// keepAlive 排除的组件
-const keepAliveExclude = computed(() => workTabStore.keepAliveExclude)
-
-// 根据菜单是否打开来设置左侧填充宽度
+/**
+ *  计算左侧填充宽度
+ *  @description 根据菜单状态动态计算布局间距
+ */
 const paddingLeft = computed(() => {
   const width = menuOpen.value ? settingStore.getMenuOpenWidth : MenuWidth.CLOSE
-// 更新菜单宽度
-  menuStore.menuWidth = width
 
-  // 双列菜单
+  menuStore.menuWidth = width // 更新菜单宽度状态
+
+  // 双列菜单特殊处理
   if (menuType.value === MenuTypeEnum.DUAL_MENU) {
     return `calc(${width} + 80px)`
   }
@@ -88,25 +131,31 @@ const paddingLeft = computed(() => {
   return menuType.value !== MenuTypeEnum.TOP ? width : 0
 })
 
-// 根据是否显示工作标签来设置最小高度
+/**
+ *  计算最小高度
+ *  @description 根据工作标签状态调整布局高度
+ */
 const minHeight = computed(() => `calc(100vh - ${showWorkTab.value ? 120 : 75}px)`)
 
-const paddingTop = computed(() => {
-  return showWorkTab.value ? '106px' : '60px'
-})
+/**
+ *  计算顶部填充高度
+ */
+const paddingTop = computed(() => showWorkTab.value ? '106px' : '60px')
 
-// 是否刷新页面的状态
+/**
+ *  页面刷新状态
+ */
 const isRefresh = ref(true)
 
-// 是否开启路由信息
+/**
+ *  路由信息调试开关
+ */
 const isOpenRouteInfo = import.meta.env.VITE_OPEN_ROUTE_INFO
 
-// 监听刷新状态变化并调用 reload 函数
-watch(refresh, () => {
-  reload()
-})
-
-// 刷新页面
+/**
+ *  执行页面刷新
+ *  @description 通过状态切换实现强制重新渲染
+ */
 function reload() {
   isRefresh.value = false
   nextTick(() => {
@@ -114,11 +163,19 @@ function reload() {
   })
 }
 
+/**
+ *  监听刷新状态变化
+ */
+watch(refresh, () => {
+  reload()
+})
+
+/**
+ *  组件挂载钩子
+ */
 onMounted(() => {
-  // 初始化打开烟花
-  // 延迟3s
+  // 延迟3秒触发烟花效果
   setTimeout(() => {
-    // 初始化打开搜索框
     blogMittBus.emit('triggerFireworks')
   }, 3000)
 })

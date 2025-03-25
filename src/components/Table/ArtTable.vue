@@ -1,5 +1,17 @@
-<!-- 表格组件，带分页（默认分页大于一页时显示） -->
+<!--
+ * 增强表格组件
+ * @description 基于Element Plus表格的封装，支持分页、选择、序号等功能
+ * @example
+ * <ArtTable :data="tableData" :columns="columns" pagination>
+ *   <el-table-column prop="name" label="姓名" />
+ * </ArtTable>
+ -->
 <script setup lang="ts">
+import type { TableColumnCtx } from 'element-plus'
+
+/**
+ * 表格组件属性定义
+ */
 type TableProps = {
 
   /** 表格数据源 */
@@ -8,7 +20,7 @@ type TableProps = {
   /** 是否显示加载状态 */
   loading?: boolean
 
-  /** 行数据的 Key，用于标识每一行数据 */
+  /** 行数据的Key，用于标识每一行数据 */
   rowKey?: string
 
   /** 是否显示边框 */
@@ -23,10 +35,10 @@ type TableProps = {
   /** 是否显示序号列 */
   index?: boolean
 
-  /** 表格高度，可以是数字或 CSS 值 */
+  /** 表格高度，可以是数字或CSS值 */
   height?: string | number
 
-  /** 表格最大高度，可以是数字或 CSS 值 */
+  /** 表格最大高度，可以是数字或CSS值 */
   maxHeight?: string | number
 
   /** 是否显示表头 */
@@ -92,46 +104,60 @@ const props = withDefaults(defineProps<TableProps>(), {
   showHeaderBackground: false,
 })
 
-const emit = defineEmits([
-  'update:currentPage',
-  'update:pageSize',
-  'selectionChange',
-  'rowClick',
-  'sizeChange',
-  'currentChange',
-])
+/**
+ * 组件事件定义
+ */
+const emit = defineEmits<{
 
-// 表格数据
+  /** 当前页码变化事件 */
+  (e: 'update:currentPage', val: number): void
+
+  /** 每页条数变化事件 */
+  (e: 'update:pageSize', val: number): void
+
+  /** 选择项变化事件 */
+  (e: 'selectionChange', selection: any[]): void
+
+  /** 行点击事件 */
+  (e: 'rowClick', row: any, column: TableColumnCtx<any>, event: Event): void
+
+  /** 每页条数变化事件 */
+  (e: 'sizeChange', val: number): void
+
+  /** 当前页变化事件 */
+  (e: 'currentChange', val: number): void
+}>()
+
+/**
+ * 计算属性和状态
+ */
 const tableData = computed(() => props.data)
 
-// 当前页
 const currentPage = computed({
   get: () => props.currentPage,
   set: val => emit('update:currentPage', val),
 })
 
-// 每页条数
 const pageSize = computed({
   get: () => props.pageSize,
   set: val => emit('update:pageSize', val),
 })
 
-// 选择项改变
+/**
+ * 事件处理函数
+ */
 function handleSelectionChange(selection: any[]) {
   emit('selectionChange', selection)
 }
 
-// 行点击事件
-function handleRowClick(row: any, column: any, event: any) {
+function handleRowClick(row: any, column: TableColumnCtx<any>, event: Event) {
   emit('rowClick', row, column, event)
 }
 
-// 每页条数改变
 function handleSizeChange(val: number) {
   emit('sizeChange', val)
 }
 
-// 当前页改变
 function handleCurrentChange(val: number) {
   emit('currentChange', val)
 }
@@ -142,6 +168,7 @@ function handleCurrentChange(val: number) {
     class="art-table"
     :class="{ 'header-background': showHeaderBackground }"
   >
+    <!-- Element Plus 表格 -->
     <el-table
       v-loading="loading"
       :data="tableData"
@@ -174,10 +201,10 @@ function handleCurrentChange(val: number) {
         fixed="left"
       />
 
-      <!-- 动态列 -->
+      <!-- 动态列插槽 -->
       <slot />
 
-      <!-- 空数据 -->
+      <!-- 空数据状态 -->
       <template
         #empty
       >
@@ -187,7 +214,7 @@ function handleCurrentChange(val: number) {
       </template>
     </el-table>
 
-    <!-- 分页 -->
+    <!-- 分页器 -->
     <div
       v-if="pagination"
       class="table-pagination"
@@ -209,15 +236,15 @@ function handleCurrentChange(val: number) {
   </div>
 </template>
 
-<style lang="scss" scoped>
-  .art-table {
+ <style lang="scss" scoped>
+ .art-table {
   margin-top: 20px;
 
   .table-pagination {
     display: flex;
     margin-top: 16px;
+    padding: 12px 0;
 
-    // 分页对齐方式
     &.left {
       justify-content: flex-start;
     }
@@ -234,11 +261,16 @@ function handleCurrentChange(val: number) {
   :deep(.el-table) {
     th.el-table__cell {
       font-weight: 600;
+      color: var(--el-text-color-primary);
     }
 
     td.el-table__cell,
     th.el-table__cell {
-      padding: 16px 0; // 设置表格单元格高度
+      padding: 12px 0;
+    }
+
+    .el-table__empty-block {
+      width: 100% !important;
     }
   }
 
@@ -250,8 +282,8 @@ function handleCurrentChange(val: number) {
     }
   }
 
-  // 解决el-image 和 el-table冲突层级冲突问题
-  ::v-deep(.el-table__cell) {
+  // 解决el-image和el-table层级冲突问题
+  :deep(.el-table__cell) {
     position: static !important;
   }
 }

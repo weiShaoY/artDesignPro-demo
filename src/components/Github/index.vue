@@ -23,9 +23,7 @@ const props = withDefaults(defineProps<GithubPropsType>(), {
 })
 
 function handleClick() {
-
   window.open(import.meta.env.VITE_GITHUB_URL, '_blank')
-
 }
 </script>
 

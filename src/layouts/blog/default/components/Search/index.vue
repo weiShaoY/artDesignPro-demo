@@ -57,23 +57,6 @@ const searchHistoryList = computed(() => settingStore.searchHistoryList)
 const highlightedIndex = ref(0)
 
 /**
- * 处理全局键盘事件
- * @param  event - 键盘事件对象
- * @desc 监听 Command/Ctrl + K 组合键打开搜索弹窗
- */
-function handleKeydown(event: KeyboardEvent) {
-  const isMac = navigator.platform.toUpperCase().includes('MAC')
-
-  const isCommandKey = isMac ? event.metaKey : event.ctrlKey
-
-  if (isCommandKey && event.key.toLowerCase() === 'k') {
-    event.preventDefault()
-    isShowSearchDialog.value = true
-    focusInput()
-  }
-}
-
-/**
  * 聚焦搜索输入框
  * @desc 使用setTimeout确保弹窗打开后再执行聚焦操作
  */
@@ -251,6 +234,15 @@ function updateHistory() {
 }
 
 /**
+ * 清理搜索项
+ * @param  item - 搜索结果项
+ */
+function cleanItem(item: BlogType.MenuListType) {
+  delete item.children
+  delete item.meta.authList
+}
+
+/**
  * 添加搜索历史
  * @param  item - 搜索结果项
  */
@@ -272,29 +264,12 @@ function addHistory(item: BlogType.MenuListType) {
 }
 
 /**
- * 清理搜索项
- * @param  item - 搜索结果项
- */
-function cleanItem(item: BlogType.MenuListType) {
-  delete item.children
-  delete item.meta.authList
-}
-
-/**
  * 删除搜索历史
  * @param  index - 历史记录索引
  */
 function deleteHistory(index: number) {
   searchHistoryList.value.splice(index, 1)
   updateHistory()
-}
-
-/**
- * 打开搜索弹窗
- */
-function openSearchDialog() {
-  isShowSearchDialog.value = true
-  focusInput()
 }
 
 /**
@@ -313,6 +288,31 @@ function closeSearchDialog() {
  */
 function highlightOnHover(index: number) {
   highlightedIndex.value = index
+}
+
+/**
+ * 打开搜索弹窗
+ */
+function openSearchDialog() {
+  isShowSearchDialog.value = true
+  focusInput()
+}
+
+/**
+ * 处理全局键盘事件
+ * @param  event - 键盘事件对象
+ * @desc 监听 Command/Ctrl + K 组合键打开搜索弹窗
+ */
+function handleKeydown(event: KeyboardEvent) {
+  const isMac = navigator.platform.toUpperCase().includes('MAC')
+
+  const isCommandKey = isMac ? event.metaKey : event.ctrlKey
+
+  if (isCommandKey && event.key.toLowerCase() === 'k') {
+    event.preventDefault()
+    isShowSearchDialog.value = true
+    focusInput()
+  }
 }
 
 onMounted(() => {

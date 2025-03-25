@@ -3,7 +3,7 @@ const oneRoute: BlogType.AppRouteRecordRaw = {
   name: 'oneIframe',
   meta: {
     title: '一级路由并嵌套iframe',
-    icon: '&#xe712;',
+    icon: 'blog-menu-creativity',
     keepAlive: false,
     isIframe: true,
     isInMainContainer: true,

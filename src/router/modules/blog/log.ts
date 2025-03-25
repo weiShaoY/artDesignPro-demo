@@ -6,9 +6,9 @@ const logRoute: BlogType.AppRouteRecordRaw = {
   meta: {
     title: '一级路由更新日志',
     showTextBadge: `v2.2.4`,
-    icon: '&#xe712;',
     keepAlive: false,
     isInMainContainer: true,
+    icon: 'blog-menu-creativity',
   },
 }
 

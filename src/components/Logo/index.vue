@@ -8,6 +8,16 @@ type LogoPropsType = {
    *  颜色
    */
   textColor?: string
+
+  /**
+   *  是否隐藏logo
+   */
+  isShowLogo?: boolean
+
+  /**
+   *  是否隐藏文字
+   */
+  isShowText?: boolean
 }
 
 const props = withDefaults(defineProps<LogoPropsType>(), {
@@ -17,10 +27,6 @@ const props = withDefaults(defineProps<LogoPropsType>(), {
 const router = useRouter()
 
 function handleClick() {
-  // if (router.currentRoute.value.path === import.meta.env.VITE_APP_HOME_PAGE) {
-  //   return
-  // }
-
   router.push('/')
 }
 </script>
@@ -31,11 +37,13 @@ function handleClick() {
     @click="handleClick"
   >
     <SvgIcon
+      v-if="!props.isShowLogo"
       icon="logo"
       size="60"
     />
 
     <SvgIcon
+      v-if="!props.isShowText"
       icon="weiShaoY"
       size="120"
       :style="{

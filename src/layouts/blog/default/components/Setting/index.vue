@@ -149,12 +149,12 @@ const customRadiusOps = [
 const containerWidthList = [
   {
     value: ContainerWidthEnum.FULL,
-    label: 'setting.container.list[0]',
+    label: '铺满',
     icon: '&#xe694;',
   },
   {
     value: ContainerWidthEnum.BOXED,
-    label: 'setting.container.list[1]',
+    label: '定宽',
     icon: '&#xe6de;',
   },
 ]
@@ -895,7 +895,7 @@ watch(
           class="title"
           style="margin-top: 40px"
         >
-          接触配置
+          基础配置
         </p>
 
         <div

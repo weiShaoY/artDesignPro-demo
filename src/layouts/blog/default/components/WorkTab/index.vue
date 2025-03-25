@@ -1,3 +1,7 @@
+<!--
+ * 工作标签页组件
+ * @description 管理多标签页的打开、关闭和导航功能，支持右键菜单操作
+ -->
 <script setup lang="ts">
 import type { WorkTabType } from '@/types/store'
 
@@ -15,7 +19,9 @@ import {
   Close,
 } from '@element-plus/icons-vue'
 
-// 导入必要的组件和工具
+/**
+ * 导入Vue组合式API
+ */
 import {
   computed,
   onMounted,
@@ -28,8 +34,14 @@ import {
   useRouter,
 } from 'vue-router'
 
+/**
+ * 导入子组件
+ */
 import MenuRight from '../MenuRight/index.vue'
 
+/**
+ * 状态管理
+ */
 const store = useWorkTabStore()
 
 const route = useRoute()
@@ -38,40 +50,51 @@ const router = useRouter()
 
 const { currentRoute } = router
 
-// 初始化状态和引用
-const scrollRef = ref<HTMLElement | null>(null) // 滚动容器引用
+/**
+ * DOM元素引用
+ */
+const scrollRef = ref<HTMLElement | null>(null) // 滚动容器
 
-const tabsRef = ref<HTMLElement | null>(null) // 标签列表容器引用
+const tabsRef = ref<HTMLElement | null>(null) // 标签列表容器
 
-const menuRef = ref() // 右键菜单引用
+const menuRef = ref() // 右键菜单组件实例
 
-// 滚动相关状态
-const translateX = ref(0) // 标签列表水平偏移量
+/**
+ * 滚动状态
+ */
+const translateX = ref(0) // 水平滚动偏移量
 
-const transition = ref('') // 过渡动画样式
+const transition = ref('') // 过渡动画效果
 
 const clickedPath = ref('') // 当前点击的标签路径
 
-let startX = 0 // 触摸开始位置
+let startX = 0 // 触摸起始X坐标
 
-let currentX = 0 // 当前触摸位置
+let currentX = 0 // 当前触摸X坐标
 
-// 打开的标签页列表
-const list = computed(() => store.opened)
+/**
+ * 计算属性
+ */
+const list = computed(() => store.opened) // 已打开的标签页列表
 
-// 当前激活的标签页
-const activeTab = computed(() => currentRoute.value.path)
+const activeTab = computed(() => currentRoute.value.path) // 当前激活的标签页
 
-// 获取当前激活 tab 的 index
-const activeTabIndex = computed(() => list.value.findIndex(tab => tab.path === activeTab.value))
+/**
+ * 获取当前激活标签的索引
+ */
+const activeTabIndex = computed(() =>
+  list.value.findIndex(tab => tab.path === activeTab.value),
+)
 
-// 右键菜单选项
+/**
+ * 右键菜单选项配置
+ */
 const menuItems = computed(() => {
   const clickedIndex = list.value.findIndex(tab => tab.path === clickedPath.value)
 
   const isLastTab = clickedIndex === list.value.length - 1
 
-  const isFirstOrSecondTab = clickedIndex === 0 || clickedIndex === 1
+  const isFirstOrSecondTab = clickedIndex <= 1
 
   const isOneTab = list.value.length === 1
 
@@ -105,12 +128,16 @@ const menuItems = computed(() => {
   ]
 })
 
-// 获取当前标签页索引和元素
+/**
+ * 获取当前激活标签页的DOM元素
+ */
 function getCurTabEl() {
   return document.getElementById(`scroll-li-${activeTabIndex.value}`) as HTMLElement
 }
 
-// 设置过渡动画
+/**
+ * 设置过渡动画效果
+ */
 function setTransition() {
   transition.value = 'transform 0.5s ease-in-out'
   setTimeout(() => {
@@ -118,7 +145,9 @@ function setTransition() {
   }, 300)
 }
 
-// 自动定位当前标签页到可视区域
+/**
+ * 自动定位当前标签页到可视区域
+ */
 function workTabAutoPosition() {
   if (!scrollRef.value || !tabsRef.value) {
     return
@@ -157,14 +186,18 @@ function workTabAutoPosition() {
   })
 }
 
-// 生命周期钩子
+/**
+ * 生命周期钩子
+ */
 onMounted(() => {
-  listenerScroll() // 监听滚动事件
-  addTouchListeners() // 添加触摸事件监听
+  listenerScroll() // 初始化滚动监听
+  addTouchListeners() // 添加触摸事件
   workTabAutoPosition() // 初始定位
 })
 
-// 监听路由变化，自动定位标签页
+/**
+ * 监听路由变化
+ */
 watch(
   () => currentRoute.value,
   () => {
@@ -173,7 +206,9 @@ watch(
   },
 )
 
-// 标签页操作方法
+/**
+ * 点击标签页导航
+ */
 function clickTab(item: WorkTabType) {
   router.push({
     path: item.path,
@@ -181,7 +216,11 @@ function clickTab(item: WorkTabType) {
   })
 }
 
-// 关闭标签页的不同方式
+/**
+ * 关闭标签页
+ * @param type 关闭类型: current/left/right/other/all
+ * @param tabPath 目标标签路径
+ */
 function closeWorkTab(type: string, tabPath: string) {
   const path = typeof tabPath === 'string' ? tabPath : route.path
 
@@ -208,7 +247,9 @@ function closeWorkTab(type: string, tabPath: string) {
   }, 100)
 }
 
-// 关闭标签页后的位置调整
+/**
+ * 关闭标签页后的位置调整
+ */
 function workTabClosePosition() {
   if (!scrollRef.value || !tabsRef.value) {
     return
@@ -233,7 +274,9 @@ function workTabClosePosition() {
   })
 }
 
-// 右键菜单相关方法
+/**
+ * 显示右键菜单
+ */
 function showMenu(e: MouseEvent, path?: string) {
   clickedPath.value = path || ''
   menuRef.value?.show(e)
@@ -241,6 +284,9 @@ function showMenu(e: MouseEvent, path?: string) {
   e.stopPropagation()
 }
 
+/**
+ * 处理右键菜单选择
+ */
 function handleSelect(item: MenuItemType) {
   const { key } = item
 
@@ -250,62 +296,69 @@ function handleSelect(item: MenuItemType) {
 
   // 处理标签跳转逻辑
   const shouldNavigate
-      = (key === 'left' && activeIndex < clickedIndex)
-        || (key === 'right' && activeIndex > clickedIndex)
-        || key === 'other'
+     = (key === 'left' && activeIndex < clickedIndex)
+       || (key === 'right' && activeIndex > clickedIndex)
+       || key === 'other'
 
   if (shouldNavigate) {
     router.push(clickedPath.value)
   }
 
-  // 关闭标签页
   closeWorkTab(key, clickedPath.value)
 }
 
-// 滚动事件处理
+/**
+ * 监听滚动事件
+ */
 function listenerScroll() {
   const xMax = 0
 
-  if (tabsRef.value) {
-    tabsRef.value.addEventListener(
-      'wheel',
-      (event: WheelEvent) => {
-        if (scrollRef.value && tabsRef.value) {
-          event.preventDefault()
+  tabsRef.value?.addEventListener(
+    'wheel',
+    (event: WheelEvent) => {
+      if (!scrollRef.value || !tabsRef.value) {
+        return
+      }
 
-          if (tabsRef.value.offsetWidth <= scrollRef.value.offsetWidth) {
-            return
-          }
+      event.preventDefault()
 
-          const xMin = scrollRef.value.offsetWidth - tabsRef.value.offsetWidth
+      if (tabsRef.value.offsetWidth <= scrollRef.value.offsetWidth) {
+        return
+      }
 
-          // 使用 deltaX 来处理水平滚动，使用 deltaY 来处理垂直滚动
-          const delta
-              = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY
+      const xMin = scrollRef.value.offsetWidth - tabsRef.value.offsetWidth
 
-          translateX.value = Math.min(Math.max(translateX.value - delta, xMin), xMax)
-        }
-      },
-      {
-        passive: false,
-      },
-    )
-  }
+      const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY)
+        ? event.deltaX
+        : event.deltaY
+
+      translateX.value = Math.min(Math.max(translateX.value - delta, xMin), xMax)
+    },
+    {
+      passive: false,
+    },
+  )
 }
 
-// 触摸事件处理
+/**
+ * 添加触摸事件监听
+ */
 function addTouchListeners() {
-  if (tabsRef.value) {
-    tabsRef.value.addEventListener('touchstart', handleTouchStart)
-    tabsRef.value.addEventListener('touchmove', handleTouchMove)
-    tabsRef.value.addEventListener('touchend', handleTouchEnd)
-  }
+  tabsRef.value?.addEventListener('touchstart', handleTouchStart)
+  tabsRef.value?.addEventListener('touchmove', handleTouchMove)
+  tabsRef.value?.addEventListener('touchend', handleTouchEnd)
 }
 
+/**
+ * 处理触摸开始事件
+ */
 function handleTouchStart(event: TouchEvent) {
   startX = event.touches[0].clientX
 }
 
+/**
+ * 处理触摸移动事件
+ */
 function handleTouchMove(event: TouchEvent) {
   if (!scrollRef.value || !tabsRef.value) {
     return
@@ -320,6 +373,9 @@ function handleTouchMove(event: TouchEvent) {
   startX = currentX
 }
 
+/**
+ * 处理触摸结束事件
+ */
 function handleTouchEnd() {
   setTransition()
 }
@@ -329,6 +385,7 @@ function handleTouchEnd() {
   <div
     class="workTab"
   >
+    <!-- 标签页滚动区域 -->
     <div
       ref="scrollRef"
       class="scroll-view"
@@ -336,19 +393,22 @@ function handleTouchEnd() {
       <ul
         ref="tabsRef"
         class="tabs"
-        :style="{ transform: `translateX(${translateX}px)`, transition: `${transition}` }"
+        :style="{
+          transform: `translateX(${translateX}px)`,
+          transition,
+        }"
       >
         <li
           v-for="(item, index) in list"
           :id="`scroll-li-${index}`"
           :key="item.path"
-          :ref="item.path"
           class="art-custom-card"
           :class="{ 'activ-tab': item.path === activeTab }"
           @click="clickTab(item)"
           @contextmenu.prevent="(e: MouseEvent) => showMenu(e, item.path)"
         >
           {{ item.title }}
+          <!-- 关闭按钮 -->
           <el-icon
             v-if="index !== 0"
             @click.stop="closeWorkTab('current', item.path)"
@@ -359,6 +419,7 @@ function handleTouchEnd() {
       </ul>
     </div>
 
+    <!-- 右侧操作菜单 -->
     <div
       class="right"
     >
@@ -380,7 +441,7 @@ function handleTouchEnd() {
               command="left"
               :disabled="activeTabIndex === 0 || activeTabIndex === 1"
             >
-              <span>关闭左侧</span>
+              关闭左侧
             </el-dropdown-item>
 
             <el-dropdown-item
@@ -388,7 +449,7 @@ function handleTouchEnd() {
               command="right"
               :disabled="activeTabIndex === list.length - 1"
             >
-              <span>关闭右侧</span>
+              关闭右侧
             </el-dropdown-item>
 
             <el-dropdown-item
@@ -396,7 +457,7 @@ function handleTouchEnd() {
               command="other"
               :disabled="list.length === 1 || (list.length === 2 && activeTabIndex === 1)"
             >
-              <span>关闭其它</span>
+              关闭其它
             </el-dropdown-item>
 
             <el-dropdown-item
@@ -404,13 +465,14 @@ function handleTouchEnd() {
               command="all"
               :disabled="list.length === 1"
             >
-              <span>关闭全部</span>
+              关闭全部
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
     </div>
 
+    <!-- 右键菜单组件 -->
     <MenuRight
       ref="menuRef"
       :menu-items="menuItems"
@@ -419,6 +481,6 @@ function handleTouchEnd() {
   </div>
 </template>
 
-<style lang="scss" scoped>
-  @use './style';
+ <style lang="scss" scoped>
+ @use './style';
 </style>

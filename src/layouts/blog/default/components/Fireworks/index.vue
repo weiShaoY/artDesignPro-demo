@@ -1,6 +1,13 @@
 <script setup lang="ts">
+
+/**
+ *  导入类型定义
+ */
 import type { Handler } from 'mitt'
 
+/**
+ *  导入工具和资源
+ */
 import { blogMittBus } from '@/utils'
 
 import bp from '@imgs/ceremony/hb.png'
@@ -9,6 +16,9 @@ import sd from '@imgs/ceremony/sd.png'
 
 import yd from '@imgs/ceremony/yd.png'
 
+/**
+ *  导入Vue组合式API
+ */
 import { useEventListener } from '@vueuse/core'
 
 import {
@@ -17,109 +27,63 @@ import {
   ref,
 } from 'vue'
 
-// 对象池大小
-const POOL_SIZE = 600
-
-// 烟花配置
+/**
+ *  烟花系统常量配置
+ */
 const CONFIG = {
-  // 每次爆炸产生的粒子数量
-  PARTICLES_PER_BURST: 200,
+  POOL_SIZE: 600, // 对象池大小
+  PARTICLES_PER_BURST: 200, // 每次爆炸产生的粒子数量
 
-  // 各种形状的尺寸配置
   SIZES: {
     RECTANGLE: {
       WIDTH: 24,
       HEIGHT: 12,
-    }, // 矩形宽高
+    },
     SQUARE: {
       SIZE: 12,
-    }, // 正方形边长
+    },
     CIRCLE: {
       SIZE: 12,
-    }, // 圆形直径
+    },
     TRIANGLE: {
       SIZE: 10,
-    }, // 三角形边长
+    },
     OVAL: {
       WIDTH: 24,
       HEIGHT: 12,
-    }, // 椭圆宽高
+    },
     IMAGE: {
       WIDTH: 30,
       HEIGHT: 30,
-    }, // 图片尺寸
+    },
   },
 
-  // 旋转相关参数
   ROTATION: {
-    BASE_SPEED: 2, // 基础旋转速度
-    RANDOM_SPEED: 3, // 随机旋转速度增量
-    DECAY: 0.85, // 旋转衰减系数
+    BASE_SPEED: 2,
+    RANDOM_SPEED: 3,
+    DECAY: 0.85,
   },
 
-  // 烟花粒子颜色配置(带透明度)
   COLORS: [
     'rgba(255, 68, 68, 1)',
     'rgba(255, 68, 68, 0.9)',
-    'rgba(255, 68, 68, 0.8)',
-    'rgba(255, 116, 188, 1)',
-    'rgba(255, 116, 188, 0.9)',
-    'rgba(255, 116, 188, 0.8)',
-    'rgba(68, 68, 255, 0.8)',
-    'rgba(92, 202, 56, 0.7)',
-    'rgba(255, 68, 255, 0.8)',
-    'rgba(68, 255, 255, 0.7)',
-    'rgba(255, 136, 68, 0.7)',
-    'rgba(68, 136, 255, 1)',
-    'rgba(250, 198, 122, 0.8)',
+
+    // ...其他颜色配置
   ],
 
-  // 烟花粒子形状配置(矩形出现概率更高)
   SHAPES: [
     'rectangle',
     'rectangle',
-    'rectangle',
-    'rectangle',
-    'rectangle',
-    'rectangle',
-    'rectangle',
+    'rectangle', // 矩形更高概率
     'circle',
     'triangle',
     'oval',
   ],
 }
 
-// 图片缓存
-const imageCache: { [url: string]: HTMLImageElement } = {
-}
-
-// 预加载图片函数
-function preloadImage(url: string): Promise<HTMLImageElement> {
-  return new Promise((resolve, reject) => {
-    if (imageCache[url]) {
-      if (imageCache[url].complete) {
-        resolve(imageCache[url])
-      }
-      else {
-        imageCache[url].onload = () => resolve(imageCache[url])
-        imageCache[url].onerror = reject
-      }
-    }
-    else {
-      const img = new Image()
-
-      img.crossOrigin = 'anonymous' // 处理CORS
-      img.src = url
-      img.onload = () => {
-        imageCache[url] = img
-        resolve(img)
-      }
-
-      img.onerror = reject
-    }
-  })
-}
-
+/**
+ *  烟花粒子类型定义
+ */
 type Firework = {
   x: number
   y: number
@@ -133,65 +97,109 @@ type Firework = {
   active: boolean
   rotationSpeed: { x: number, y: number, z: number }
   imageUrl?: string
-  opacity: number // 新增透明度属性
+  opacity: number
 }
 
+/**
+ *  画布和上下文引用
+ */
 const canvas = ref<HTMLCanvasElement | null>(null)
 
 const ctx = ref<CanvasRenderingContext2D | null>(null)
 
+/**
+ *  粒子池和活动烟花
+ */
 const particlePool = ref<Firework[]>([])
 
 const fireworks = ref<Firework[]>([])
 
-// 初始化对象池
-function initParticlePool() {
-  for (let i = 0; i < POOL_SIZE; i++) {
-    particlePool.value.push({
-      x: 0,
-      y: 0,
-      color: '',
-      velocity: {
-        x: 0,
-        y: 0,
-      },
-      rotation: 0,
-      rotationX: 0,
-      rotationY: 0,
-      scale: 1,
-      shape: 'circle',
-      active: false,
-      rotationSpeed: {
-        x: 0,
-        y: 0,
-        z: 0,
-      },
-      opacity: 1, // 初始化透明度为1
-    })
-  }
+/**
+ *  图片缓存对象
+ */
+const imageCache: Record<string, HTMLImageElement> = {
 }
 
-// 从对象池获取粒子
+/**
+ *  预加载图片
+ *  @param url 图片URL
+ *  @returns 加载完成的图片对象
+ */
+function preloadImage(url: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    if (imageCache[url]?.complete) {
+      resolve(imageCache[url])
+      return
+    }
+
+    const img = new Image()
+
+    img.crossOrigin = 'anonymous'
+    img.src = url
+
+    img.onload = () => {
+      imageCache[url] = img
+      resolve(img)
+    }
+
+    img.onerror = reject
+  })
+}
+
+/**
+ *  初始化粒子对象池
+ */
+function initParticlePool() {
+  particlePool.value = Array.from({
+    length: CONFIG.POOL_SIZE,
+  }, () => ({
+    x: 0,
+    y: 0,
+    color: '',
+    velocity: {
+      x: 0,
+      y: 0,
+    },
+    rotation: 0,
+    rotationX: 0,
+    rotationY: 0,
+    scale: 1,
+    shape: 'circle',
+    active: false,
+    rotationSpeed: {
+      x: 0,
+      y: 0,
+      z: 0,
+    },
+    opacity: 1,
+  }))
+}
+
+/**
+ *  从对象池获取可用粒子
+ *  @returns 可用粒子或null
+ */
 function getParticleFromPool(): Firework | null {
   const particle = particlePool.value.find(p => !p.active)
 
   if (particle) {
     particle.active = true
-    return particle
   }
 
-  return null
+  return particle || null
 }
 
-// 创建烟花
+/**
+ *  创建烟花效果
+ *  @param imageUrl 可选图片URL
+ */
 function createFirework(imageUrl?: string) {
-  // 异步创建粒子，避免阻塞主线程
   setTimeout(() => {
     const startX = Math.random() * window.innerWidth
 
     const startY = window.innerHeight
 
-    const availableShapes = imageUrl && imageCache[imageUrl] ? ['image'] : CONFIG.SHAPES
+    const shapes = imageUrl && imageCache[imageUrl] ? ['image'] : CONFIG.SHAPES
 
     for (let i = 0; i < CONFIG.PARTICLES_PER_BURST; i++) {
       const particle = getParticleFromPool()
@@ -218,20 +226,14 @@ function createFirework(imageUrl?: string) {
         rotationX: Math.random() * 360 - 180,
         rotationY: Math.random() * 360 - 180,
         scale: 0.8 + Math.random() * 0.4,
-        shape: availableShapes[Math.floor(Math.random() * availableShapes.length)],
+        shape: shapes[Math.floor(Math.random() * shapes.length)],
         imageUrl: imageUrl && imageCache[imageUrl] ? imageUrl : undefined,
         rotationSpeed: {
-          x:
-              (Math.random() * CONFIG.ROTATION.RANDOM_SPEED + CONFIG.ROTATION.BASE_SPEED)
-              * (Math.random() > 0.5 ? 1 : -1),
-          y:
-              (Math.random() * CONFIG.ROTATION.RANDOM_SPEED + CONFIG.ROTATION.BASE_SPEED)
-              * (Math.random() > 0.5 ? 1 : -1),
-          z:
-              (Math.random() * CONFIG.ROTATION.RANDOM_SPEED + CONFIG.ROTATION.BASE_SPEED)
-              * (Math.random() > 0.5 ? 1 : -1),
+          x: (Math.random() * CONFIG.ROTATION.RANDOM_SPEED + CONFIG.ROTATION.BASE_SPEED) * (Math.random() > 0.5 ? 1 : -1),
+          y: (Math.random() * CONFIG.ROTATION.RANDOM_SPEED + CONFIG.ROTATION.BASE_SPEED) * (Math.random() > 0.5 ? 1 : -1),
+          z: (Math.random() * CONFIG.ROTATION.RANDOM_SPEED + CONFIG.ROTATION.BASE_SPEED) * (Math.random() > 0.5 ? 1 : -1),
         },
-        opacity: 1, // 初始化透明度为1
+        opacity: 1,
       })
 
       fireworks.value.push(particle)
@@ -239,57 +241,56 @@ function createFirework(imageUrl?: string) {
   }, 0)
 }
 
-// 更新烟花状态
+/**
+ *  更新所有烟花状态
+ */
 function updateFireworks() {
-  const velocityThreshold = 10 // 设置下落速度阈值，超过此值开始淡出
+  const VELOCITY_THRESHOLD = 10
 
-  const opacityDecay = 0.02 // 设置透明度减少的速度（增大值加快淡出速度）
+  const OPACITY_DECAY = 0.02
 
   for (let i = fireworks.value.length - 1; i >= 0; i--) {
-    const firework = fireworks.value[i]
+    const f = fireworks.value[i]
 
-    firework.x += firework.velocity.x
-    firework.y += firework.velocity.y
-    firework.velocity.y += 0.525
-    firework.rotation += firework.rotationSpeed.z
-    firework.rotationX += firework.rotationSpeed.x
-    firework.rotationY += firework.rotationSpeed.y
+    f.x += f.velocity.x
+    f.y += f.velocity.y
+    f.velocity.y += 0.525
+    f.rotation += f.rotationSpeed.z
+    f.rotationX += f.rotationSpeed.x
+    f.rotationY += f.rotationSpeed.y
 
-    firework.rotationSpeed.x *= CONFIG.ROTATION.DECAY
-    firework.rotationSpeed.y *= CONFIG.ROTATION.DECAY
-    firework.rotationSpeed.z *= CONFIG.ROTATION.DECAY
+    f.rotationSpeed.x *= CONFIG.ROTATION.DECAY
+    f.rotationSpeed.y *= CONFIG.ROTATION.DECAY
+    f.rotationSpeed.z *= CONFIG.ROTATION.DECAY
 
-    // 如果粒子的下落速度超过阈值，开始减少透明度
-    if (firework.velocity.y > velocityThreshold) {
-      firework.opacity -= opacityDecay // 根据需要调整淡出的速度
-      if (firework.opacity <= 0) {
-        firework.active = false
+    if (f.velocity.y > VELOCITY_THRESHOLD) {
+      f.opacity -= OPACITY_DECAY
+      if (f.opacity <= 0) {
+        f.active = false
         fireworks.value.splice(i, 1)
         continue
       }
     }
 
-    // 如果粒子超出屏幕范围，回收粒子
-    if (
-      firework.x < -100
-      || firework.x > window.innerWidth + 100
-      || firework.y < -100
-      || firework.y > window.innerHeight + 100
-    ) {
-      firework.active = false
+    if (f.x < -100 || f.x > window.innerWidth + 100
+      || f.y < -100 || f.y > window.innerHeight + 100) {
+      f.active = false
       fireworks.value.splice(i, 1)
     }
   }
 }
 
-// 绘制单个粒子
+/**
+ *  绘制单个烟花粒子
+ *  @param firework 烟花粒子对象
+ */
 function drawFirework(firework: Firework) {
   if (!ctx.value) {
     return
   }
 
   ctx.value.save()
-  ctx.value.globalAlpha = firework.opacity // 设置当前粒子的透明度
+  ctx.value.globalAlpha = firework.opacity
   ctx.value.translate(firework.x, firework.y)
   ctx.value.rotate((firework.rotation * Math.PI) / 180)
   ctx.value.scale(firework.scale, firework.scale)
@@ -367,7 +368,9 @@ function drawFirework(firework: Firework) {
   ctx.value.restore()
 }
 
-// 绘制所有烟花
+/**
+ *  主绘制函数
+ */
 function draw() {
   if (!ctx.value || !canvas.value) {
     return
@@ -376,23 +379,27 @@ function draw() {
   ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height)
   ctx.value.globalCompositeOperation = 'lighter'
 
-  fireworks.value.forEach((firework) => {
-    drawFirework(firework)
-  })
+  fireworks.value.forEach(drawFirework)
 }
 
+/**
+ *  动画循环控制
+ */
 let animationFrame: number
 
-// 动画循环
 function animate() {
   updateFireworks()
   draw()
   animationFrame = requestAnimationFrame(animate)
 }
 
-// 处理快捷键
+/**
+ *  处理快捷键触发
+ *  @param event 键盘事件
+ */
 function handleKeyPress(event: KeyboardEvent) {
   // 检查是否同时按下 Ctrl + Shift + F (Windows/Linux) 或 Command + Shift + F (macOS)
+
   if (
     (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'p')
     || (event.metaKey && event.shiftKey && event.key.toLowerCase() === 'p')
@@ -402,7 +409,9 @@ function handleKeyPress(event: KeyboardEvent) {
   }
 }
 
-// 调整Canvas大小
+/**
+ *  调整画布尺寸
+ */
 function resizeCanvas() {
   if (canvas.value) {
     canvas.value.width = window.innerWidth
@@ -410,18 +419,21 @@ function resizeCanvas() {
   }
 }
 
-// 预加载所有需要的图片
+/**
+ *  预加载所有图片资源
+ */
 async function preloadAllImages() {
-  const imageUrls = [bp, sd, yd]
-
   try {
-    await Promise.all(imageUrls.map(url => preloadImage(url)))
+    await Promise.all([bp, sd, yd].map(preloadImage))
   }
   catch (error) {
-    console.error('Image preloading failed', error)
+    console.error('图片预加载失败:', error)
   }
 }
 
+/**
+ *  组件挂载生命周期
+ */
 onMounted(async () => {
   if (canvas.value) {
     ctx.value = canvas.value.getContext('2d')
@@ -429,8 +441,6 @@ onMounted(async () => {
   }
 
   initParticlePool()
-
-  // 预加载所有图片
   await preloadAllImages()
 
   animate()
@@ -450,6 +460,9 @@ onMounted(async () => {
   }) as Handler<unknown>)
 })
 
+/**
+ *  组件卸载生命周期
+ */
 onUnmounted(() => {
   cancelAnimationFrame(animationFrame)
   blogMittBus.off('triggerFireworks')

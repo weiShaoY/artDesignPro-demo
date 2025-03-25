@@ -1,58 +1,74 @@
+import type { MenuThemeType, SystemThemeTypes } from '@/types/store'
+
 import { MenuThemeEnum, SystemThemeEnum } from '@/enums/appEnum'
-import { MenuThemeType, SystemThemeTypes } from '@/types/store'
 
-// Element plus theme
+/**
+ * Element Plus 主题配置
+ */
 export const ElementPlusTheme = {
-  primary: '#5D87FF'
-}
+  /** 主色 */
+  primary: '#5D87FF',
+} as const
 
-// 系统信息
+/**
+ * 系统信息配置
+ */
 export const SystemInfo = {
-  // 系统名称
+  /** 系统名称 */
   name: 'Art Design Pro',
-  // 登录默认帐号、密码
-  login: {
-    username: 'admin',
-    password: '123456'
-  }
-}
 
-// 系统主题样式（light | dark）
+  /** 登录配置 */
+  login: {
+    /** 默认用户名 */
+    username: 'admin',
+
+    /** 默认密码 */
+    password: '123456',
+  },
+} as const
+
+/**
+ * 系统主题样式配置
+ */
 export const SystemThemeStyles: SystemThemeTypes = {
   [SystemThemeEnum.LIGHT]: {
-    className: ''
+    className: '',
   },
   [SystemThemeEnum.DARK]: {
-    className: SystemThemeEnum.DARK
-  }
-}
+    className: SystemThemeEnum.DARK,
+  },
+} as const
 
-// 设置中心主题列表
+/**
+ * 设置中心主题列表配置
+ */
 export const SettingThemeList = [
   {
     name: '浅色',
     theme: SystemThemeEnum.LIGHT,
     color: ['#fff', '#fff'],
     leftLineColor: '#EDEEF0',
-    rightLineColor: '#EDEEF0'
+    rightLineColor: '#EDEEF0',
   },
   {
     name: '深色',
     theme: SystemThemeEnum.DARK,
     color: ['#22252A'],
     leftLineColor: '#3F4257',
-    rightLineColor: '#3F4257'
+    rightLineColor: '#3F4257',
   },
   {
     name: '系统',
     theme: SystemThemeEnum.AUTO,
     color: ['#fff', '#22252A'],
     leftLineColor: '#EDEEF0',
-    rightLineColor: '#3F4257'
-  }
-]
+    rightLineColor: '#3F4257',
+  },
+] as const
 
-// 菜单样式
+/**
+ * 菜单主题样式配置
+ */
 export const ThemeList: MenuThemeType[] = [
   {
     theme: MenuThemeEnum.DESIGN,
@@ -65,7 +81,7 @@ export const ThemeList: MenuThemeType[] = [
     tabBarBackground: '#FAFBFC',
     systemBackground: '#FAFBFC',
     leftLineColor: '#EDEEF0',
-    rightLineColor: '#EDEEF0'
+    rightLineColor: '#EDEEF0',
   },
   {
     theme: MenuThemeEnum.DARK,
@@ -78,7 +94,7 @@ export const ThemeList: MenuThemeType[] = [
     tabBarBackground: '#FFFFFF',
     systemBackground: '#F8F8F8',
     leftLineColor: '#3F4257',
-    rightLineColor: '#EDEEF0'
+    rightLineColor: '#EDEEF0',
   },
   {
     theme: MenuThemeEnum.LIGHT,
@@ -91,11 +107,13 @@ export const ThemeList: MenuThemeType[] = [
     tabBarBackground: '#FFFFFF',
     systemBackground: '#F8F8F8',
     leftLineColor: '#EDEEF0',
-    rightLineColor: '#EDEEF0'
-  }
-]
+    rightLineColor: '#EDEEF0',
+  },
+] as const
 
-// dark 模式下 菜单样式
+/**
+ * 暗黑模式下菜单样式配置
+ */
 export const DarkMenuStyles: MenuThemeType[] = [
   {
     theme: MenuThemeEnum.DARK,
@@ -108,23 +126,30 @@ export const DarkMenuStyles: MenuThemeType[] = [
     tabBarBackground: '#FFFFFF',
     systemBackground: '#F8F8F8',
     leftLineColor: '#3F4257',
-    rightLineColor: '#EDEEF0'
-  }
-]
+    rightLineColor: '#EDEEF0',
+  },
+] as const
 
-// 系统主色
+/**
+ * 系统主色配置
+ */
 export const SystemMainColor = [
-  '#5D87FF',
-  '#B48DF3',
-  '#1D84FF',
-  '#60C041',
-  '#38C0FC',
-  '#F9901F',
-  '#FF80C8'
-]
+  '#5D87FF', // 蓝色
+  '#B48DF3', // 紫色
+  '#1D84FF', // 深蓝
+  '#60C041', // 绿色
+  '#38C0FC', // 浅蓝
+  '#F9901F', // 橙色
+  '#FF80C8', // 粉色
+] as const
 
-// 系统设置中心配置
+/**
+ * 系统设置中心配置
+ */
 export const SystemSetting = {
-  defaultMenuWidth: 252, // 菜单展开宽度默认值
-  defaultCustomRadius: '0.75' // 圆角默认值
-}
+  /** 菜单展开宽度默认值(px) */
+  defaultMenuWidth: 252,
+
+  /** 圆角默认值(rem) */
+  defaultCustomRadius: '0.75',
+} as const

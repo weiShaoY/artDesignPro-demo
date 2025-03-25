@@ -12,48 +12,126 @@ import {
 
 import { computed } from 'vue'
 
-// 节日庆祝相关配置
+/**
+ * 节日庆典配置类型
+ */
+type FestivalConfigType = {
+
+  /** 初始延迟时间(ms) */
+  INITIAL_DELAY: number
+
+  /** 烟花效果触发间隔(ms) */
+  FIREWORK_INTERVAL: number
+
+  /** 文本显示延迟时间(ms) */
+  TEXT_DELAY: number
+
+  /** 最大触发次数 */
+  MAX_TRIGGERS: number
+}
+
+/**
+ * 节日庆典 Hook
+ * @description 提供节日检测、烟花效果和祝福文本显示功能
+ * @returns {object} 节日庆典相关方法和状态
+ */
 export function useCeremony() {
   const settingStore = useSettingStore()
 
-  // 判断当前日期是否是节日
+  let fireworksInterval: { pause: () => void } | null = null
+
+  /**
+   * 节日庆典配置常量
+   */
+  const FESTIVAL_CONFIG: FestivalConfigType = {
+    INITIAL_DELAY: 300,
+    FIREWORK_INTERVAL: 1000,
+    TEXT_DELAY: 2000,
+    MAX_TRIGGERS: 6,
+  } as const
+
+  /**
+   * 获取当前节日数据
+   */
   const currentFestivalData = computed(() => {
     const currentDate = useDateFormat(new Date(), 'YYYY-MM-DD').value
 
     return festivalList.find(item => item.date === currentDate)
   })
 
-  // 设置节日日期
+  /**
+   * 设置当前节日日期到状态管理
+   */
   const setFestivalDate = () => {
     settingStore.setFestivalDate(currentFestivalData.value?.date || '')
   }
 
-  // 节日礼花效果是否已加载
-  const holidayFireworksLoaded = computed(() => settingStore.holidayFireworksLoaded)
+  /**
+   * 烟花效果是否已加载
+   */
+  const holidayFireworksLoaded = computed(
+    () => settingStore.holidayFireworksLoaded,
+  )
 
-  // 节日礼花是否显示
-  const isShowFireworks = computed(() => settingStore.isShowFireworks)
+  /**
+   * 是否显示烟花效果
+   */
+  const isShowFireworks = computed(
+    () => settingStore.isShowFireworks,
+  )
 
-  // 烟花间隔引用，用于清理
-  let fireworksInterval: { pause: () => void } | null = null
+  /**
+   * 判断是否应该触发节日效果
+   */
+  const shouldTriggerFestival = () => {
+    return currentFestivalData.value && isShowFireworks.value
+  }
 
-  // 节日庆祝相关配置
-  const FESTIVAL_CONFIG = {
-    INITIAL_DELAY: 300, // 初始延迟时间，单位毫秒
-    FIREWORK_INTERVAL: 1000, // 烟花效果触发间隔，单位毫秒
-    TEXT_DELAY: 2000, // 文本显示延迟时间，单位毫秒
-    MAX_TRIGGERS: 6, // 最大触发次数
-  } as const
+  /**
+   * 触发单个烟花效果
+   */
+  const triggerFireworkEffect = () => {
+    blogMittBus.emit('triggerFireworks', currentFestivalData.value?.image)
+  }
 
-  // 根据节日列表显示节日祝福
-  const openFestival = () => {
-    // 没有节日数据，不显示
-    if (!currentFestivalData.value) {
-      return
+  /**
+   * 判断是否应该停止烟花效果
+   * @param triggers 已触发次数
+   */
+  const shouldStopFireworks = (triggers: number) => {
+    return triggers >= FESTIVAL_CONFIG.MAX_TRIGGERS
+  }
+
+  /**
+   * 停止烟花并显示祝福文本
+   * @param pause 停止函数
+   */
+  const stopFireworksAndShowText = (pause: () => void) => {
+    pause()
+    settingStore.setholidayFireworksLoaded(true)
+
+    useTimeoutFn(() => {
+      settingStore.setShowFestivalText(true)
+      setFestivalDate()
+    }, FESTIVAL_CONFIG.TEXT_DELAY)
+  }
+
+  /**
+   * 存储烟花间隔引用
+   * @param pause 停止函数
+   */
+  const storeFireworksInterval = (pause: () => void) => {
+    fireworksInterval = {
+      pause,
     }
+  }
 
-    // 礼花效果结束，不显示
-    if (!isShowFireworks.value) {
+  /**
+   * 开启节日庆典效果
+   * @description 触发烟花效果并显示节日祝福文本
+   */
+  const openFestival = () => {
+    if (!shouldTriggerFestival()) {
       return
     }
 
@@ -61,31 +139,24 @@ export function useCeremony() {
 
     const { start: startFireworks } = useTimeoutFn(() => {
       const { pause } = useIntervalFn(() => {
-        // console.log(currentFestivalData.value?.image)
-        blogMittBus.emit('triggerFireworks', currentFestivalData.value?.image)
+        triggerFireworkEffect()
         triggers++
 
-        if (triggers >= FESTIVAL_CONFIG.MAX_TRIGGERS) {
-          pause()
-          settingStore.setholidayFireworksLoaded(true)
-
-          // 主页显示节日文本
-          useTimeoutFn(() => {
-            settingStore.setShowFestivalText(true)
-            setFestivalDate()
-          }, FESTIVAL_CONFIG.TEXT_DELAY)
+        if (shouldStopFireworks(triggers)) {
+          stopFireworksAndShowText(pause)
         }
       }, FESTIVAL_CONFIG.FIREWORK_INTERVAL)
 
-      fireworksInterval = {
-        pause,
-      }
+      storeFireworksInterval(pause)
     }, FESTIVAL_CONFIG.INITIAL_DELAY)
 
     startFireworks()
   }
 
-  // 清理函数
+  /**
+   * 清理节日庆典效果
+   * @description 停止烟花效果并隐藏祝福文本
+   */
   const cleanup = () => {
     if (fireworksInterval) {
       fireworksInterval.pause()

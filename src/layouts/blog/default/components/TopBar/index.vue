@@ -57,6 +57,9 @@ const isDark = computed(() => settingStore.isDark)
 
 const { width } = useWindowSize()
 
+/**
+ *   顶部菜单宽度
+ */
 const menuTopWidth = computed(() => {
   return width.value * 0.5
 })
@@ -88,16 +91,25 @@ function visibleMenu() {
   settingStore.setMenuOpen(!menuOpen.value)
 }
 
+/**
+ *  返回首页
+ */
 function toHome() {
   router.push(HOME_PAGE)
 }
 
+/**
+ *  刷新
+ */
 function reload(time: number = 0) {
   setTimeout(() => {
     settingStore.reload()
   }, time)
 }
 
+/**
+ *  打开设置
+ */
 function openSetting() {
   blogMittBus.emit('openSetting')
 }

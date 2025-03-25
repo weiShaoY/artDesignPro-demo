@@ -6,9 +6,9 @@ const documentRoute: BlogType.AppRouteRecordRaw = {
   component: BLOG_DEFAULT_LAYOUT,
   meta: {
     title: '文档',
-    icon: '&#xe81a;',
     keepAlive: false,
     order: 0,
+    icon: 'blog-menu-creativity',
   },
   children: [
     {

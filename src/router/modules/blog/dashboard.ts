@@ -27,6 +27,8 @@ const dashboardRoute: BlogType.AppRouteRecordRaw = {
       meta: {
         title: '分析页',
         keepAlive: true,
+        icon: 'blog-menu-creativity',
+
       },
     },
     {
@@ -37,7 +39,9 @@ const dashboardRoute: BlogType.AppRouteRecordRaw = {
         title: '电子商务',
         keepAlive: true,
         showTextBadge: 'new',
+        icon: 'blog-menu-creativity',
         order: 0,
+
       },
     },
   ],

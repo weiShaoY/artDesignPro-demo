@@ -2,7 +2,6 @@ import type { Router } from 'vue-router'
 
 import { SystemInfo } from '@/config/setting'
 
-
 /**
  * 创建文档标题守卫
  *
