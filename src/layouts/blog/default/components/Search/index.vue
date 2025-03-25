@@ -5,40 +5,62 @@ import { useSettingStore } from '@/store/modules/setting'
 
 import { blogMittBus } from '@/utils'
 
-import { Search } from '@element-plus/icons-vue'
+import { Search as SearchIcon } from '@element-plus/icons-vue'
 
 const router = useRouter()
 
 const settingStore = useSettingStore()
 
+/**
+ *   搜索历史记录最大存储数量
+ */
+const HISTORY_MAX_LENGTH = 5
+
+/**
+ *  菜单列表
+ */
 const menuList = computed(() => useMenuStore().menuList)
 
-const showSearchDialog = ref(false)
+/**
+ *  是否显示搜索弹窗
+ */
+const isShowSearchDialog = ref(false)
 
+/**
+ *   搜索输入框Ref
+ */
+const searchInputRef = ref<HTMLInputElement | null>(null)
+
+/**
+ *   搜索关键词
+ */
 const searchVal = ref()
 
+/**
+ *   搜索结果列表
+ */
 const searchResult: any = ref([])
 
-const historyMaxLength = 5 // 历史记录最大长度
-
-const historyResult = computed(() => settingStore.searchHistoryList)
-
-const searchInput = ref<HTMLInputElement | null>(null)
-
-// 搜索逻辑
-const highlightedIndex = ref([0, 0]) // [parentIndex, childIndex]
-
+/**
+ *  搜索历史记录列表的高亮索引
+ */
 const historyHIndex = ref(0)
 
-onMounted(() => {
-  blogMittBus.on('openSearchDialog', openSearchDialog)
-  document.addEventListener('keydown', handleKeydown)
-})
+/**
+ *   搜索历史记录列表
+ */
+const searchHistoryList = computed(() => settingStore.searchHistoryList)
 
-onUnmounted(() => {
-  document.removeEventListener('keydown', handleKeydown)
-})
+/**
+ * 当前高亮选项的索引位置
+ */
+const highlightedIndex = ref(0)
 
+/**
+ * 处理全局键盘事件
+ * @param  event - 键盘事件对象
+ * @desc 监听 Command/Ctrl + K 组合键打开搜索弹窗
+ */
 function handleKeydown(event: KeyboardEvent) {
   const isMac = navigator.platform.toUpperCase().includes('MAC')
 
@@ -46,32 +68,74 @@ function handleKeydown(event: KeyboardEvent) {
 
   if (isCommandKey && event.key.toLowerCase() === 'k') {
     event.preventDefault()
-    showSearchDialog.value = true
+    isShowSearchDialog.value = true
     focusInput()
   }
 }
 
+/**
+ * 聚焦搜索输入框
+ * @desc 使用setTimeout确保弹窗打开后再执行聚焦操作
+ */
 function focusInput() {
   setTimeout(() => {
-    searchInput.value?.focus()
+    searchInputRef.value?.focus()
   }, 100)
 }
 
+/**
+ * 执行搜索操作
+ * @param  val - 搜索关键词
+ * @desc 根据输入值进行模糊搜索并更新搜索结果列表
+ */
 function search(val: string) {
-  if (val) {
-    const list = fuzzyQueryList(menuList.value, val)
+  if (!val) {
+    searchResult.value = []
+    return
+  }
 
-    searchResult.value = list.filter((item) => {
-      return item.children!.length
+  /**
+   * 递归处理菜单项扁平化
+   * @param items 要处理的菜单项数组
+   * @returns 扁平化后的菜单项数组
+   */
+  const flattenItems = (items: BlogType.MenuListType[]): BlogType.MenuListType[] => {
+    return items.flatMap((item) => {
+      // 包含在主体容器中的项直接保留
+      if (item.meta.isInMainContainer) {
+        return [item]
+      }
+
+      // 不包含在主体容器中的项需要展开自身及其子项
+      const children = item.children ? flattenItems(item.children) : []
+
+      return [item, ...children]
     })
   }
-  else {
-    searchResult.value = []
-  }
+
+  // 执行模糊查询
+  const filteredList = fuzzyQueryList(menuList.value, val)
+
+  // 处理结果扁平化
+  searchResult.value = filteredList.flatMap((category) => {
+    // 分类下没有子项时直接返回空数组
+    if (!category.children?.length) {
+      return []
+    }
+
+    // 处理当前分类的扁平化
+    return flattenItems([category])
+  })
+
+  console.log('%c Line:101 🍊 searchResult.value', 'color:#42b983', searchResult.value)
 }
 
-// 模糊查询
-function fuzzyQueryList(arr: BlogType.MenuListType[], val: string): BlogType.MenuListType[] {
+/**
+ * 模糊查询菜单列表
+ * @param  arr - 菜单列表
+ * @param  val - 搜索关键字
+ * @returns  - 查询结果
+ */function fuzzyQueryList(arr: BlogType.MenuListType[], val: string): BlogType.MenuListType[] {
   const lowerVal = val.toLowerCase() // 将查询值转换为小写
 
   const searchItem = (
@@ -109,104 +173,66 @@ function fuzzyQueryList(arr: BlogType.MenuListType[], val: string): BlogType.Men
 // 搜索框键盘向上切换
 function highlightPrevious() {
   if (searchVal.value) {
-    const [parentIndex, childIndex] = highlightedIndex.value
-
-    if (childIndex > 0) {
-      highlightedIndex.value = [parentIndex, childIndex - 1]
-    }
-    else if (parentIndex > 0) {
-      const previousParent = searchResult.value[parentIndex - 1]
-
-      const newChildIndex
-        = previousParent.children.length > 0
-          ? previousParent.children.length - 1
-          : -1
-
-      highlightedIndex.value = [parentIndex - 1, newChildIndex]
-    }
-    else {
-      const lastParentIndex = searchResult.value.length - 1
-
-      const lastParent = searchResult.value[lastParentIndex]
-
-      const newChildIndex
-        = lastParent.children.length > 0 ? lastParent.children.length - 1 : -1
-
-      highlightedIndex.value = [lastParentIndex, newChildIndex]
-    }
+    highlightedIndex.value = (highlightedIndex.value - 1 + searchResult.value.length)
+      % searchResult.value.length
   }
   else {
     historyHIndex.value
-      = (historyHIndex.value - 1 + historyResult.value.length)
-        % historyResult.value.length
+      = (historyHIndex.value - 1 + searchHistoryList.value.length)
+        % searchHistoryList.value.length
   }
 }
 
-// 搜索框键盘向下切换
+/**
+ * 搜索框键盘向下切换高亮项
+ */
 function highlightNext() {
   if (searchVal.value) {
-    const [parentIndex, childIndex] = highlightedIndex.value
-
-    const currentParent = searchResult.value[parentIndex]
-
-    const hasMoreChildren = childIndex < currentParent.children.length - 1
-
-    if (hasMoreChildren) {
-      highlightedIndex.value = [parentIndex, childIndex + 1]
-    }
-    else if (parentIndex < searchResult.value.length - 1) {
-      highlightedIndex.value = [parentIndex + 1, 0]
-    }
-    else {
-      highlightedIndex.value = [0, 0]
-    }
+    highlightedIndex.value = (highlightedIndex.value + 1) % searchResult.value.length
   }
   else {
-    historyHIndex.value = (historyHIndex.value + 1) % historyResult.value.length
+    historyHIndex.value = (historyHIndex.value + 1) % searchHistoryList.value.length
   }
 }
 
-// 搜索框键盘回车跳转页面
+/**
+ * 搜索框键盘回车跳转页面
+ */
 function selectHighlighted() {
   if (searchVal.value) {
-    const [parentIndex, childIndex] = highlightedIndex.value
-
-    if (parentIndex !== -1) {
-      const selectedItem
-        = childIndex === -1
-          ? searchResult.value[parentIndex]
-          : searchResult.value[parentIndex].children[childIndex]
-
-      if (selectedItem) {
-        searchInput.value?.blur()
-        searchGoPage(selectedItem)
-      }
-    }
+    searchGoPage(searchResult.value[highlightedIndex.value])
   }
   else {
-    if (!searchVal.value && historyResult.value.length === 0) {
+    if (!searchVal.value && searchHistoryList.value.length === 0) {
       return
     }
 
-    searchGoPage(historyResult.value[historyHIndex.value])
+    searchGoPage(searchHistoryList.value[historyHIndex.value])
   }
 }
 
-function isHighlighted(parentIndex: number, childIndex?: number) {
-  const [highlightedParentIndex, highlightedChildIndex] = highlightedIndex.value
-
-  return childIndex === undefined
-    ? highlightedParentIndex === parentIndex && highlightedChildIndex === -1
-    : highlightedParentIndex === parentIndex
-      && highlightedChildIndex === childIndex
+/**
+ * 判断是否高亮
+ * @param  index - 索引
+ * @returns  - 是否高亮
+ */
+function isHighlighted(index: number) {
+  return highlightedIndex.value === index
 }
 
+/**
+ * 搜索框失去焦点
+ */
 function searchBlur() {
-  highlightedIndex.value = [0, 0]
+  highlightedIndex.value = 0
 }
 
+/**
+ * 跳转到搜索结果页面
+ * @param {BlogType.MenuListType} item - 搜索结果项
+ */
 function searchGoPage(item: BlogType.MenuListType) {
-  showSearchDialog.value = false
+  isShowSearchDialog.value = false
 
   addHistory(item)
 
@@ -215,56 +241,89 @@ function searchGoPage(item: BlogType.MenuListType) {
   searchResult.value = []
 }
 
-// 添加历史记录
+/**
+ * 更新搜索历史
+ */
 function updateHistory() {
-  if (Array.isArray(historyResult.value)) {
-    settingStore.setSearchHistoryList(historyResult.value)
+  if (Array.isArray(searchHistoryList.value)) {
+    settingStore.setSearchHistoryList(searchHistoryList.value)
   }
 }
 
+/**
+ * 添加搜索历史
+ * @param  item - 搜索结果项
+ */
 function addHistory(item: BlogType.MenuListType) {
-  const hasItemIndex = historyResult.value.findIndex(
+  const hasItemIndex = searchHistoryList.value.findIndex(
     (historyItem: BlogType.MenuListType) => historyItem.path === item.path,
   )
 
   if (hasItemIndex !== -1) {
-    historyResult.value.splice(hasItemIndex, 1) // 如果存在则删除
+    searchHistoryList.value.splice(hasItemIndex, 1) // 如果存在则删除
   }
-  else if (historyResult.value.length >= historyMaxLength) {
-    historyResult.value.pop() // 超过最大记录数则删除最后一个
+  else if (searchHistoryList.value.length >= HISTORY_MAX_LENGTH) {
+    searchHistoryList.value.pop() // 超过最大记录数则删除最后一个
   }
 
   cleanItem(item)
-  historyResult.value.unshift(item) // 添加新的 item 到头部
+  searchHistoryList.value.unshift(item) // 添加新的 item 到头部
   updateHistory()
 }
 
+/**
+ * 清理搜索项
+ * @param  item - 搜索结果项
+ */
 function cleanItem(item: BlogType.MenuListType) {
   delete item.children
   delete item.meta.authList
 }
 
+/**
+ * 删除搜索历史
+ * @param  index - 历史记录索引
+ */
 function deleteHistory(index: number) {
-  historyResult.value.splice(index, 1)
+  searchHistoryList.value.splice(index, 1)
   updateHistory()
 }
 
+/**
+ * 打开搜索弹窗
+ */
 function openSearchDialog() {
-  showSearchDialog.value = true
+  isShowSearchDialog.value = true
   focusInput()
 }
 
+/**
+ * 关闭搜索弹窗
+ */
 function closeSearchDialog() {
   searchVal.value = ''
   searchResult.value = []
-  highlightedIndex.value = [0, 0]
+  highlightedIndex.value = 0
   historyHIndex.value = 0
 }
 
-// 鼠标 hover 高亮
-function highlightOnHover(pIndex: number, cIndex: number) {
-  highlightedIndex.value = [pIndex, cIndex]
+/**
+ * 鼠标悬停高亮
+ * @param  index - 索引
+ */
+function highlightOnHover(index: number) {
+  highlightedIndex.value = index
 }
+
+onMounted(() => {
+  blogMittBus.on('openSearchDialog', openSearchDialog)
+  document.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeydown)
+})
+
 </script>
 
 <template>
@@ -272,7 +331,7 @@ function highlightOnHover(pIndex: number, cIndex: number) {
     class="search-widget"
   >
     <el-dialog
-      v-model="showSearchDialog"
+      v-model="isShowSearchDialog"
       width="600"
       :show-close="false"
       :lock-scroll="false"
@@ -280,10 +339,10 @@ function highlightOnHover(pIndex: number, cIndex: number) {
       @close="closeSearchDialog"
     >
       <el-input
-        ref="searchInput"
+        ref="searchInputRef"
         v-model.trim="searchVal"
         placeholder="搜索页面"
-        :prefix-icon="Search"
+        :prefix-icon="SearchIcon"
         @input="search"
         @blur="searchBlur"
         @keydown.up.prevent="highlightPrevious"
@@ -306,22 +365,20 @@ function highlightOnHover(pIndex: number, cIndex: number) {
         class="result"
       >
         <div
-          v-for="(item, pIndex) in searchResult"
-          :key="pIndex"
+          v-for="(item, index) in searchResult"
+          :key="index"
           class="box"
         >
           <div
-            v-for="(cItem, cIndex) in item.children"
-            :key="cIndex"
             :class="{
-              highlighted: isHighlighted(pIndex, cIndex),
+              highlighted: isHighlighted(index),
             }"
-            @click="searchGoPage(cItem)"
-            @mouseenter="highlightOnHover(pIndex, cIndex)"
+            @click="searchGoPage(item)"
+            @mouseenter="highlightOnHover(index)"
           >
-            {{ cItem.meta.title }}
+            {{ item.meta.title }}
             <i
-              v-show="isHighlighted(pIndex, cIndex)"
+              v-show="isHighlighted(index)"
               class="selected-icon iconfont-sys"
             >
               &#xe6e6;
@@ -332,7 +389,7 @@ function highlightOnHover(pIndex: number, cIndex: number) {
 
       <!-- 搜索历史 -->
       <div
-        v-show="!searchVal && searchResult.length === 0 && historyResult.length > 0"
+        v-show="!searchVal && searchResult.length === 0 && searchHistoryList.length > 0"
         class="history-box"
       >
         <p
@@ -345,7 +402,7 @@ function highlightOnHover(pIndex: number, cIndex: number) {
           class="history-result"
         >
           <div
-            v-for="(item, index) in historyResult"
+            v-for="(item, index) in searchHistoryList"
             :key="index"
             class="box"
             :class="{
@@ -354,140 +411,6 @@ function highlightOnHover(pIndex: number, cIndex: number) {
             @click="searchGoPage(item)"
             @mouseenter="historyHIndex = index"
           >
-            {{ item.meta.title }}
-            <span>
-              {{ item.meta.title }}
-            </span>
-
-            <i
-              class="selected-icon iconfont-sys"
-              @click.stop="deleteHistory(index)"
-            >
-              &#xe83a;
-            </i>
-          </div>
-        </div>
-      </div>
-
-      <template
-        #footer
-      >
-        <div
-          class="dialog-footer"
-        >
-          <div>
-            <i
-              class="iconfont-sys"
-            > &#xe864; </i>
-
-            <i
-              class="iconfont-sys"
-            > &#xe867; </i>
-
-            <span>切换</span>
-          </div>
-
-          <div>
-            <i
-              class="iconfont-sys"
-            > &#xe6e6; </i>
-
-            <span>选择</span>
-          </div>
-        </div>
-      </template>
-    </el-dialog>
-  </div>
-</template>
-
-<template>
-  <div
-    class="search-widget"
-  >
-    <el-dialog
-      v-model="showSearchDialog"
-      width="600"
-      :show-close="false"
-      :lock-scroll="false"
-      modal-class="search-modal"
-      @close="closeSearchDialog"
-    >
-      <el-input
-        ref="searchInput"
-        v-model.trim="searchVal"
-        placeholder="搜索页面"
-        :prefix-icon="Search"
-        @input="search"
-        @blur="searchBlur"
-        @keydown.up.prevent="highlightPrevious"
-        @keydown.down.prevent="highlightNext"
-        @keydown.enter.prevent="selectHighlighted"
-      >
-        <template
-          #suffix
-        >
-          <div
-            class="search-keydown"
-          >
-            <span>ESC</span>
-          </div>
-        </template>
-      </el-input>
-
-      <div
-        v-show="searchResult.length"
-        class="result"
-      >
-        <div
-          v-for="(item, pIndex) in searchResult"
-          :key="pIndex"
-          class="box"
-        >
-          <div
-            v-for="(cItem, cIndex) in item.children"
-            :key="cIndex"
-            :class="{
-              highlighted: isHighlighted(pIndex, cIndex)
-            }"
-            @click="searchGoPage(cItem)"
-            @mouseenter="highlightOnHover(pIndex, cIndex)"
-          >
-            {{ cItem.meta.title }}
-            <i
-              v-show="isHighlighted(pIndex, cIndex)"
-              class="selected-icon iconfont-sys"
-            >
-              &#xe6e6;
-            </i>
-          </div>
-        </div>
-      </div>
-
-      <!-- 搜索历史 -->
-      <div
-        v-show="!searchVal && searchResult.length === 0 && historyResult.length > 0"
-        class="history-box"
-      >
-        <p
-          class="title"
-        >
-          搜索历史
-        </p>
-
-        <div
-          class="history-result"
-        >
-          <div
-            v-for="(item, index) in historyResult"
-            :key="index"
-            class="box"
-            :class="{
-              highlighted: historyHIndex === index,
-            }"
-            @click="searchGoPage(item)"
-            @mouseenter="historyHIndex = index"
-          >
-            {{ item.meta.title }}
             <span>
               {{ item.meta.title }}
             </span>
