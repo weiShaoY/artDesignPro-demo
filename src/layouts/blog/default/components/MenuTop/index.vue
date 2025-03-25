@@ -1,23 +1,22 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 
 import MenuTopSubmenu from './MenuTopSubmenu.vue'
 
-defineProps({
+type PropsType = {
+
   /**
    *   菜单列表
    */
-  list: {
-    type: [Array] as PropType<BlogType.MenuListType[]>,
-    default: () => [],
-  },
+  list?: BlogType.MenuListType[]
 
   /**
    *   菜单宽度
    */
-  width: {
-    type: Number,
-    default: 500,
-  },
+  width?: number
+}
+withDefaults(defineProps<PropsType>(), {
+  list: () => [],
+  width: 500,
 })
 
 const route = useRoute()
@@ -32,20 +31,20 @@ const routerPath = computed(() => {
     class="menu-top"
   >
     <el-menu
-      :ellipsis="true"
-      class="el-menu-popper-demo"
-      mode="horizontal"
       :default-active="routerPath"
-      text-color="var(--art-text-gray-700)"
+      :ellipsis="true"
       :popper-offset="16"
       :style="{ width: `${width}px` }"
       background-color="transparent"
+      class="el-menu-popper-demo"
+      mode="horizontal"
+      text-color="var(--art-text-gray-700)"
     >
       <MenuTopSubmenu
         v-for="item in list"
         :key="item.id"
-        :item="item"
         :is-mobile="false"
+        :item="item"
         :level="0"
       />
     </el-menu>
@@ -53,7 +52,7 @@ const routerPath = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-  // :deep(.el-menu--horizontal > .el-sub-menu.is-active) {
+// :deep(.el-menu--horizontal > .el-sub-menu.is-active) {
 //   background-color: #eee;
 // }
 

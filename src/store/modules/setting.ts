@@ -76,9 +76,6 @@ export const useSettingStore = defineStore('settingStore', () => {
   /**  色弱模式 */
   const colorWeak = ref(false)
 
-  /**  是否显示设置引导 */
-  const showSettingGuide = ref(true)
-
   /**  页面切换动画 */
   const pageTransition = ref('slide-right')
 
@@ -171,7 +168,6 @@ export const useSettingStore = defineStore('settingStore', () => {
       showLanguage.value = setting.showLanguage
       showNprogress.value = setting.showNprogress
       colorWeak.value = setting.colorWeak
-      showSettingGuide.value = setting.showSettingGuide
       pageTransition.value = setting.pageTransition
       menuOpen.value = setting.menuOpen
       watermarkVisible.value = setting.watermarkVisible
@@ -268,16 +264,6 @@ export const useSettingStore = defineStore('settingStore', () => {
     colorWeak.value = !colorWeak.value
   }
 
-  // 隐藏设置引导
-  function hideSettingGuide() {
-    showSettingGuide.value = false
-  }
-
-  // 显示设置引导
-  function openSettingGuide() {
-    showSettingGuide.value = true
-  }
-
   // 设置页面切换动画
   function setPageTransition(transition: string) {
     pageTransition.value = transition
@@ -348,7 +334,6 @@ export const useSettingStore = defineStore('settingStore', () => {
     showLanguage,
     showNprogress,
     colorWeak,
-    showSettingGuide,
     pageTransition,
     menuOpen,
     refresh,
@@ -383,8 +368,7 @@ export const useSettingStore = defineStore('settingStore', () => {
     setLanguage,
     setNprogress,
     setColorWeak,
-    hideSettingGuide,
-    openSettingGuide,
+
     setPageTransition,
     setMenuOpen,
     reload,

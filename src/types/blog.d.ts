@@ -103,7 +103,7 @@ declare namespace BlogType {
   /**
    *  博客模块菜单列表菜单项类型
    */
-  type MenuListType = AppRouteRecordRaw & {
+  type MenuListType = Omit<AppRouteRecordRaw, 'children'> & {
 
     /**
      *  菜单ID

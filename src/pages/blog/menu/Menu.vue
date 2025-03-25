@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus'
 
-import { IconTypeEnum } from '@/enums/appEnum'
-
 import { useMenuStore } from '@/store/modules/menu'
 
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -84,14 +82,12 @@ const dialogTitle = computed(() => {
   return isEdit.value ? `编辑${type}` : `新建${type}`
 })
 
-function showDialog(type: string, row: any) {
-  showModel('menu', row, true)
-}
-
 function handleChange() {}
 
 async function submitForm() {
-  if (!formRef.value) { return }
+  if (!formRef.value) {
+    return
+  }
 
   await formRef.value.validate(async (valid) => {
     if (valid) {
@@ -138,11 +134,10 @@ async function submitForm() {
   })
 }
 
-function showModel(type: string, row?: any, lock: boolean = false) {
+function showModel(type: string, row?: any) {
   dialogVisible.value = true
   labelPosition.value = type
   isEdit.value = false
-  lockMenuType.value = lock
   resetForm()
 
   if (row) {
@@ -198,23 +193,6 @@ function resetForm() {
   })
 }
 
-async function deleteMenu() {
-  try {
-    await ElMessageBox.confirm('确定要删除该菜单吗？删除后无法恢复', '提示', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning',
-    })
-
-    ElMessage.success('删除成功')
-  }
-  catch (error) {
-    if (error !== 'cancel') {
-      ElMessage.error('删除失败')
-    }
-  }
-}
-
 async function deleteAuth() {
   try {
     await ElMessageBox.confirm('确定要删除该权限吗？删除后无法恢复', '提示', {
@@ -235,19 +213,23 @@ async function deleteAuth() {
 // 修改计算属性，增加锁定控制参数
 const disableMenuType = computed(() => {
   // 编辑权限时锁定为权限类型
-  if (isEdit.value && labelPosition.value === 'button') { return true }
+  if (isEdit.value && labelPosition.value === 'button') {
+    return true
+  }
 
   // 编辑菜单时锁定为菜单类型
-  if (isEdit.value && labelPosition.value === 'menu') { return true }
+  if (isEdit.value && labelPosition.value === 'menu') {
+    return true
+  }
 
   // 顶部添加菜单按钮时锁定为菜单类型
-  if (!isEdit.value && labelPosition.value === 'menu' && lockMenuType.value) { return true }
+  if (!isEdit.value && labelPosition.value === 'menu') {
+    return true
+  }
 
   return false
 })
 
-// 添加一个控制变量
-const lockMenuType = ref(false)
 </script>
 
 <template>
@@ -261,7 +243,7 @@ const lockMenuType = ref(false)
       <el-button
         v-auth="'add'"
         v-ripple
-        @click="showModel('menu', null, true)"
+        @click="showModel('menu', null)"
       >
         添加菜单
       </el-button>

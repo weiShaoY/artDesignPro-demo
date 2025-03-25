@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import type { MenuListType } from '@/types/menu'
 
 import { blogMenuJump } from '@/utils/blogMenuJump'
 
 import { computed } from 'vue'
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<PropsType>(), {
   title: '',
   list: () => [],
   theme: () => ({
@@ -20,55 +19,75 @@ const emit = defineEmits<{
 }>()
 
 // 类型定义
-type Props = {
+type PropsType = {
 
-  /** 菜单标题 */
+  /**
+   *  菜单标题
+   */
   title?: string
 
-  /** 菜单列表 */
-  list?: MenuListType[]
+  /**
+   *  菜单列表
+   */
+  list?: BlogType.MenuListType[]
 
-  /** 菜单主题 */
+  /**
+   *  菜单主题
+   */
   theme?: {
 
-    /** 菜单图标颜色 */
+    /**
+     *  菜单图标颜色
+     */
     iconColor?: string
   }
 
-  /** 是否是移动端 */
+  /**
+   *  是否是移动端
+   */
   isMobile?: boolean
 
-  /** 菜单层级 */
+  /**
+   *  菜单层级
+   */
   level?: number
 }
 const route = useRoute()
 
-console.log('%c Line:45 🌮 route', 'color:#93c0a4', route)
+/**
+ *  过滤菜单列表
+ */
+const filteredMenuItemList = computed(() => filterRouteList(props.list))
 
-// 计算属性
-const filteredMenuItems = computed(() => filterRoutes(props.list))
-
-// 关闭菜单
+/**
+ *  关闭菜单
+ */
 const closeMenu = () => emit('close')
 
-// 跳转页面
-function goPage(item: MenuListType) {
+/**
+ *  跳转页面
+ */
+function goPage(item: BlogType.MenuListType) {
   closeMenu()
   blogMenuJump(item)
 }
 
-// 判断是否有子菜单
-function hasChildren(item: MenuListType): boolean {
+/**
+ *  判断是否有子菜单
+ */
+function hasChildren(item: BlogType.MenuListType): boolean {
   return Boolean(item.children?.length)
 }
 
-// 过滤菜单项
-function filterRoutes(items: MenuListType[]): MenuListType[] {
+/**
+ *  过滤路由列表
+ */
+function filterRouteList(items: BlogType.MenuListType[]): BlogType.MenuListType[] {
   return items
     .filter(item => !item.meta.isHide)
     .map(item => ({
       ...item,
-      children: item.children ? filterRoutes(item.children) : undefined,
+      children: item.children ? filterRouteList(item.children) : undefined,
     }))
 }
 
@@ -82,7 +101,7 @@ export default {
 
 <template>
   <template
-    v-for="item in filteredMenuItems"
+    v-for="item in filteredMenuItemList"
     :key="item.id"
   >
     <!-- 包含子菜单的项目 -->

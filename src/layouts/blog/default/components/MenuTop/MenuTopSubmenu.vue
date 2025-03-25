@@ -2,22 +2,52 @@
 
 import { blogMenuJump } from '@/utils/blogMenuJump'
 
-defineProps({
-  item: {
-    type: Object as PropType<BlogType.MenuListType>,
-    required: true,
-  },
-  theme: {
-    type: Object,
-    default: () => ({
-    }),
-  },
+type PropsType = {
 
-  isMobile: Boolean,
-  level: {
-    type: Number,
-    default: 0,
-  },
+  /**
+   *  菜单列表
+   */
+  item: BlogType.MenuListType
+
+  /**
+   *  菜单主题
+   */
+  theme?: {
+
+    /**
+     *  菜单图标颜色
+     */
+    iconColor?: string
+  }
+
+  /**
+   *  是否是移动端
+   */
+  isMobile?: boolean
+
+  /**
+   *  菜单层级
+   */
+  level?: number
+}
+
+withDefaults(defineProps<PropsType>(), {
+
+  /**
+   *   主题
+   */
+  theme: () => ({
+  }),
+
+  /**
+   *   是否是移动端
+   */
+  isMobile: false,
+
+  /**
+   *  菜单层级
+   */
+  level: 0,
 })
 
 const emit = defineEmits(['close'])
@@ -46,8 +76,8 @@ function isNotEmpty(children: BlogType.MenuListType[] | undefined) {
       #title
     >
       <i
-        class="menu-icon iconfont-sys"
         :style="{ color: theme?.iconColor }"
+        class="menu-icon iconfont-sys"
         v-html="item.meta.icon"
       />
 

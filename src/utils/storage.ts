@@ -103,7 +103,6 @@ export function validateStorageData() {
         showLanguage: 'boolean',
         showNprogress: 'boolean',
         colorWeak: 'boolean',
-        showSettingGuide: 'boolean',
         refresh: 'boolean',
       },
     },

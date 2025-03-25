@@ -41,8 +41,6 @@ const menuOpen = computed(() => settingStore.menuOpen)
 
 const showCrumbs = computed(() => settingStore.showCrumbs)
 
-const showSettingGuide = computed(() => settingStore.showSettingGuide)
-
 const menuList = computed(() => useMenuStore().menuList)
 
 const menuType = computed(() => settingStore.menuType)
@@ -102,16 +100,11 @@ function reload(time: number = 0) {
 
 function openSetting() {
   blogMittBus.emit('openSetting')
-
-  // 隐藏设置引导
-  if (showSettingGuide.value) {
-    settingStore.hideSettingGuide()
-  }
-
-  // 打开设置引导
-  // settingStore.openSettingGuide()
 }
 
+/**
+ *  打开顶部搜索框
+ */
 function openSearchDialog() {
   blogMittBus.emit('openSearchDialog')
 }
