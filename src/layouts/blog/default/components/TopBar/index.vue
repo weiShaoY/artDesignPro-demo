@@ -1,13 +1,9 @@
 <script setup lang="ts">
 
-import { SystemInfo } from '@/config/setting'
-
 import {
   MenuTypeEnum,
   MenuWidth,
 } from '@/enums/appEnum'
-
-import { HOME_PAGE } from '@/router'
 
 import { useMenuStore } from '@/store/modules/menu'
 
@@ -31,8 +27,6 @@ const isWindows = navigator.userAgent.includes('Windows')
 
 const settingStore = useSettingStore()
 
-const router = useRouter()
-
 const showMenuButton = computed(() => settingStore.showMenuButton)
 
 const showRefreshButton = computed(() => settingStore.showRefreshButton)
@@ -54,6 +48,11 @@ const isTopMenu = computed(() => menuType.value === MenuTypeEnum.TOP)
 const isTopLeftMenu = computed(() => menuType.value === MenuTypeEnum.TOP_LEFT)
 
 const isDark = computed(() => settingStore.isDark)
+
+/**
+ *  计算菜单主题
+ */
+const theme = computed(() => settingStore.getMenuTheme)
 
 const { width } = useWindowSize()
 
@@ -89,13 +88,6 @@ function topBarWidth(): string {
 
 function visibleMenu() {
   settingStore.setMenuOpen(!menuOpen.value)
-}
-
-/**
- *  返回首页
- */
-function toHome() {
-  router.push(HOME_PAGE)
 }
 
 /**
@@ -135,37 +127,13 @@ function openSearchDialog() {
         class="left"
         style="display: flex"
       >
-        <!-- 系统信息  -->
-        <div
-          v-if="isTopMenu"
-          class="top-header"
-          @click="toHome"
-        >
-          <svg
-            class="svg-icon2"
-            aria-hidden="true"
-          >
-            <use
-              xlink:href="#iconsys-zhaopian-copy"
-            />
-          </svg>
 
-          <p
-            v-if="width >= 1400"
-          >
-            {{ SystemInfo.name }}
-          </p>
-        </div>
+        <Logo
+          :is-hide-text="width <= 1400"
+          :text-color="theme.theme === 'dark' ? 'white' : 'black'"
+          class="svg-icon m-l-4 block"
+        />
 
-        <svg
-          class="svg-icon"
-          aria-hidden="true"
-          @click="toHome()"
-        >
-          <use
-            xlink:href="#iconsys-zhaopian-copy"
-          />
-        </svg>
         <!-- 菜单按钮 -->
         <div
           v-if="isLeftMenu && showMenuButton"

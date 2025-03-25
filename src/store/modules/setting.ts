@@ -383,18 +383,35 @@ export const useSettingStore = defineStore('settingStore', () => {
   }
 })
 
-function setElementThemeColor(color: string) {
-  const mixColor = '#ffffff'
+/**
+ * 设置Element Plus主题色
+ * @description 动态修改Element Plus主色及衍生色
+ * @param color 基础主题色(十六进制格式)
+ */
+function setElementThemeColor(color: string): void {
+  const settingStore = useSettingStore()
 
   const elStyle = document.documentElement.style
 
+  const mixColor = '#ffffff' // 用于生成浅色变体的混合色
+
+  const colorVariantsCount = 16 // 生成的浅色变体数量
+
+  // 设置基础主题色
   elStyle.setProperty('--el-color-primary', color)
-  handleElementThemeColor(color, useSettingStore().isDark)
 
-  // 生成更淡一点的颜色
-  for (let i = 1; i < 16; i++) {
-    const itemColor = colourBlend(color, mixColor, i / 16)
+  // 处理Element主题色相关变量
+  handleElementThemeColor(color, settingStore.isDark)
 
-    elStyle.setProperty(`--el-color-primary-custom-${i}`, itemColor)
+  /**
+   * 生成并设置浅色变体
+   * @description 生成从基础色到白色的渐变颜色
+   */
+  for (let i = 1; i < colorVariantsCount; i++) {
+    const blendRatio = i / colorVariantsCount
+
+    const variantColor = colourBlend(color, mixColor, blendRatio)
+
+    elStyle.setProperty(`--el-color-primary-custom-${i}`, variantColor)
   }
 }

@@ -12,16 +12,18 @@ type LogoPropsType = {
   /**
    *  是否隐藏logo
    */
-  isShowLogo?: boolean
+  isHideLogo?: boolean
 
   /**
    *  是否隐藏文字
    */
-  isShowText?: boolean
+  isHideText?: boolean
 }
 
 const props = withDefaults(defineProps<LogoPropsType>(), {
   textColor: 'white',
+  isHideLogo: false,
+  isHideText: false,
 })
 
 const router = useRouter()
@@ -37,13 +39,13 @@ function handleClick() {
     @click="handleClick"
   >
     <SvgIcon
-      v-if="!props.isShowLogo"
+      v-if="!props.isHideLogo"
       icon="logo"
       size="60"
     />
 
     <SvgIcon
-      v-if="!props.isShowText"
+      v-if="!props.isHideText"
       icon="weiShaoY"
       size="120"
       :style="{

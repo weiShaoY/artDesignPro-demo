@@ -8,7 +8,7 @@ import { MenuThemeEnum, SystemThemeEnum } from '@/enums/appEnum'
 export const ElementPlusTheme = {
   /** 主色 */
   primary: '#5D87FF',
-} as const
+}
 
 /**
  * 系统信息配置
@@ -25,7 +25,7 @@ export const SystemInfo = {
     /** 默认密码 */
     password: '123456',
   },
-} as const
+}
 
 /**
  * 系统主题样式配置
@@ -37,7 +37,7 @@ export const SystemThemeStyles: SystemThemeTypes = {
   [SystemThemeEnum.DARK]: {
     className: SystemThemeEnum.DARK,
   },
-} as const
+}
 
 /**
  * 设置中心主题列表配置
@@ -64,7 +64,7 @@ export const SettingThemeList = [
     leftLineColor: '#EDEEF0',
     rightLineColor: '#3F4257',
   },
-] as const
+]
 
 /**
  * 菜单主题样式配置
@@ -109,7 +109,7 @@ export const ThemeList: MenuThemeType[] = [
     leftLineColor: '#EDEEF0',
     rightLineColor: '#EDEEF0',
   },
-] as const
+]
 
 /**
  * 暗黑模式下菜单样式配置
@@ -128,7 +128,7 @@ export const DarkMenuStyles: MenuThemeType[] = [
     leftLineColor: '#3F4257',
     rightLineColor: '#EDEEF0',
   },
-] as const
+]
 
 /**
  * 系统主色配置
@@ -141,7 +141,7 @@ export const SystemMainColor = [
   '#38C0FC', // 浅蓝
   '#F9901F', // 橙色
   '#FF80C8', // 粉色
-] as const
+]
 
 /**
  * 系统设置中心配置
@@ -152,4 +152,4 @@ export const SystemSetting = {
 
   /** 圆角默认值(rem) */
   defaultCustomRadius: '0.75',
-} as const
+}

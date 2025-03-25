@@ -272,9 +272,8 @@ watch(
         class="h-15 w-full flex items-center justify-center"
       >
         <Logo
-          :is-show-text="true"
+          :is-hide-text="true"
         />
-
       </div>
 
       <el-scrollbar
@@ -341,13 +340,15 @@ watch(
       :style="{ background: theme.background }"
     >
       <div
-        class="h-15 flex items-center justify-center"
+        class="header h-15 flex items-center justify-center"
       >
+        <!-- 如果是双列菜单 则隐藏 logo  -->
+        <!-- 如果是双列菜单 则不隐藏文字  -->
         <Logo
-          :is-show-logo="isDualMenu"
+          :is-hide-logo="isDualMenu"
+          :is-hide-text="collapse"
           :text-color="theme.theme === 'dark' ? 'white' : 'black'"
         />
-
       </div>
 
       <el-menu
