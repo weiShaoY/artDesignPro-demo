@@ -1,6 +1,5 @@
 import type { MenuListType } from '@/types/menu'
 
-
 // 创建递归函数处理嵌套路由
 /**
  * 处理路由配置,转换为菜单数据结构
@@ -45,4 +44,3 @@ export function saveIframeRoutes(list: MenuListType[]): void {
 export function getIframeRoutes() {
   return JSON.parse(sessionStorage.getItem('iframeRoutes') || '[]')
 }
-

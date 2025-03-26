@@ -27,6 +27,9 @@ const isWindows = navigator.userAgent.includes('Windows')
 
 const settingStore = useSettingStore()
 
+/**
+ *  显示菜单按钮
+ */
 const showMenuButton = computed(() => settingStore.showMenuButton)
 
 const showRefreshButton = computed(() => settingStore.showRefreshButton)
@@ -128,49 +131,58 @@ function openSearchDialog() {
         style="display: flex"
       >
 
+        <!-- 当前是顶部菜单 -->
         <Logo
+          v-if="isTopMenu"
           :is-hide-text="width <= 1400"
+          :text-color="theme.theme === 'dark' ? 'white' : 'black'"
+          class="m-l-4 block"
+        />
+
+        <!-- 手机端显示这个logo -->
+        <Logo
+          :is-hide-text="true"
           :text-color="theme.theme === 'dark' ? 'white' : 'black'"
           class="svg-icon m-l-4 block"
         />
 
         <!-- 菜单按钮 -->
+
         <div
           v-if="isLeftMenu && showMenuButton"
           class="btn-box"
         >
           <div
             class="btn menu-btn"
+            @click="visibleMenu"
           >
-            <i
-              class="iconfont-sys"
-              @click="visibleMenu"
-            >
-              &#xe6ba;
-            </i>
+            <SvgIcon
+              :icon="menuOpen ? 'arrow-left' : 'arrow-right'"
+            />
           </div>
         </div>
+
         <!-- 刷新按钮 -->
         <div
           v-if="showRefreshButton"
           class="btn-box"
+          @click="reload()"
         >
           <div
             class="btn refresh-btn"
             :style="{ marginLeft: !isLeftMenu ? '10px' : '0' }"
           >
-            <i
-              class="iconfont-sys"
-              @click="reload()"
-            >
-              &#xe6b3;
-            </i>
+            <SvgIcon
+              icon="blog-refresh"
+            />
           </div>
         </div>
+
         <!-- 快速入口 -->
         <FastEnter
           v-if="width >= 1200"
         />
+
         <!-- 面包屑 -->
         <Breadcrumb
           v-if="(showCrumbs && isLeftMenu) || (showCrumbs && isDualMenu)"

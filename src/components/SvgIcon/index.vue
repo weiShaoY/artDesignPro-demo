@@ -36,7 +36,7 @@ type SvgIconPropsType = {
 
 const props = withDefaults(defineProps<SvgIconPropsType>(), {
   prefix: 'icon',
-  size: '1em',
+  size: 24,
   color: 'currentColor',
 })
 
