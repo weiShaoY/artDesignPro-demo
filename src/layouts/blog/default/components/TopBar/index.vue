@@ -1,9 +1,6 @@
 <script setup lang="ts">
 
-import {
-  MenuTypeEnum,
-  MenuWidth,
-} from '@/enums/appEnum'
+import { MenuTypeEnum } from '@/enums/appEnum'
 
 import { useMenuStore } from '@/store/modules/menu'
 
@@ -75,7 +72,7 @@ function toggleFullScreen() {
 function topBarWidth(): string {
   const { TOP, DUAL_MENU } = MenuTypeEnum
 
-  const { getMenuOpenWidth } = settingStore
+  const { getMenuOpenWidth, getMenuCloseWidth } = settingStore
 
   switch (menuType.value) {
     case TOP:
@@ -85,7 +82,7 @@ function topBarWidth(): string {
     default:
       return menuOpen.value
         ? `calc(100% - ${getMenuOpenWidth})`
-        : `calc(100% - ${MenuWidth.CLOSE})`
+        : `calc(100% - ${getMenuCloseWidth})`
   }
 }
 

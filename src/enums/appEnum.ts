@@ -52,42 +52,6 @@ export enum MenuThemeEnum {
 }
 
 /**
- * 侧边菜单关闭时的宽度
- * @enum {string}
- */
-export enum MenuWidth {
-
-  /** 关闭状态下的宽度 */
-  CLOSE = '70px',
-}
-
-/**
- * 语言枚举
- * @enum {string}
- */
-export enum LanguageEnum {
-
-  /** 中文 */
-  ZH = 'zh',
-
-  /** 英文 */
-  EN = 'en',
-}
-
-/**
- * 图标类型枚举
- * @enum {string}
- */
-export enum IconTypeEnum {
-
-  /** 通过类名设置图标 */
-  CLASS_NAME = 'className',
-
-  /** 通过 Unicode 码设置图标 */
-  UNICODE = 'unicode',
-}
-
-/**
  * 容器宽度枚举
  * @enum {string}
  */

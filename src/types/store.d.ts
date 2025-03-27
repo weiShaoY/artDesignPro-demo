@@ -119,24 +119,3 @@ export type WorkTabType = {
   /** 路由查询参数 */
   query?: Record<string, any>
 }
-
-/**
- * 主题颜色配置类型
- */
-export type ThemeColorConfig = {
-
-  /** 主题名称 */
-  name: string
-
-  /** 主题枚举值 */
-  theme: SystemThemeEnum
-
-  /** 主题颜色数组 */
-  color: string[]
-
-  /** 左侧线条颜色 */
-  leftLineColor: string
-
-  /** 右侧线条颜色 */
-  rightLineColor: string
-}

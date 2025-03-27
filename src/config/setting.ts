@@ -204,6 +204,9 @@ export const SystemSetting = {
   /** 菜单展开宽度默认值(px) */
   defaultMenuWidth: 252,
 
+  /** 菜单关闭宽度默认值(px) */
+  defaultCloseMenuWidth: 70,
+
   /** 圆角默认值(rem) */
   defaultCustomRadius: '0.75',
 }

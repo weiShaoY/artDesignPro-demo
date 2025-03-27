@@ -4,7 +4,7 @@
 /**
  *  导入菜单类型和宽度枚举
  */
-import { MenuTypeEnum, MenuWidth } from '@/enums/appEnum'
+import { MenuTypeEnum } from '@/enums/appEnum'
 
 /**
  *  导入菜单存储模块
@@ -44,7 +44,7 @@ const menuOpenWidth = computed(() => settingStore.getMenuOpenWidth)
 /**
  *  菜单关闭时的宽度
  */
-const menuCloseWidth = MenuWidth.CLOSE
+const menuCloseWidth = computed(() => settingStore.getMenuCloseWidth)
 
 /**
  *  判断是否为顶部左侧菜单

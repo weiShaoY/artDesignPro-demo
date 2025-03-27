@@ -3,7 +3,7 @@
 /**
  *  导入枚举类型
  */
-import { MenuTypeEnum, MenuWidth } from '@/enums/appEnum'
+import { MenuTypeEnum } from '@/enums/appEnum'
 
 /**
  *  导入状态管理模块
@@ -119,7 +119,7 @@ const showLeftMenu = computed(
  *  @description 根据菜单状态动态计算布局间距
  */
 const paddingLeft = computed(() => {
-  const width = menuOpen.value ? settingStore.getMenuOpenWidth : MenuWidth.CLOSE
+  const width = menuOpen.value ? settingStore.getMenuOpenWidth : settingStore.getMenuCloseWidth
 
   menuStore.menuWidth = width // 更新菜单宽度状态
 

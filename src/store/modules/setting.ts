@@ -24,7 +24,7 @@ import { defineStore } from 'pinia'
 
 import { computed, ref } from 'vue'
 
-const { defaultMenuWidth, defaultCustomRadius } = SystemSetting
+const { defaultMenuWidth, defaultCloseMenuWidth, defaultCustomRadius } = SystemSetting
 
 /** Tab 状态管理 */
 export const useSettingStore = defineStore('settingStore', () => {
@@ -33,6 +33,9 @@ export const useSettingStore = defineStore('settingStore', () => {
 
   /**  菜单展开宽度 */
   const menuOpenWidth = ref(defaultMenuWidth)
+
+  /**  菜单关闭宽度 */
+  const menuCloseWidth = ref(defaultCloseMenuWidth)
 
   /**  全局主题类型 light dark */
   const systemThemeType = ref(SystemThemeEnum.LIGHT)
@@ -126,6 +129,9 @@ export const useSettingStore = defineStore('settingStore', () => {
 
   /**  获取菜单展开宽度 */
   const getMenuOpenWidth = computed(() => `${menuOpenWidth.value}px` || `${defaultMenuWidth}px`)
+
+  /**  获取菜单关闭宽度 */
+  const getMenuCloseWidth = computed(() => `${menuCloseWidth.value}px` || `${defaultCloseMenuWidth}px`)
 
   /**  获取自定义圆角 */
   const getCustomRadius = computed(() => `${customRadius.value}rem` || `${defaultCustomRadius}rem`)
@@ -320,6 +326,7 @@ export const useSettingStore = defineStore('settingStore', () => {
   return {
     menuType,
     menuOpenWidth,
+    menuCloseWidth,
     systemThemeType,
     systemThemeMode,
     menuThemeType,
@@ -349,6 +356,7 @@ export const useSettingStore = defineStore('settingStore', () => {
     getMenuTheme,
     isDark,
     getMenuOpenWidth,
+    getMenuCloseWidth,
     getCustomRadius,
     isShowFireworks,
     initState,
