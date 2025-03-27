@@ -4,6 +4,7 @@ import { useCeremony } from '@/composables/useCeremony'
 import { useTheme } from '@/composables/useTheme'
 
 import {
+  menuLayoutList,
   SettingThemeList,
   SystemMainColor,
   ThemeList,
@@ -29,7 +30,7 @@ const props = defineProps([
 
 const { openFestival, cleanup } = useCeremony()
 
-const { setSystemTheme, setSystemAutoTheme, switchTheme } = useTheme()
+const { setSystemTheme, setSystemAutoTheme, switchThemeStyles } = useTheme()
 
 // 删除原来的相关方法定义，直接使用从useTheme中导入的方法
 
@@ -68,11 +69,7 @@ const customRadius = computed(() => store.customRadius)
 
 const menuType = computed(() => store.menuType)
 
-const isLeftMenu = computed(() => store.menuType === MenuTypeEnum.LEFT)
-
 const isTopMenu = computed(() => store.menuType === MenuTypeEnum.TOP)
-
-const isTopLeftMenu = computed(() => store.menuType === MenuTypeEnum.TOP_LEFT)
 
 const isDualMenu = computed(() => store.menuType === MenuTypeEnum.DUAL_MENU)
 
@@ -99,6 +96,10 @@ const showNprogress = ref(true)
 const colorWeak = ref(false)
 
 const containerWidth = computed(() => store.containerWidth)
+
+const openSetting = () => (showDrawer.value = true)
+
+const closeDrawer = () => (showDrawer.value = false)
 
 const pageTransitionOps = [
   {
@@ -163,14 +164,14 @@ watch(width, (newWidth: number) => {
   if (newWidth < 1000) {
     if (!hasChangedMenu.value) {
       beforeMenuType.value = menuType.value
-      setMenuType(MenuTypeEnum.LEFT)
+      switchMenuLayouts(MenuTypeEnum.LEFT)
       store.setMenuOpen(false)
       hasChangedMenu.value = true
     }
   }
   else {
     if (hasChangedMenu.value && beforeMenuType.value) {
-      setMenuType(beforeMenuType.value)
+      switchMenuLayouts(beforeMenuType.value)
       store.setMenuOpen(true)
       hasChangedMenu.value = false
     }
@@ -205,13 +206,6 @@ onUnmounted(() => {
   cleanup()
 })
 
-//  如果主题色不在列表中，则设置为列表中的第一个元素
-function initSystemColor() {
-  if (!SystemMainColor.includes(systemThemeColor.value)) {
-    setElementTheme(SystemMainColor[0])
-  }
-}
-
 function initUserSetting() {
   uniqueOpened.value = store.uniqueOpened
   showMenuButton.value = store.showMenuButton
@@ -226,12 +220,12 @@ function initUserSetting() {
   setBoxMode(true, store.boxBorderMode ? 'border-mode' : 'shadow-mode')
 }
 
-function setMenuTheme(theme: MenuThemeEnum) {
+function switchMenuStyles(theme: MenuThemeEnum) {
   if (isDualMenu.value || isTopMenu.value || isDark.value) {
     return
   }
 
-  store.setMenuTheme(theme)
+  store.switchMenuStyles(theme)
   isAutoClose()
 }
 
@@ -252,22 +246,17 @@ function initSystemTheme() {
   }
 }
 
-function setMenuType(type: MenuTypeEnum) {
+function switchMenuLayouts(type: MenuTypeEnum) {
   if (type === MenuTypeEnum.LEFT || type === MenuTypeEnum.TOP_LEFT) {
     store.setMenuOpen(true)
   }
 
-  store.setMenuType(type)
+  store.switchMenuLayouts(type)
   if (type === MenuTypeEnum.DUAL_MENU) {
-    store.setMenuTheme(MenuThemeEnum.DESIGN)
+    store.switchMenuStyles(MenuThemeEnum.DESIGN)
     store.setMenuOpen(true)
   }
 
-  isAutoClose()
-}
-
-function showWorkTabFunc() {
-  store.setWorkTab(!store.showWorkTab)
   isAutoClose()
 }
 
@@ -290,14 +279,6 @@ function toggleDrawer(open: boolean) {
   else {
     el.removeAttribute('class')
   }
-}
-
-function openSetting() {
-  showDrawer.value = true
-}
-
-function closeDrawer() {
-  showDrawer.value = false
 }
 
 function switchBoxMode(isInit: boolean = false, type: string) {
@@ -324,62 +305,43 @@ function setBoxMode(isInit: boolean = false, type: string) {
   }, 50)
 }
 
-function setPageTransition(transition: string) {
-  store.setPageTransition(transition)
+// 高阶函数：封装 store 方法调用后自动关闭抽屉
+function autoCloseHandler(storeMethod: (...args: any[]) => void, needReload: boolean = false, ...args: any[]) {
+  storeMethod(...args)
+  if (needReload) {
+    store.reload()
+  }
+
   isAutoClose()
 }
 
-function setCustomRadius(radius: string) {
-  store.setCustomRadius(radius)
-  isAutoClose()
+const showWorkTabFunc = () => autoCloseHandler(store.setWorkTab, false, !store.showWorkTab)
+
+function setPageTransition(transition: string) {
+  return autoCloseHandler(store.setPageTransition, false, transition)
 }
 
 function setContainerWidth(type: ContainerWidthEnum) {
-  store.setContainerWidth(type)
-  store.reload()
-  isAutoClose()
+  return autoCloseHandler(store.setContainerWidth, true, type)
 }
 
-function setUniqueOpened() {
-  store.setUniqueOpened()
-  isAutoClose()
-}
+const setElementTheme = (theme: string) => autoCloseHandler(store.setElementTheme, true, theme)
 
-function setButton() {
-  store.setButton()
-  isAutoClose()
-}
+const setCustomRadius = (radius: string) => autoCloseHandler(store.setCustomRadius, false, radius)
 
-function setShowRefreshButton() {
-  store.setShowRefreshButton()
-  isAutoClose()
-}
+const setUniqueOpened = () => autoCloseHandler(store.setUniqueOpened)
 
-function setCrumbs() {
-  store.setCrumbs()
-  isAutoClose()
-}
+const setButton = () => autoCloseHandler(store.setButton)
 
-function setLanguage() {
-  store.setLanguage()
-  isAutoClose()
-}
+const setShowRefreshButton = () => autoCloseHandler(store.setShowRefreshButton)
 
-function setNprogress() {
-  store.setNprogress()
-  isAutoClose()
-}
+const setCrumbs = () => autoCloseHandler(store.setCrumbs)
 
-function setAutoClose() {
-  store.setAutoClose()
-  isAutoClose()
-}
+const setLanguage = () => autoCloseHandler(store.setLanguage)
 
-function setElementTheme(theme: string) {
-  store.setElementTheme(theme)
-  store.reload()
-  isAutoClose()
-}
+const setNprogress = () => autoCloseHandler(store.setNprogress)
+
+const setAutoClose = () => autoCloseHandler(store.setAutoClose)
 
 function setColorWeak() {
   const el = document.getElementsByTagName('html')[0]
@@ -396,18 +358,39 @@ function setColorWeak() {
   isAutoClose()
 }
 
+/**
+ *  设置水印
+ */
 function setWatermarkVisible() {
-  store.setWatermarkVisible(!watermarkVisible.value)
-  isAutoClose()
+  autoCloseHandler(store.setWatermarkVisible, false, !store.watermarkVisible)
 }
 
+// function setWatermarkVisible() {
+//   store.setWatermarkVisible(!watermarkVisible.value)
+//   isAutoClose()
+// }
+
+/**
+ *  设置菜单宽度
+ */
 function setMenuOpenSize() {
   if (menuOpenWidth.value) {
-    store.setMenuOpenWidth(menuOpenWidth.value)
-    isAutoClose()
+    autoCloseHandler(store.setMenuOpenWidth, false, menuOpenWidth.value)
   }
 }
 
+;
+
+// function setMenuOpenSize() {
+//   if (menuOpenWidth.value) {
+//     store.setMenuOpenWidth(menuOpenWidth.value)
+//     isAutoClose()
+//   }
+// }
+
+/**
+ *  设置颜色弱化
+ */
 function initColorWeak() {
   if (colorWeak.value) {
     const el = document.getElementsByTagName('html')[0]
@@ -415,6 +398,13 @@ function initColorWeak() {
     setTimeout(() => {
       el.setAttribute('class', 'color-weak')
     }, 100)
+  }
+}
+
+//  如果主题色不在列表中，则设置为列表中的第一个元素
+function initSystemColor() {
+  if (!SystemMainColor.includes(systemThemeColor.value)) {
+    setElementTheme(SystemMainColor[0])
   }
 }
 
@@ -460,39 +450,21 @@ watch(
         </p>
 
         <div
-          class="theme-wrap"
+          class="theme-styles"
         >
           <div
-            v-for="(item, index) in settingThemeList"
+            v-for="(item) in settingThemeList"
             :key="item.theme"
-            class="item"
-            @click="switchTheme(item.theme)"
+            class="style-item"
+            @click="switchThemeStyles(item.theme)"
           >
             <div
               class="box"
               :class="{ 'is-active': item.theme === systemThemeMode }"
             >
-              <div
-                :style="{ background: `${item.color[0]}!important` }"
+              <img
+                :src="item.img"
               >
-                <div
-                  v-for="(cItem, subIndex) in 3"
-                  :key="subIndex"
-                  :class="`line${subIndex}`"
-                  :style="{ background: item.leftLineColor }"
-                />
-              </div>
-
-              <div
-                :style="{ background: index === 2 ? item.color[1] : `${item.color[0]}!important` }"
-              >
-                <div
-                  v-for="(cItem, subIndex) in 3"
-                  :key="subIndex"
-                  :class="`line${subIndex}`"
-                  :style="{ background: item.rightLineColor }"
-                />
-              </div>
             </div>
 
             <p
@@ -520,225 +492,35 @@ watch(
           </p>
 
           <div
-            class="menu-type"
+            class="menu-layouts"
           >
             <div
-              class="menu-type-wrap"
+              class="menu-layouts-wrap"
             >
-              <!-- 左侧菜单 -->
               <div
-                class="item"
+                v-for="(item, index) in menuLayoutList"
+                :key="item.value"
+                class="style-item"
+                @click="switchMenuLayouts(item.value)"
               >
                 <div
-                  class="box bl"
-                  :class="{ 'is-active': isLeftMenu }"
-                  @click="setMenuType(MenuTypeEnum.LEFT)"
+                  class="box"
+                  :class="{ 'is-active': item.value === menuType, 'mt-16': index > 2 }"
                 >
-                  <div
-                    class="bl-menu"
+                  <img
+                    :src="item.img"
                   >
-                    <div
-                      v-for="i in 6"
-                      :key="i"
-                      class="line"
-                    />
-                  </div>
-
-                  <div
-                    class="bl-content"
-                  >
-                    <div
-                      class="header"
-                    />
-
-                    <div
-                      class="row1"
-                    >
-                      <div
-                        v-for="i in 2"
-                        :key="i"
-                      />
-                    </div>
-
-                    <div
-                      class="row2"
-                    />
-                  </div>
                 </div>
 
-                <span
+                <p
                   class="name"
                 >
-                  垂直
-                </span>
-              </div>
-              <!-- 顶部菜单 -->
-              <div
-                class="item"
-              >
-                <div
-                  class="box bt"
-                  :class="{ 'is-active': isTopMenu }"
-                  @click="setMenuType(MenuTypeEnum.TOP)"
-                >
-                  <div
-                    class="bt-menu"
-                  >
-                    <div
-                      v-for="i in 6"
-                      :key="i"
-                      class="line"
-                    />
-                  </div>
-
-                  <div
-                    class="bl-content"
-                  >
-                    <div
-                      class="row1"
-                    >
-                      <div
-                        v-for="i in 2"
-                        :key="i"
-                      />
-                    </div>
-
-                    <div
-                      class="row2"
-                    />
-                  </div>
-                </div>
-
-                <span
-                  class="name"
-                >
-                  水平
-                </span>
-              </div>
-              <!-- 混合菜单 -->
-              <div
-                class="item"
-              >
-                <div
-                  class="box tl"
-                  :class="{ 'is-active': isTopLeftMenu }"
-                  @click="setMenuType(MenuTypeEnum.TOP_LEFT)"
-                >
-                  <div
-                    class="tl-left"
-                  >
-                    <div
-                      v-for="i in 6"
-                      :key="i"
-                      class="line"
-                    />
-                  </div>
-
-                  <div
-                    class="tl-right"
-                  >
-                    <div
-                      class="bt-menu"
-                    >
-                      <div
-                        v-for="i in 6"
-                        :key="i"
-                        class="line"
-                      />
-                    </div>
-
-                    <div
-                      class="bl-content"
-                    >
-                      <div
-                        class="row1"
-                      >
-                        <div
-                          v-for="i in 2"
-                          :key="i"
-                        />
-                      </div>
-
-                      <div
-                        class="row2"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <span
-                  class="name"
-                >
-                  混合
-                </span>
-              </div>
-              <!-- 双列菜单 -->
-              <div
-                class="item"
-                style="padding-right: 7px"
-              >
-                <div
-                  class="box dl"
-                  :class="{ 'is-active': isDualMenu }"
-                  @click="setMenuType(MenuTypeEnum.DUAL_MENU)"
-                >
-                  <div
-                    class="tl1-left"
-                    style="width: 8px !important"
-                  >
-                    <div
-                      v-for="i in 1"
-                      :key="i"
-                      class="line"
-                    />
-                  </div>
-
-                  <div
-                    class="tl2-left"
-                  >
-                    <div
-                      v-for="i in 6"
-                      :key="i"
-                      class="line"
-                    />
-                  </div>
-
-                  <div
-                    class="tl-right"
-                  >
-                    <div
-                      class="bt-menu"
-                    />
-
-                    <div
-                      class="bl-content"
-                    >
-                      <div
-                        class="row1"
-                      >
-                        <div
-                          v-for="i in 2"
-                          :key="i"
-                        />
-                      </div>
-
-                      <div
-                        class="row2"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <span
-                  class="name"
-                >
-                  双列
-                </span>
+                  {{ index === 0 ? '垂直' : index === 1 ? '水平' : index === 2 ? '混合' : "双列" }}
+                </p>
               </div>
             </div>
           </div>
         </div>
-
         <!-- 菜单风格 -->
         <p
           class="title"
@@ -748,14 +530,16 @@ watch(
         </p>
 
         <div
-          class="menu-theme-wrap"
+          class="menu-styles"
         >
-          <div>
+          <div
+            class="menu-styles-wrap"
+          >
             <div
               v-for="item in menuThemeList"
               :key="item.theme"
-              class="item"
-              @click="setMenuTheme(item.theme)"
+              class="style-item"
+              @click="switchMenuStyles(item.theme)"
             >
               <div
                 class="box"
@@ -764,33 +548,9 @@ watch(
                   cursor: isDualMenu || isTopMenu || isDark ? 'no-drop' : 'pointer',
                 }"
               >
-                <div
-                  class="top"
-                  :style="{ background: `${item.tabBarBackground}!important` }"
-                />
-
-                <div
-                  class="left"
-                  :style="{ background: `${item.background}!important` }"
+                <img
+                  :src="item.img"
                 >
-                  <div
-                    v-for="(cItem, index) in 3"
-                    :key="index"
-                    :class="`line${index}`"
-                    :style="{ background: item.leftLineColor }"
-                  />
-                </div>
-
-                <div
-                  class="right"
-                >
-                  <div
-                    v-for="(cItem, index) in 3"
-                    :key="index"
-                    :class="`line${index}`"
-                    :style="{ background: item.rightLineColor }"
-                  />
-                </div>
               </div>
 
               <div
@@ -804,7 +564,7 @@ watch(
         <!-- 系统主题色 -->
         <p
           class="title"
-          style="margin-top: 30px"
+          style="margin-top: 60px"
         >
           主题色
         </p>
@@ -1080,7 +840,7 @@ watch(
 </template>
 
 <style lang="scss">
-  .setting-modal {
+ .setting-modal {
   background: transparent !important;
 
   .el-drawer {
@@ -1107,5 +867,5 @@ watch(
 </style>
 
 <style lang="scss" scoped>
-  @use './style';
+@use './style';
 </style>

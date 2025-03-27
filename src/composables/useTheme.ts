@@ -102,7 +102,7 @@ export function useTheme() {
    * 切换主题
    * @param theme 要切换到的主题
    */
-  const switchTheme = (theme: SystemThemeEnum): void => {
+  const switchThemeStyles = (theme: SystemThemeEnum): void => {
     theme === SystemThemeEnum.AUTO
       ? setSystemAutoTheme()
       : setSystemTheme(theme)
@@ -111,6 +111,6 @@ export function useTheme() {
   return {
     setSystemTheme,
     setSystemAutoTheme,
-    switchTheme,
+    switchThemeStyles,
   }
 }

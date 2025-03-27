@@ -75,6 +75,9 @@ export type MenuThemeType = {
 
   /** 右侧分割线颜色 */
   rightLineColor: string
+
+  /** 图片 */
+  img?: string
 }
 
 /**

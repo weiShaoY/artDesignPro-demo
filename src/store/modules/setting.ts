@@ -187,7 +187,7 @@ export const useSettingStore = defineStore('settingStore', () => {
     }
   }
 
-  function setMenuType(type: MenuTypeEnum) {
+  function switchMenuLayouts(type: MenuTypeEnum) {
     menuType.value = type
   }
 
@@ -200,7 +200,7 @@ export const useSettingStore = defineStore('settingStore', () => {
     systemThemeMode.value = themeMode
   }
 
-  function setMenuTheme(theme: MenuThemeEnum) {
+  function switchMenuStyles(theme: MenuThemeEnum) {
     menuThemeType.value = theme
   }
 
@@ -352,10 +352,10 @@ export const useSettingStore = defineStore('settingStore', () => {
     getCustomRadius,
     isShowFireworks,
     initState,
-    setMenuType,
+    switchMenuLayouts,
     setMenuOpenWidth,
     setGlopTheme,
-    setMenuTheme,
+    switchMenuStyles,
     setElementTheme,
     setBorderMode,
     setContainerWidth,

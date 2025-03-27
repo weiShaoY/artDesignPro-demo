@@ -284,7 +284,7 @@ function handleBlogWorkTabGuard(to: RouteLocationNormalized): void {
 function handleBlogThemeGuard(to: RouteLocationNormalized): void {
   // 如果目标路由需要设置主题，切换主题
   if (to.meta.setTheme) {
-    useTheme().switchTheme(useSettingStore().systemThemeType)
+    useTheme().switchThemeStyles(useSettingStore().systemThemeType)
   }
 }
 
