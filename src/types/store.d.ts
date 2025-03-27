@@ -1,27 +1,6 @@
 import type { MenuThemeEnum, SystemThemeEnum } from '@/enums/appEnum'
 
 /**
- * 用户信息类型
- */
-export type UserInfo = {
-
-  /** 用户ID */
-  id: number
-
-  /** 用户姓名 */
-  name: string
-
-  /** 用户名 */
-  username: string
-
-  /** 头像URL */
-  avatar: string
-
-  /** 电子邮箱 */
-  email: string
-}
-
-/**
  * 系统主题样式配置
  */
 export type SystemThemeType = {
