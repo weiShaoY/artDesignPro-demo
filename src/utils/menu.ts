@@ -1,5 +1,3 @@
-import type { MenuListType } from '@/types/menu'
-
 // 创建递归函数处理嵌套路由
 /**
  * 处理路由配置,转换为菜单数据结构
@@ -7,7 +5,7 @@ import type { MenuListType } from '@/types/menu'
  * @param parentPath 父级路径
  * @returns 处理后的菜单项
  */
-export function processRoute(route: MenuListType, parentPath = ''): MenuListType {
+export function processRoute(route: BlogType.MenuListType, parentPath = ''): BlogType.MenuListType {
   // 构建完整路径
   const currentPath = route.path
     ? route.meta?.isIframe
@@ -34,7 +32,7 @@ export function processRoute(route: MenuListType, parentPath = ''): MenuListType
  * 保存 iframe 路由到 sessionStorage 中
  * @param list iframe 路由列表
  */
-export function saveIframeRoutes(list: MenuListType[]): void {
+export function saveIframeRoutes(list: BlogType.MenuListType[]): void {
   if (list.length > 0) {
     sessionStorage.setItem('iframeRoutes', JSON.stringify(list))
   }

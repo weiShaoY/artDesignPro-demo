@@ -1,5 +1,3 @@
-// import type { MenuListType } from '@/types/menu'
-
 import type {
   NavigationGuardNext,
   RouteLocationNormalized,
