@@ -337,8 +337,6 @@ const setShowRefreshButton = () => autoCloseHandler(store.setShowRefreshButton)
 
 const setCrumbs = () => autoCloseHandler(store.setCrumbs)
 
-const setLanguage = () => autoCloseHandler(store.setLanguage)
-
 const setNprogress = () => autoCloseHandler(store.setNprogress)
 
 const setAutoClose = () => autoCloseHandler(store.setAutoClose)
@@ -714,17 +712,6 @@ watch(
             <el-switch
               v-model="showCrumbs"
               @change="setCrumbs"
-            />
-          </div>
-
-          <div
-            class="item"
-          >
-            <span>显示多语言选择</span>
-
-            <el-switch
-              v-model="showLanguage"
-              @change="setLanguage"
             />
           </div>
 

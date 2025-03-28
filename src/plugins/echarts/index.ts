@@ -1,24 +1,24 @@
-import * as echarts from 'echarts/core'
-
 import {
   BarChart,
+  GaugeChart,
   LineChart,
-  PieChart,
   MapChart,
   PictorialBarChart,
-  GaugeChart
+  PieChart,
 } from 'echarts/charts'
 
 import {
+  AriaComponent,
+  GridComponent,
+  LegendComponent,
+  LegendPlainComponent,
+  ParallelComponent,
+  PolarComponent,
   TitleComponent,
   TooltipComponent,
-  GridComponent,
-  PolarComponent,
-  AriaComponent,
-  ParallelComponent,
-  LegendComponent,
-  LegendPlainComponent
 } from 'echarts/components'
+
+import * as echarts from 'echarts/core'
 
 import { SVGRenderer } from 'echarts/renderers'
 
@@ -37,7 +37,7 @@ echarts.use([
   MapChart,
   SVGRenderer,
   PictorialBarChart,
-  GaugeChart
+  GaugeChart,
 ])
 
 export default echarts

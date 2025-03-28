@@ -70,9 +70,6 @@ export const useSettingStore = defineStore('settingStore', () => {
   /**  是否显示多标签 */
   const showWorkTab = ref(true)
 
-  /**  是否显示多语言选择 */
-  const showLanguage = ref(true)
-
   /**  是否显示顶部进度条 */
   const showNprogress = ref(true)
 
@@ -171,7 +168,6 @@ export const useSettingStore = defineStore('settingStore', () => {
       showCrumbs.value = setting.showCrumbs
       autoClose.value = setting.autoClose
       showWorkTab.value = setting.showWorkTab
-      showLanguage.value = setting.showLanguage
       showNprogress.value = setting.showNprogress
       colorWeak.value = setting.colorWeak
       pageTransition.value = setting.pageTransition
@@ -253,11 +249,6 @@ export const useSettingStore = defineStore('settingStore', () => {
   // 是否显示多标签
   function setWorkTab(show: boolean) {
     showWorkTab.value = show
-  }
-
-  // 是否显示多语言选择
-  function setLanguage() {
-    showLanguage.value = !showLanguage.value
   }
 
   // 是否显示顶部进度条
@@ -373,7 +364,6 @@ export const useSettingStore = defineStore('settingStore', () => {
     setShowRefreshButton,
     setCrumbs,
     setWorkTab,
-    setLanguage,
     setNprogress,
     setColorWeak,
 

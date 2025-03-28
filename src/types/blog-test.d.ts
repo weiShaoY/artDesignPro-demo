@@ -143,9 +143,6 @@ declare namespace BlogSystem {
     /** 是否显示多标签页 */
     showWorkTab: boolean
 
-    /** 是否显示多语言选择 */
-    showLanguage: boolean
-
     /** 是否显示顶部进度条 */
     showNprogress: boolean
 
