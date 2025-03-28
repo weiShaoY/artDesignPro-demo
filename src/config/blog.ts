@@ -22,71 +22,82 @@ import theme_styles_system from '@imgs/settings/theme_styles/system.png'
  *   博客模块配置
  */
 export const blogConfig = {
-  /**
-   *  菜单主题列表
-   */
-  menuThemeList: [
-    {
-      theme: BlogTypeTest.MenuThemeModeEnum.DESIGN,
-      background: '#FFFFFF',
-      systemNameColor: 'var(--art-text-gray-800)',
-      iconColor: '#6B6B6B',
-      textColor: '#29343D',
-      textActiveColor: '#3F8CFF',
-      iconActiveColor: '#333333',
-      tabBarBackground: '#FAFBFC',
-      systemBackground: '#FAFBFC',
-      leftLineColor: '#EDEEF0',
-      rightLineColor: '#EDEEF0',
-      img: menu_mode_design,
-    },
-    {
-      theme: BlogTypeTest.MenuThemeModeEnum.DARK,
-      background: '#191A23',
-      systemNameColor: '#BABBBD',
-      iconColor: '#BABBBD',
-      textColor: '#BABBBD',
-      textActiveColor: '#FFFFFF',
-      iconActiveColor: '#FFFFFF',
-      tabBarBackground: '#FFFFFF',
-      systemBackground: '#F8F8F8',
-      leftLineColor: '#3F4257',
-      rightLineColor: '#EDEEF0',
-      img: menu_mode_dark,
-    },
-    {
-      theme: BlogTypeTest.MenuThemeModeEnum.LIGHT,
-      background: '#ffffff',
-      systemNameColor: '#68758E',
-      iconColor: '#6B6B6B',
-      textColor: '#29343D',
-      textActiveColor: '#3F8CFF',
-      iconActiveColor: '#333333',
-      tabBarBackground: '#FFFFFF',
-      systemBackground: '#F8F8F8',
-      leftLineColor: '#EDEEF0',
-      rightLineColor: '#EDEEF0',
-      img: menu_mode_light,
-    },
-  ],
 
-  /**
-   *  菜单深色模式主题
-   */
-  menuDarkThemeList: [
-    {
-      theme: BlogTypeTest.MenuThemeModeEnum.DARK,
-      background: '#161618',
-      systemNameColor: '#DDDDDD',
-      iconColor: '#BABBBD',
-      textColor: 'rgba(#FFFFFF, 0.7)',
-      textActiveColor: '',
-      iconActiveColor: '#FFFFFF',
-      tabBarBackground: '#FFFFFF',
-      systemBackground: '#F8F8F8',
-      leftLineColor: '#3F4257',
-      rightLineColor: '#EDEEF0',
-    },
+  menu: {
 
-  ],
+    /**
+     *  菜单主题列表
+     */
+    menuThemeList: [
+      {
+        theme: BlogTypeTest.MenuThemeModeEnum.DESIGN,
+        background: '#FFFFFF',
+        systemNameColor: 'var(--art-text-gray-800)',
+        iconColor: '#6B6B6B',
+        textColor: '#29343D',
+        textActiveColor: '#3F8CFF',
+        iconActiveColor: '#333333',
+        tabBarBackground: '#FAFBFC',
+        systemBackground: '#FAFBFC',
+        leftLineColor: '#EDEEF0',
+        rightLineColor: '#EDEEF0',
+        img: menu_mode_design,
+      },
+      {
+        theme: BlogTypeTest.MenuThemeModeEnum.DARK,
+        background: '#191A23',
+        systemNameColor: '#BABBBD',
+        iconColor: '#BABBBD',
+        textColor: '#BABBBD',
+        textActiveColor: '#FFFFFF',
+        iconActiveColor: '#FFFFFF',
+        tabBarBackground: '#FFFFFF',
+        systemBackground: '#F8F8F8',
+        leftLineColor: '#3F4257',
+        rightLineColor: '#EDEEF0',
+        img: menu_mode_dark,
+      },
+      {
+        theme: BlogTypeTest.MenuThemeModeEnum.LIGHT,
+        background: '#ffffff',
+        systemNameColor: '#68758E',
+        iconColor: '#6B6B6B',
+        textColor: '#29343D',
+        textActiveColor: '#3F8CFF',
+        iconActiveColor: '#333333',
+        tabBarBackground: '#FFFFFF',
+        systemBackground: '#F8F8F8',
+        leftLineColor: '#EDEEF0',
+        rightLineColor: '#EDEEF0',
+        img: menu_mode_light,
+      },
+    ],
+
+    /**
+     *  菜单深色模式主题
+     */
+    menuDarkThemeList: [
+      {
+        theme: BlogTypeTest.MenuThemeModeEnum.DARK,
+        background: '#161618',
+        systemNameColor: '#DDDDDD',
+        iconColor: '#BABBBD',
+        textColor: 'rgba(#FFFFFF, 0.7)',
+        textActiveColor: '',
+        iconActiveColor: '#FFFFFF',
+        tabBarBackground: '#FFFFFF',
+        systemBackground: '#F8F8F8',
+        leftLineColor: '#3F4257',
+        rightLineColor: '#EDEEF0',
+      },
+
+    ],
+
+    /** 菜单展开宽度默认值(px) */
+    menuDefaultOpenWidth: 252,
+
+    /** 菜单关闭宽度默认值(px) */
+    menuDefaultCloseWidth: 70,
+  },
+
 }

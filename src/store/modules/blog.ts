@@ -35,27 +35,38 @@ export const useBlogStore = defineStore('BlogStore', () => {
     holidayFireworksLoaded: false,
     dualMenuShowText: false,
     containerWidth: BlogTypeTest.ContainerWidthEnum.FULL,
+    isDark: false,
+  })
 
+  watchEffect(() => {
+    state.value.isDark = state.value.systemThemeType === BlogTypeTest.SystemThemeModeEnum.DARK)
   })
 
   /**
    *  是否为深色模式
    */
-  const isDark = computed(() => state.value.systemThemeType === BlogTypeTest.SystemThemeModeEnum.DARK)
+
+  //  state.value.isDark = computed(() => state.value.systemThemeType === BlogTypeTest.SystemThemeModeEnum.DARK)
 
   /**
    *  获取菜单主题
    */
   const getMenuTheme = computed<BlogTypeTest.MenuTheme>(() => {
-    const list = blogConfig.menuThemeList.filter(item => item.theme === state.value.menuThemeType)
+    const list = blogConfig.menu.menuThemeList.filter(item => item.theme === state.value.menuThemeType)
 
     if (isDark.value) {
-      return blogConfig.menuDarkThemeList[0]
+      return blogConfig.menu.menuDarkThemeList[0]
     }
     else {
       return list[0]
     }
   })
+
+  /**  获取菜单展开宽度 */
+  const getMenuOpenWidth = computed(() => `${state.value.menuOpenWidth}px` || `${blogConfig.menu.menuDefaultOpenWidth}px`)
+
+  /**  获取菜单关闭宽度 */
+  const getMenuCloseWidth = computed(() => `${state.value.menuCloseWidth.value}px` || `${blogConfig.menu.menuDefaultCloseWidth}px`)
 
   return {
     state,
@@ -69,5 +80,15 @@ export const useBlogStore = defineStore('BlogStore', () => {
      *  获取菜单主题
      */
     getMenuTheme,
+
+    /**
+     *  获取菜单展开宽度
+     */
+    getMenuOpenWidth,
+
+    /**
+     *  获取菜单关闭宽度
+     */
+    getMenuCloseWidth,
   }
 })
