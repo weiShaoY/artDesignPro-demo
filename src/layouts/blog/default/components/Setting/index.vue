@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useCeremony } from '@/composables/useCeremony'
 
 import { useTheme } from '@/composables/useTheme'
 
@@ -27,8 +26,6 @@ const props = defineProps([
    */
   'open',
 ])
-
-const { openFestival, cleanup } = useCeremony()
 
 const { setSystemTheme, setSystemAutoTheme, switchThemeStyles } = useTheme()
 
@@ -88,8 +85,6 @@ const showRefreshButton = ref(true)
 const showCrumbs = ref(true)
 
 const showWorkTab = ref(true)
-
-const showLanguage = ref(true)
 
 const showNprogress = ref(true)
 
@@ -196,14 +191,12 @@ onMounted(() => {
   listenerSystemTheme()
   initUserSetting()
   initSystemTheme()
-  openFestival()
 })
 
 onUnmounted(() => {
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 
   mediaQuery.removeEventListener('change', initSystemTheme)
-  cleanup()
 })
 
 function initUserSetting() {
@@ -213,7 +206,6 @@ function initUserSetting() {
   showRefreshButton.value = store.showRefreshButton
   showCrumbs.value = store.showCrumbs
   showWorkTab.value = store.showWorkTab
-  showLanguage.value = store.showLanguage
   showNprogress.value = store.showNprogress
   colorWeak.value = store.colorWeak
   initColorWeak()

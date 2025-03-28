@@ -60,39 +60,6 @@ export type MenuThemeType = {
 }
 
 /**
- * 系统设置类型
- */
-export type Setting = {
-
-  /** 当前主题 */
-  theme: string
-
-  /** 是否开启手风琴模式(一次只能展开一个菜单) */
-  uniqueOpened: boolean
-
-  /** 是否显示菜单展开按钮 */
-  menuButton: boolean
-
-  /** 是否显示页面刷新按钮 */
-  showRefreshButton: boolean
-
-  /** 是否显示全局面包屑导航 */
-  showCrumbs: boolean
-
-  /** 设置后是否自动关闭窗口 */
-  autoClose: boolean
-
-  /** 是否显示多标签页 */
-  showWorkTab: boolean
-
-  /** 是否显示顶部进度条 */
-  showNprogress: boolean
-
-  /** 主题模式(light/dark/auto) */
-  themeModel: string
-}
-
-/**
  * 工作标签页类型
  * @description 多标签页系统中每个标签页的信息
  */

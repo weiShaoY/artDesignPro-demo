@@ -1,82 +1,73 @@
-export const useTestStore = defineStore('testStore', () => {
-  /**  菜单类型 */
-  const menuType = ref(MenuTypeEnum.LEFT)
+import { blogConfig } from '@/config'
 
-  /**  菜单展开宽度 */
-  const menuOpenWidth = ref(defaultMenuWidth)
+import { defineStore } from 'pinia'
 
-  /**  菜单关闭宽度 */
-  const menuCloseWidth = ref(defaultCloseMenuWidth)
+import { computed, ref } from 'vue'
 
-  /**  全局主题类型 light dark */
-  const themeType = ref(SystemThemeEnum.LIGHT)
+export const useBlogStore = defineStore('BlogStore', () => {
+  /**
+   *  菜单布局
+   */
+  const state = ref<BlogTypeTest.SettingType>({
+    menuLayout: BlogTypeTest.MenuLayoutEnum.LEFT,
+    menuOpenWidth: 230,
+    menuCloseWidth: 70,
+    systemThemeType: BlogTypeTest.SystemThemeModeEnum.LIGHT,
+    systemThemeMode: BlogTypeTest.SystemThemeModeEnum.LIGHT,
+    menuThemeType: BlogTypeTest.MenuThemeModeEnum.DESIGN,
+    systemThemeColor: '#409EFF',
+    boxBorderMode: true,
+    uniqueOpened: true,
+    showMenuButton: true,
+    showRefreshButton: true,
+    showCrumbs: true,
+    autoClose: false,
+    showWorkTab: true,
+    showLanguage: true,
+    showNprogress: true,
+    colorWeak: false,
+    showSettingGuide: false,
+    pageTransition: 'fade',
+    menuOpen: true,
+    refresh: false,
+    watermarkVisible: false,
+    customRadius: '0',
+    holidayFireworksLoaded: false,
+    dualMenuShowText: false,
+    containerWidth: BlogTypeTest.ContainerWidthEnum.FULL,
 
-  /**  全局主题模式 light dark auto */
-  const systemThemeMode = ref(SystemThemeEnum.LIGHT)
+  })
 
-  /**  菜单主题类型 */
-  const menuThemeType = ref(MenuThemeEnum.DESIGN)
+  /**
+   *  是否为深色模式
+   */
+  const isDark = computed(() => state.value.systemThemeType === BlogTypeTest.SystemThemeModeEnum.DARK)
 
-  /**  系统主题颜色 */
-  const systemThemeColor = ref(ElementPlusTheme.primary)
+  /**
+   *  获取菜单主题
+   */
+  const getMenuTheme = computed<BlogTypeTest.MenuTheme>(() => {
+    const list = blogConfig.menuThemeList.filter(item => item.theme === state.value.menuThemeType)
 
-  /**  盒子模式 border | shadow */
-  const boxBorderMode = ref(true)
+    if (isDark.value) {
+      return blogConfig.menuDarkThemeList[0]
+    }
+    else {
+      return list[0]
+    }
+  })
 
-  /**  是否开启手风琴模式 */
-  const uniqueOpened = ref(true)
+  return {
+    state,
 
-  /**  是否显示菜单展开按钮 */
-  const showMenuButton = ref(true)
+    /**
+     *  是否为深色模式
+     */
+    isDark,
 
-  /**  是否显示页面刷新按钮 */
-  const showRefreshButton = ref(true)
-
-  /**  是否显示全局面包屑 */
-  const showCrumbs = ref(true)
-
-  /**  设置后是否自动关闭窗口 */
-  const autoClose = ref(false)
-
-  /**  是否显示多标签 */
-  const showWorkTab = ref(true)
-
-  /**  是否显示顶部进度条 */
-  const showNprogress = ref(true)
-
-  /**  色弱模式 */
-  const colorWeak = ref(false)
-
-  /**  页面切换动画 */
-  const pageTransition = ref('slide-right')
-
-  /**  菜单是否展开 */
-  const menuOpen = ref(true)
-
-  /**  刷新 */
-  const refresh = ref(false)
-
-  /**  水印是否显示 */
-  const watermarkVisible = ref(false)
-
-  /**  自定义圆角 */
-  const customRadius = ref(defaultCustomRadius)
-
-  /**  是否加载完礼花 */
-  const holidayFireworksLoaded = ref(false)
-
-  /**  是否显示节日文本 */
-  const showFestivalText = ref(false)
-
-  /**  节日日期 */
-  const festivalDate = ref('')
-
-  /**  双列菜单是否显示文本 */
-  const dualMenuShowText = ref(false)
-
-  /** 容器宽度 */
-  const containerWidth = ref(ContainerWidthEnum.FULL)
-
-  /**  是否为暗黑模式 */
-  const isDark = computed(() => systemThemeType.value === SystemThemeEnum.DARK)
+    /**
+     *  获取菜单主题
+     */
+    getMenuTheme,
+  }
 })

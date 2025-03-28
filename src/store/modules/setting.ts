@@ -1,7 +1,5 @@
 import type { MenuThemeType } from '@/types/store'
 
-import { useCeremony } from '@/composables/useCeremony'
-
 import {
   DarkMenuStyles,
   ElementPlusTheme,
@@ -91,15 +89,6 @@ export const useSettingStore = defineStore('settingStore', () => {
   /**  自定义圆角 */
   const customRadius = ref(defaultCustomRadius)
 
-  /**  是否加载完礼花 */
-  const holidayFireworksLoaded = ref(false)
-
-  /**  是否显示节日文本 */
-  const showFestivalText = ref(false)
-
-  /**  节日日期 */
-  const festivalDate = ref('')
-
   /**  双列菜单是否显示文本 */
   const dualMenuShowText = ref(false)
 
@@ -132,13 +121,6 @@ export const useSettingStore = defineStore('settingStore', () => {
 
   /**  获取自定义圆角 */
   const getCustomRadius = computed(() => `${customRadius.value}rem` || `${defaultCustomRadius}rem`)
-
-  /**  节日礼花否显示 */
-  const isShowFireworks: ComputedRef<boolean> = computed(() => {
-    const currentFestivalDate: string | undefined = useCeremony().currentFestivalData.value?.date
-
-    return festivalDate.value !== currentFestivalDate
-  })
 
   /**
    *  搜索历史列表
@@ -174,9 +156,7 @@ export const useSettingStore = defineStore('settingStore', () => {
       menuOpen.value = setting.menuOpen
       watermarkVisible.value = setting.watermarkVisible
       customRadius.value = setting.customRadius || defaultCustomRadius
-      holidayFireworksLoaded.value = setting.holidayFireworksLoaded
-      showFestivalText.value = setting.showFestivalText
-      festivalDate.value = setting.festivalDate
+
       dualMenuShowText.value = setting.dualMenuShowText
       setCustomRadius(customRadius.value)
       setElementThemeColor(setting.systemThemeColor)
@@ -287,21 +267,6 @@ export const useSettingStore = defineStore('settingStore', () => {
     document.documentElement.style.setProperty('--custom-radius', `${radius}rem`)
   }
 
-  // 设置是否加载完礼花
-  function setholidayFireworksLoaded(isLoad: boolean) {
-    holidayFireworksLoaded.value = isLoad
-  }
-
-  // 设置是否显示节日文本
-  function setShowFestivalText(show: boolean) {
-    showFestivalText.value = show
-  }
-
-  // 设置节日日期
-  function setFestivalDate(date: string) {
-    festivalDate.value = date
-  }
-
   // 设置双列菜单是否显示文本
   function setDualMenuShowText(show: boolean) {
     dualMenuShowText.value = show
@@ -329,7 +294,6 @@ export const useSettingStore = defineStore('settingStore', () => {
     showCrumbs,
     autoClose,
     showWorkTab,
-    showLanguage,
     showNprogress,
     colorWeak,
     pageTransition,
@@ -337,9 +301,7 @@ export const useSettingStore = defineStore('settingStore', () => {
     refresh,
     watermarkVisible,
     customRadius,
-    holidayFireworksLoaded,
-    showFestivalText,
-    festivalDate,
+
     dualMenuShowText,
     containerWidth,
 
@@ -349,7 +311,6 @@ export const useSettingStore = defineStore('settingStore', () => {
     getMenuOpenWidth,
     getMenuCloseWidth,
     getCustomRadius,
-    isShowFireworks,
     initState,
     switchMenuLayouts,
     setMenuOpenWidth,
@@ -372,9 +333,7 @@ export const useSettingStore = defineStore('settingStore', () => {
     reload,
     setWatermarkVisible,
     setCustomRadius,
-    setholidayFireworksLoaded,
-    setShowFestivalText,
-    setFestivalDate,
+
     setDualMenuShowText,
     searchHistoryList,
     setSearchHistoryList,
