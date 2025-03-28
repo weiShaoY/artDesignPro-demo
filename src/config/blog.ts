@@ -99,79 +99,81 @@ export const blogConfig = {
   /** 圆角默认值(rem) */
   customRadius: '0.75',
 
-  /**  系统主题样式（light | dark） */
-  systemThemeStyles: {
-    [BlogTypeTest.SystemThemeModeEnum.LIGHT]: {
-      className: '',
+  settingDrawer: {
+    /**
+     * Element Plus 主题配置
+     */
+    elementPlusTheme: {
+      /** 主色 */
+      primary: '#5D87FF',
     },
-    [BlogTypeTest.SystemThemeModeEnum.DARK]: {
-      className: BlogTypeTest.SystemThemeModeEnum.DARK,
+
+    systemMainColor: [
+      '#5D87FF', // 蓝色
+      '#B48DF3', // 紫色
+      '#1D84FF', // 深蓝
+      '#60C041', // 绿色
+      '#38C0FC', // 浅蓝
+      '#F9901F', // 橙色
+      '#FF80C8', // 粉色
+    ],
+
+    /**  系统主题样式（light | dark） */
+    systemThemeStyles: {
+      [BlogTypeTest.SystemThemeModeEnum.LIGHT]: {
+        className: '',
+      },
+      [BlogTypeTest.SystemThemeModeEnum.DARK]: {
+        className: BlogTypeTest.SystemThemeModeEnum.DARK,
+      },
     },
+
+    /**
+     *  设置抽屉-主题风格列表
+     */
+    themeStyleList: [
+      {
+        name: '浅色',
+        theme: BlogTypeTest.SystemThemeModeEnum.LIGHT,
+        img: system_theme_light,
+      },
+      {
+        name: '深色',
+        theme: BlogTypeTest.SystemThemeModeEnum.DARK,
+        img: system_theme_dark,
+      },
+      {
+        name: '系统',
+        theme: BlogTypeTest.SystemThemeModeEnum.AUTO,
+        img: system_theme_system,
+      },
+    ],
+
+    /**
+     *  设置抽屉-菜单布局列表
+     */
+    menuLayoutList: [
+      {
+        name: '左侧',
+        value: BlogTypeTest.MenuLayoutEnum.LEFT,
+        img: menu_layout_vertical,
+      },
+      {
+        name: '顶部',
+        value: BlogTypeTest.MenuLayoutEnum.TOP,
+        img: menu_layout_horizontal,
+      },
+      {
+        name: '混合',
+        value: BlogTypeTest.MenuLayoutEnum.TOP_LEFT,
+        img: menu_layout_mixed,
+      },
+      {
+        name: '双列',
+        value: BlogTypeTest.MenuLayoutEnum.DUAL_MENU,
+        img: menu_layout_dual_column,
+      },
+    ],
+
   },
-
-  /**
-   *  设置抽屉-主题风格列表
-   */
-  settingThemeStyleList: [
-    {
-      name: '浅色',
-      theme: BlogTypeTest.SystemThemeModeEnum.LIGHT,
-      img: system_theme_light,
-    },
-    {
-      name: '深色',
-      theme: BlogTypeTest.SystemThemeModeEnum.DARK,
-      img: system_theme_dark,
-    },
-    {
-      name: '系统',
-      theme: BlogTypeTest.SystemThemeModeEnum.AUTO,
-      img: system_theme_system,
-    },
-  ],
-
-  /**
-   *  设置抽屉-菜单布局列表
-   */
-  settingMenuLayoutList: [
-    {
-      name: '左侧',
-      value: BlogTypeTest.MenuLayoutEnum.LEFT,
-      img: menu_layout_vertical,
-    },
-    {
-      name: '顶部',
-      value: BlogTypeTest.MenuLayoutEnum.TOP,
-      img: menu_layout_horizontal,
-    },
-    {
-      name: '混合',
-      value: BlogTypeTest.MenuLayoutEnum.TOP_LEFT,
-      img: menu_layout_mixed,
-    },
-    {
-      name: '双列',
-      value: BlogTypeTest.MenuLayoutEnum.DUAL_MENU,
-      img: menu_layout_dual_column,
-    },
-  ],
-
-  /**
-   * Element Plus 主题配置
-   */
-  elementPlusTheme: {
-    /** 主色 */
-    primary: '#5D87FF',
-  },
-
-  systemColor: [
-    '#5D87FF', // 蓝色
-    '#B48DF3', // 紫色
-    '#1D84FF', // 深蓝
-    '#60C041', // 绿色
-    '#38C0FC', // 浅蓝
-    '#F9901F', // 橙色
-    '#FF80C8', // 粉色
-  ],
-
 }

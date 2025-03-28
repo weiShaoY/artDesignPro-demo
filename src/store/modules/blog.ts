@@ -37,25 +37,25 @@ export const useBlogStore = defineStore('BlogStore', () => {
     containerWidth: BlogTypeTest.ContainerWidthEnum.FULL,
 
     isDark: false,
-    menuTheme: blogConfig.menu.menuThemeList[0],
+    menuTheme: blogConfig.menuThemeList[0],
     searchHistoryList: [],
   })
 
-  watchEffect(() => {
-    state.value.isDark = state.value.systemThemeType === BlogTypeTest.SystemThemeModeEnum.DARK
+  // watchEffect(() => {
+  //   state.value.isDark = state.value.systemThemeType === BlogTypeTest.SystemThemeModeEnum.DARK
 
-    state.value.menuTheme = (
-      state.value.isDark
-        ? blogConfig.menu.menuDarkThemeList
-        : blogConfig.menu.menuThemeList
-    ).find(item => item.theme === state.value.menuThemeType) ?? blogConfig.menu.menuThemeList[0]
+  //   state.value.menuTheme = (
+  //     state.value.isDark
+  //       ? blogConfig.menu.menuDarkThemeList
+  //       : blogConfig.menu.menuThemeList
+  //   ).find(item => item.theme === state.value.menuThemeType) ?? blogConfig.menu.menuThemeList[0]
 
-    state.value.menuOpenWidth = state.value.menuOpenWidth || blogConfig.menu.menuDefaultOpenWidth
+  //   state.value.menuOpenWidth = state.value.menuOpenWidth || blogConfig.menu.menuDefaultOpenWidth
 
-    state.value.menuCloseWidth = state.value.menuCloseWidth || blogConfig.menu.menuDefaultCloseWidth
+  //   state.value.menuCloseWidth = state.value.menuCloseWidth || blogConfig.menu.menuDefaultCloseWidth
 
-    state.value.customRadius = state.value.customRadius || blogConfig.setting.defaultCustomRadius
-  })
+  //   state.value.customRadius = state.value.customRadius || blogConfig.setting.defaultCustomRadius
+  // })
 
   return {
     state,
