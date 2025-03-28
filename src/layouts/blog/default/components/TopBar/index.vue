@@ -123,6 +123,7 @@ function openSearchDialog() {
     <div
       class="menu"
     >
+      <!-- 左侧 -->
       <div
         class="left"
         style="display: flex"
@@ -201,6 +202,7 @@ function openSearchDialog() {
         />
       </div>
 
+      <!-- 右侧 -->
       <div
         class="right"
       >
@@ -215,9 +217,10 @@ function openSearchDialog() {
             <div
               class="left"
             >
-              <i
-                class="iconfont-sys"
-              >&#xe710;</i>
+
+              <SvgIcon
+                icon="search"
+              />
 
               <span>搜索</span>
             </div>
@@ -249,9 +252,9 @@ function openSearchDialog() {
             class="btn"
             :class="{ 'full-screen-btn': !isFullscreen, 'exit-full-screen-btn': isFullscreen }"
           >
-            <i
-              class="iconfont-sys"
-            >{{ isFullscreen ? '&#xe62d;' : '&#xe8ce;' }}</i>
+            <SvgIcon
+              :icon="!isFullscreen ? 'blog-topBar-fullscreen' : 'blog-topBar-exit-fullscreen'"
+            />
           </div>
         </div>
 
@@ -264,9 +267,9 @@ function openSearchDialog() {
           <div
             class="btn theme-btn"
           >
-            <i
-              class="iconfont-sys"
-            >&#xe6d0;</i>
+            <SvgIcon
+              icon="setting"
+            />
           </div>
         </div>
 
@@ -278,9 +281,9 @@ function openSearchDialog() {
           <div
             class="btn theme-btn"
           >
-            <i
-              class="iconfont-sys"
-            >{{ isDark ? '&#xe6b5;' : '&#xe725;' }}</i>
+            <SvgIcon
+              :icon="isDark ? 'blog-topBar-dark' : 'blog-topBar-light'"
+            />
           </div>
         </div>
       </div>

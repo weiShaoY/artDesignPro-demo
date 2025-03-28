@@ -1,3 +1,5 @@
+<!-- 快速入口 -->
+
 <script setup lang="ts">
 import { RoutesAlias } from '@/router/modules/routesAlias'
 
@@ -19,7 +21,8 @@ const WEB_LINKS = {
   DOCS: 'https://www.lingchen.kim/art-design-pro/docs',
 
   // 项目社区
-  COMMUNITY: 'https://www.lingchen.kim/art-design-pro/docs/guide/community/communicate.html',
+  COMMUNITY:
+    'https://www.lingchen.kim/art-design-pro/docs/guide/community/communicate.html',
 
   // 个人 Bilibili 主页
   BILIBILI: 'https://space.bilibili.com/425500936?spm_id_from=333.1007.0.0',
@@ -163,13 +166,13 @@ function handleAppClick(path: string) {
         <div
           class="btn"
         >
-          <i
-            class="iconfont-sys"
-          >&#xe81a;</i>
-
-          <span
-            class="red-dot"
+          <SvgIcon
+            icon="blog-topBar-fast"
           />
+
+          <!-- <span
+            class="red-dot"
+          /> -->
         </div>
       </div>
     </template>
@@ -237,7 +240,7 @@ function handleAppClick(path: string) {
 </template>
 
 <style lang="scss" scoped>
-  .fast-enter-trigger {
+.fast-enter-trigger {
   display: flex;
   gap: 8px;
   align-items: center;

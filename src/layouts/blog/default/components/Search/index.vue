@@ -5,8 +5,6 @@ import { useSettingStore } from '@/store/modules/setting'
 
 import { blogMittBus } from '@/utils'
 
-import { Search as SearchIcon } from '@element-plus/icons-vue'
-
 const router = useRouter()
 
 const settingStore = useSettingStore()
@@ -342,21 +340,28 @@ onUnmounted(() => {
         ref="searchInputRef"
         v-model.trim="searchVal"
         placeholder="搜索页面"
-        :prefix-icon="SearchIcon"
         @input="search"
         @blur="searchBlur"
         @keydown.up.prevent="highlightPrevious"
         @keydown.down.prevent="highlightNext"
         @keydown.enter.prevent="selectHighlighted"
       >
+
+        <template
+          #prefix
+        >
+          <SvgIcon
+            icon="search"
+          />
+
+        </template>
+
         <template
           #suffix
         >
-          <div
-            class="search-keydown"
-          >
-            <span>ESC</span>
-          </div>
+          <SvgIcon
+            icon="blog-topBar-esc"
+          />
         </template>
       </el-input>
 
