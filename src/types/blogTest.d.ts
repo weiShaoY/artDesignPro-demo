@@ -22,7 +22,7 @@ declare namespace BlogTypeTest {
    * 菜单主题模式枚举
    * @enum {string}
    */
-  enum MenuThemeModeEnum {
+  enum MenuThemeEnum {
 
     /** 深色主题 */
     DARK = 'dark',
@@ -40,7 +40,7 @@ declare namespace BlogTypeTest {
  type MenuTheme = {
 
    /** 当前主题模式 */
-   theme: MenuThemeModeEnum
+   theme: MenuThemeEnum
 
    /** 菜单背景色 */
    background: string
@@ -125,13 +125,16 @@ declare namespace BlogTypeTest {
    query?: Record<string, any>
  }
 
+ /**
+  *  设置
+  */
  type SettingType = {
 
    /** 菜单布局 */
    menuLayout: MenuLayoutEnum
 
    /** 菜单主题类型 */
-   menuThemeType: MenuThemeModeEnum
+   menuThemeType: MenuThemeEnum
 
    /** 菜单展开宽度 */
    menuOpenWidth: number
@@ -204,6 +207,15 @@ declare namespace BlogTypeTest {
 
    /** 容器宽度 */
    containerWidth: ContainerWidthEnum
+
+   /** 是否为深色模式 */
+   isDark: boolean
+
+   /** 菜单主题 */
+   menuTheme: MenuTheme
+
+   /** 搜索历史列表 */
+   searchHistoryList: MenuListType[]
 
  }
 }

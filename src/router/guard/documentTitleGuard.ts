@@ -1,7 +1,5 @@
 import type { Router } from 'vue-router'
 
-import { SystemInfo } from '@/config/setting'
-
 /**
  * 创建文档标题守卫
  *
@@ -13,7 +11,7 @@ export function createDocumentTitleGuard(router: Router) {
 
     if (title) {
       setTimeout(() => {
-        document.title = `${title} - ${SystemInfo.name}`
+        document.title = `${title} - weiShaoY`
       }, 150)
     }
   })

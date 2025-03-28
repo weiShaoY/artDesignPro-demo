@@ -35,23 +35,6 @@ export const ElementPlusTheme = {
 }
 
 /**
- * 系统信息配置
- */
-export const SystemInfo = {
-  /** 系统名称 */
-  name: 'Art Design Pro',
-
-  /** 登录配置 */
-  login: {
-    /** 默认用户名 */
-    username: 'admin',
-
-    /** 默认密码 */
-    password: '123456',
-  },
-}
-
-/**
  * 系统主题样式配置
  */
 export const SystemThemeStyles: SystemThemeTypes = {
@@ -70,25 +53,16 @@ export const SettingThemeList = [
   {
     name: '浅色',
     theme: SystemThemeEnum.LIGHT,
-    color: ['#fff', '#fff'],
-    leftLineColor: '#EDEEF0',
-    rightLineColor: '#EDEEF0',
     img: theme_styles_light,
   },
   {
     name: '深色',
     theme: SystemThemeEnum.DARK,
-    color: ['#22252A'],
-    leftLineColor: '#3F4257',
-    rightLineColor: '#3F4257',
     img: theme_styles_dark,
   },
   {
     name: '系统',
     theme: SystemThemeEnum.AUTO,
-    color: ['#fff', '#22252A'],
-    leftLineColor: '#EDEEF0',
-    rightLineColor: '#3F4257',
     img: theme_styles_system,
   },
 ]

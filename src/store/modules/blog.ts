@@ -2,7 +2,7 @@ import { blogConfig } from '@/config'
 
 import { defineStore } from 'pinia'
 
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 
 export const useBlogStore = defineStore('BlogStore', () => {
   /**
@@ -14,7 +14,7 @@ export const useBlogStore = defineStore('BlogStore', () => {
     menuCloseWidth: 70,
     systemThemeType: BlogTypeTest.SystemThemeModeEnum.LIGHT,
     systemThemeMode: BlogTypeTest.SystemThemeModeEnum.LIGHT,
-    menuThemeType: BlogTypeTest.MenuThemeModeEnum.DESIGN,
+    menuThemeType: BlogTypeTest.MenuThemeEnum.DESIGN,
     systemThemeColor: '#409EFF',
     boxBorderMode: true,
     uniqueOpened: true,
@@ -35,60 +35,29 @@ export const useBlogStore = defineStore('BlogStore', () => {
     holidayFireworksLoaded: false,
     dualMenuShowText: false,
     containerWidth: BlogTypeTest.ContainerWidthEnum.FULL,
+
     isDark: false,
+    menuTheme: blogConfig.menu.menuThemeList[0],
+    searchHistoryList: [],
   })
 
   watchEffect(() => {
-    state.value.isDark = state.value.systemThemeType === BlogTypeTest.SystemThemeModeEnum.DARK)
+    state.value.isDark = state.value.systemThemeType === BlogTypeTest.SystemThemeModeEnum.DARK
+
+    state.value.menuTheme = (
+      state.value.isDark
+        ? blogConfig.menu.menuDarkThemeList
+        : blogConfig.menu.menuThemeList
+    ).find(item => item.theme === state.value.menuThemeType) ?? blogConfig.menu.menuThemeList[0]
+
+    state.value.menuOpenWidth = state.value.menuOpenWidth || blogConfig.menu.menuDefaultOpenWidth
+
+    state.value.menuCloseWidth = state.value.menuCloseWidth || blogConfig.menu.menuDefaultCloseWidth
+
+    state.value.customRadius = state.value.customRadius || blogConfig.setting.defaultCustomRadius
   })
-
-  /**
-   *  是否为深色模式
-   */
-
-  //  state.value.isDark = computed(() => state.value.systemThemeType === BlogTypeTest.SystemThemeModeEnum.DARK)
-
-  /**
-   *  获取菜单主题
-   */
-  const getMenuTheme = computed<BlogTypeTest.MenuTheme>(() => {
-    const list = blogConfig.menu.menuThemeList.filter(item => item.theme === state.value.menuThemeType)
-
-    if (isDark.value) {
-      return blogConfig.menu.menuDarkThemeList[0]
-    }
-    else {
-      return list[0]
-    }
-  })
-
-  /**  获取菜单展开宽度 */
-  const getMenuOpenWidth = computed(() => `${state.value.menuOpenWidth}px` || `${blogConfig.menu.menuDefaultOpenWidth}px`)
-
-  /**  获取菜单关闭宽度 */
-  const getMenuCloseWidth = computed(() => `${state.value.menuCloseWidth.value}px` || `${blogConfig.menu.menuDefaultCloseWidth}px`)
 
   return {
     state,
-
-    /**
-     *  是否为深色模式
-     */
-    isDark,
-
-    /**
-     *  获取菜单主题
-     */
-    getMenuTheme,
-
-    /**
-     *  获取菜单展开宽度
-     */
-    getMenuOpenWidth,
-
-    /**
-     *  获取菜单关闭宽度
-     */
-    getMenuCloseWidth,
   }
 })
