@@ -80,7 +80,9 @@ function search(val: string) {
    * @param items 要处理的菜单项数组
    * @returns 扁平化后的菜单项数组
    */
-  const flattenItems = (items: BlogType.MenuListType[]): BlogType.MenuListType[] => {
+  const flattenItems = (
+    items: BlogType.MenuListType[],
+  ): BlogType.MenuListType[] => {
     return items.flatMap((item) => {
       // 包含在主体容器中的项直接保留
       if (item.meta.isInMainContainer) {
@@ -108,7 +110,11 @@ function search(val: string) {
     return flattenItems([category])
   })
 
-  console.log('%c Line:101 🍊 searchResult.value', 'color:#42b983', searchResult.value)
+  console.log(
+    '%c Line:101 🍊 searchResult.value',
+    'color:#42b983',
+    searchResult.value,
+  )
 }
 
 /**
@@ -116,7 +122,10 @@ function search(val: string) {
  * @param  arr - 菜单列表
  * @param  val - 搜索关键字
  * @returns  - 查询结果
- */function fuzzyQueryList(arr: BlogType.MenuListType[], val: string): BlogType.MenuListType[] {
+ */ function fuzzyQueryList(
+  arr: BlogType.MenuListType[],
+  val: string,
+): BlogType.MenuListType[] {
   const lowerVal = val.toLowerCase() // 将查询值转换为小写
 
   const searchItem = (
@@ -154,8 +163,9 @@ function search(val: string) {
 // 搜索框键盘向上切换
 function highlightPrevious() {
   if (searchVal.value) {
-    highlightedIndex.value = (highlightedIndex.value - 1 + searchResult.value.length)
-      % searchResult.value.length
+    highlightedIndex.value
+      = (highlightedIndex.value - 1 + searchResult.value.length)
+        % searchResult.value.length
   }
   else {
     historyHIndex.value
@@ -169,10 +179,12 @@ function highlightPrevious() {
  */
 function highlightNext() {
   if (searchVal.value) {
-    highlightedIndex.value = (highlightedIndex.value + 1) % searchResult.value.length
+    highlightedIndex.value
+      = (highlightedIndex.value + 1) % searchResult.value.length
   }
   else {
-    historyHIndex.value = (historyHIndex.value + 1) % searchHistoryList.value.length
+    historyHIndex.value
+      = (historyHIndex.value + 1) % searchHistoryList.value.length
   }
 }
 
@@ -321,7 +333,6 @@ onMounted(() => {
 onUnmounted(() => {
   document.removeEventListener('keydown', handleKeydown)
 })
-
 </script>
 
 <template>
@@ -346,14 +357,12 @@ onUnmounted(() => {
         @keydown.down.prevent="highlightNext"
         @keydown.enter.prevent="selectHighlighted"
       >
-
         <template
           #prefix
         >
           <SvgIcon
             icon="search"
           />
-
         </template>
 
         <template
@@ -394,7 +403,11 @@ onUnmounted(() => {
 
       <!-- 搜索历史 -->
       <div
-        v-show="!searchVal && searchResult.length === 0 && searchHistoryList.length > 0"
+        v-show="
+          !searchVal
+            && searchResult.length === 0
+            && searchHistoryList.length > 0
+        "
         class="history-box"
       >
         <p
@@ -437,21 +450,21 @@ onUnmounted(() => {
           class="dialog-footer"
         >
           <div>
-            <i
-              class="iconfont-sys"
-            > &#xe864; </i>
+            <SvgIcon
+              icon="blog-search-up"
+            />
 
-            <i
-              class="iconfont-sys"
-            > &#xe867; </i>
+            <SvgIcon
+              icon="blog-search-down"
+            />
 
             <span>切换</span>
           </div>
 
           <div>
-            <i
-              class="iconfont-sys"
-            > &#xe6e6; </i>
+            <SvgIcon
+              icon="blog-search-enter"
+            />
 
             <span>选择</span>
           </div>

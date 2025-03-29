@@ -258,21 +258,6 @@ function openSearchDialog() {
           </div>
         </div>
 
-        <!-- 设置 -->
-
-        <div
-          class="btn-box"
-          @click="openSetting"
-        >
-          <div
-            class="btn theme-btn"
-          >
-            <SvgIcon
-              icon="setting"
-            />
-          </div>
-        </div>
-
         <!-- 切换主题 -->
         <div
           class="btn-box"
@@ -286,6 +271,21 @@ function openSearchDialog() {
             />
           </div>
         </div>
+
+        <!-- 设置 -->
+        <div
+          class="btn-box"
+          @click="openSetting"
+        >
+          <div
+            class="btn theme-btn"
+          >
+            <SvgIcon
+              icon="setting"
+            />
+          </div>
+        </div>
+
       </div>
     </div>
 

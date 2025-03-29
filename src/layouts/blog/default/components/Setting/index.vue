@@ -146,12 +146,12 @@ const containerWidthList = [
   {
     value: ContainerWidthEnum.FULL,
     label: '铺满',
-    icon: '&#xe694;',
+    icon: 'blog-setting-auto-width',
   },
   {
     value: ContainerWidthEnum.BOXED,
     label: '定宽',
-    icon: '&#xe6de;',
+    icon: 'blog-setting-fixed-width',
   },
 ]
 
@@ -426,10 +426,11 @@ watch(
         <div
           class="close-wrap"
         >
-          <i
-            class="iconfont-sys"
+          <SvgIcon
+            icon="close"
+            class="hover:cursor-pointer"
             @click="closeDrawer"
-          >&#xe7dc;</i>
+          />
         </div>
 
         <!-- 主题风格 -->
@@ -571,10 +572,12 @@ watch(
               :style="{ background: `${color} !important` }"
               @click="setElementTheme(color)"
             >
-              <i
+              <SvgIcon
                 v-show="color === systemThemeColor"
-                class="iconfont-sys"
-              >&#xe616;</i>
+                icon="blog-setting-select"
+                :size="16"
+                color="!#fff"
+              />
             </div>
           </div>
         </div>
@@ -631,9 +634,9 @@ watch(
             :class="{ 'is-active': containerWidth === item.value }"
             @click="setContainerWidth(item.value)"
           >
-            <i
-              class="iconfont-sys"
-              v-html="item.icon"
+            <SvgIcon
+              class="mr-2"
+              :icon="item.icon"
             />
 
             <span>{{ item.label }}</span>
