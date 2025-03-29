@@ -62,20 +62,6 @@ export const blogRouteList11111111: BlogType.AppRouteRecordRaw[] = [
           title: '菜单权限',
           icon: '&#xe8a4;',
           keepAlive: true,
-          authList: [
-            {
-              title: '新增',
-              auth_mark: 'add',
-            },
-            {
-              title: '编辑',
-              auth_mark: 'edit',
-            },
-            {
-              title: '删除',
-              auth_mark: 'delete',
-            },
-          ],
         },
       },
       {
@@ -88,20 +74,6 @@ export const blogRouteList11111111: BlogType.AppRouteRecordRaw[] = [
           icon: '&#xe831;',
           showTextBadge: 'new',
           keepAlive: true,
-          authList: [
-            {
-              title: '新增',
-              auth_mark: 'add',
-            },
-            {
-              title: '编辑',
-              auth_mark: 'edit',
-            },
-            {
-              title: '删除',
-              auth_mark: 'delete',
-            },
-          ],
         },
       },
       {
@@ -283,3 +255,5 @@ const modules = Object.fromEntries(
  * @description 通过调用 `formatModules` 函数格式化模块化路由，并排除当前文件，以便生成代码模块的子路由列表。
  */
 export const blogRouteList = formatModules(modules, []) as BlogType.MenuListType[]
+
+console.log('%c Line:258 🍅 blogRouteList', 'color:#e41a6a', blogRouteList)

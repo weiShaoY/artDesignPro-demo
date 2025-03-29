@@ -249,7 +249,6 @@ function updateHistory() {
  */
 function cleanItem(item: BlogType.MenuListType) {
   delete item.children
-  delete item.meta.authList
 }
 
 /**

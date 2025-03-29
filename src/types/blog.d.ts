@@ -79,11 +79,6 @@ declare namespace BlogType {
       keepAlive: boolean
 
       /**
-       * 可操作权限列表
-       */
-      authList?: any[]
-
-      /**
        * 是否在主容器内
        */
       isInMainContainer?: boolean

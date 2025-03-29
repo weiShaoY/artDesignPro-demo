@@ -11,27 +11,13 @@ const menuRoute: BlogType.AppRouteRecordRaw = {
   },
   children: [
     {
-      path: '/blog/menu/menu',
+      path: '/blog/menu/menu1',
       name: 'Menus',
       component: () => import('@/pages/blog/menu/Menu.vue'),
       meta: {
         title: '菜单权限',
         icon: '&#xe8a4;',
         keepAlive: true,
-        authList: [
-          {
-            title: '新增',
-            auth_mark: 'add',
-          },
-          {
-            title: '编辑',
-            auth_mark: 'edit',
-          },
-          {
-            title: '删除',
-            auth_mark: 'delete',
-          },
-        ],
       },
     },
     {
@@ -44,20 +30,6 @@ const menuRoute: BlogType.AppRouteRecordRaw = {
         icon: '&#xe831;',
         showTextBadge: 'new',
         keepAlive: true,
-        authList: [
-          {
-            title: '新增',
-            auth_mark: 'add',
-          },
-          {
-            title: '编辑',
-            auth_mark: 'edit',
-          },
-          {
-            title: '删除',
-            auth_mark: 'delete',
-          },
-        ],
       },
     },
     {

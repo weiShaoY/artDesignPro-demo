@@ -64,15 +64,6 @@ function assignIdsAndSortRoutes(routeList: BlogType.MenuListType[], parentId: nu
       route.children = assignIdsAndSortRoutes(route.children, id)
     }
 
-    // 如果当前路由有权限列表，为每个权限项添加唯一ID
-    // if (route.meta?.authList) {
-    //   console.log("%c Line:71 🍋 route.meta", "color:#33a5ff", route.meta);
-    //   route.meta.authList = route.meta.authList.map((auth: any, authIndex: number) => ({
-    //     ...auth,
-    //     id: id * 100 + (authIndex + 1),
-    //   }))
-    // }
-
     // 返回处理后的路由对象
     return {
       ...route,
