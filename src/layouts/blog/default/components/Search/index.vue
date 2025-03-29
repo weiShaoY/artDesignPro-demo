@@ -368,11 +368,12 @@ onUnmounted(() => {
           #suffix
         >
           <SvgIcon
-            icon="blog-topBar-esc"
+            icon="blog-search-esc"
           />
         </template>
       </el-input>
 
+      <!-- 搜索结果 -->
       <div
         v-show="searchResult.length"
         class="result"
@@ -390,12 +391,11 @@ onUnmounted(() => {
             @mouseenter="highlightOnHover(index)"
           >
             {{ item.meta.title }}
-            <i
+
+            <SvgIcon
               v-show="isHighlighted(index)"
-              class="selected-icon iconfont-sys"
-            >
-              &#xe6e6;
-            </i>
+              icon="blog-search-enter"
+            />
           </div>
         </div>
       </div>
@@ -432,12 +432,12 @@ onUnmounted(() => {
               {{ item.meta.title }}
             </span>
 
-            <i
-              class="selected-icon iconfont-sys"
+            <SvgIcon
+              class="selected-icon"
+              icon="close"
+              :size="18"
               @click.stop="deleteHistory(index)"
-            >
-              &#xe83a;
-            </i>
+            />
           </div>
         </div>
       </div>

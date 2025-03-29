@@ -55,7 +55,6 @@ declare module 'vue' {
     ElTimelineItem: typeof import('element-plus/es')['ElTimelineItem']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     ElWatermark: typeof import('element-plus/es')['ElWatermark']
-    FestivalTextScroll: typeof import('./../components/Widgets/FestivalTextScroll.vue')['default']
     FormInput: typeof import('./../components/Form/FormInput.vue')['default']
     FormSelect: typeof import('./../components/Form/FormSelect.vue')['default']
     Github: typeof import('./../components/Github/index.vue')['default']

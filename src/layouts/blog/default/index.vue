@@ -206,9 +206,6 @@ onMounted(() => {
       class="container"
       :style="{ maxWidth: containerWidth }"
     >
-      <!-- 节日文本滚动 -->
-      <festival-text-scroll />
-
       <router-view
         v-if="isRefresh && isOnline"
         v-slot="{ Component, route }"
