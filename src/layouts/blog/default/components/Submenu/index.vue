@@ -169,7 +169,14 @@ export default {
         />
 
         <div
-          v-if="item.meta.showTextBadge"
+          v-if="item.meta.externalUrl"
+          class="text-badge"
+        >
+          外链
+        </div>
+
+        <div
+          v-else-if="item.meta.showTextBadge"
           class="text-badge"
         >
           {{ item.meta.showTextBadge }}

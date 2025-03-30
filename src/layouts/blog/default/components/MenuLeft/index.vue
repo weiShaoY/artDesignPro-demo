@@ -107,7 +107,7 @@ const menuList = computed(() => {
   /**
    *  处理 iframe 路由
    */
-  if (route.meta?.isIframe) {
+  if (route.meta?.iframeUrl) {
     for (const menu of list) {
       if (menu.children) {
         const iframeMenu = menu.children.find(child => child.path === route.path)

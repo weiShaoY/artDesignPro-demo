@@ -98,6 +98,11 @@ declare namespace BlogType {
        *  iframe 地址
        */
       iframeUrl?: string
+
+      /**
+       *  是否显示图标徽标  (显示优先级 > showIconBadge > showTextBadge > showBadge)
+       */
+      showIconBadge?: string
     }
 
     /**

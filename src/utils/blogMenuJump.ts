@@ -14,10 +14,10 @@ function openExternalLink(link: string) {
  */
 export function blogMenuJump(item: BlogType.MenuListType, jumpToFirst: boolean = false) {
   // 处理外部链接
-  const { link, isIframe } = item.meta
+  const { externalUrl } = item.meta
 
-  if (link && !isIframe) {
-    return openExternalLink(link)
+  if (externalUrl) {
+    return openExternalLink(externalUrl)
   }
 
   // 如果不需要跳转到第一个子菜单，或者没有子菜单，直接跳转当前路径
@@ -29,8 +29,8 @@ export function blogMenuJump(item: BlogType.MenuListType, jumpToFirst: boolean =
   const firstChild = item.children.find(child => !child.meta.isHide) || item.children[0]
 
   // 如果第一个子菜单是外部链接 并且不是 iframe，打开外部链接
-  if (firstChild.meta?.link && !firstChild.meta.isIframe) {
-    return openExternalLink(firstChild.meta.link)
+  if (firstChild.meta?.externalUrl) {
+    return openExternalLink(firstChild.meta.externalUrl)
   }
 
   // 跳转到子菜单路径

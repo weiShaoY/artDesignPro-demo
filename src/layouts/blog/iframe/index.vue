@@ -10,8 +10,8 @@ const isLoading = ref(true)
 const iframeUrl = ref('')
 
 onMounted(() => {
-  if (route.meta.link) {
-    iframeUrl.value = route.meta.link as string
+  if (route.meta.iframeUrl) {
+    iframeUrl.value = route.meta.iframeUrl as string
   }
 })
 

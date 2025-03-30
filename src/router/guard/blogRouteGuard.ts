@@ -101,8 +101,8 @@ function convertRouteComponent(route: BlogType.MenuListType): ConvertedRoute {
   }
 
   try {
-    // 处理 iframe 且在主容器内的路由
-    if (route.meta.isInMainContainer && route.meta.isIframe) {
+    // 处理 iframe 且在是一级路由的路由
+    if (route.meta.isInMainContainer && route.meta.iframeUrl) {
       converted.component = BLOG_DEFAULT_LAYOUT
       converted.path = `/${route.path?.split('/')
         .slice(1, 3)
@@ -138,7 +138,7 @@ function convertRouteComponent(route: BlogType.MenuListType): ConvertedRoute {
     }
 
     // 处理 iframe 类型的路由
-    else if (route.meta.isIframe) {
+    else if (route.meta.iframeUrl) {
       converted.component = BLOG_IFRAME_LAYOUT
     }
 

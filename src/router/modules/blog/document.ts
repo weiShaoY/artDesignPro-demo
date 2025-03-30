@@ -28,17 +28,19 @@ const documentRoute: BlogType.AppRouteRecordRaw = {
       },
     },
 
-    // {
-    //   path: '/blog/document/vite',
-    //   name: 'Vite',
-    //   meta: {
-    //     title: 'Vite',
-    //     link: 'https://cn.vitejs.dev/',
-    //     icon: 'blog-menu-vite',
-    //     keepAlive: false,
-    //     isIframe: true,
-    //   },
-    // },
+    {
+      path: '/blog/document/vite',
+      name: 'Vite',
+      meta: {
+        title: 'Vite',
+        externalUrl: 'https://cn.vitejs.dev/',
+        icon: 'blog-menu-vite',
+        keepAlive: false,
+
+        // showTextBadge: '外链',
+      },
+    },
+
     // {
     //   path: '/blog/document/react',
     //   name: 'React',
