@@ -87,6 +87,17 @@ declare namespace BlogType {
        *  排序
        */
       order?: number
+
+      // /////////////////
+      /**
+       *  外链地址
+       */
+      externalUrl?: string
+
+      /**
+       *  iframe 地址
+       */
+      iframeUrl?: string
     }
 
     /**
