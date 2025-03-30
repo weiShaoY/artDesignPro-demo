@@ -98,10 +98,12 @@ function isNotEmpty(children: BlogType.MenuListType[] | undefined) {
     <template
       #title
     >
-      <i
+      <svgIcon
+        v-if="item.meta.icon"
         :style="{ color: theme?.iconColor }"
-        class="menu-icon iconfont-sys"
-        v-html="item.meta.icon"
+        :icon="item.meta.icon"
+        :size="26"
+        class="mr-2"
       />
 
       <span>{{ item.meta.title }}</span>
@@ -126,9 +128,12 @@ function isNotEmpty(children: BlogType.MenuListType[] | undefined) {
     <template
       #title
     >
-      <i
-        class="menu-icon iconfont-sys"
-        v-html="item.meta.icon"
+      <svgIcon
+        v-if="item.meta.icon"
+        :style="{ color: theme?.iconColor }"
+        :icon="item.meta.icon"
+        :size="26"
+        class="mr-2"
       />
 
       <span>{{ item.meta.title }}</span>

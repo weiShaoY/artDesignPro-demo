@@ -11,14 +11,6 @@ import type { MenuItemType } from '../MenuRight/index.vue'
 
 import { useWorkTabStore } from '@/store/modules/workTab'
 
-import {
-  ArrowDown,
-  ArrowLeft,
-  ArrowRight,
-  CircleClose,
-  Close,
-} from '@element-plus/icons-vue'
-
 /**
  * 导入Vue组合式API
  */
@@ -104,25 +96,25 @@ const menuItems = computed(() => {
     {
       key: 'left',
       label: '关闭左侧',
-      icon: 'ArrowLeft',
+      icon: 'blog-workTab-close-left',
       disabled: isFirstOrSecondTab,
     },
     {
       key: 'right',
       label: '关闭右侧',
-      icon: 'ArrowRight',
+      icon: 'blog-workTab-close-right',
       disabled: isLastTab,
     },
     {
       key: 'other',
-      label: '关闭其它',
-      icon: 'Close',
+      label: '关闭其他',
+      icon: 'blog-workTab-close-other',
       disabled: isOneTab || disableOther,
     },
     {
       key: 'all',
       label: '关闭全部',
-      icon: 'CircleClose',
+      icon: 'blog-workTab-close-all',
       disabled: isOneTab,
     },
   ]
@@ -407,14 +399,23 @@ function handleTouchEnd() {
           @click="clickTab(item)"
           @contextmenu.prevent="(e: MouseEvent) => showMenu(e, item.path)"
         >
-          {{ item.title }}
-          <!-- 关闭按钮 -->
-          <el-icon
-            v-if="index !== 0"
-            @click.stop="closeWorkTab('current', item.path)"
+          <div
+            class="flex items-center"
           >
-            <Close />
-          </el-icon>
+            <span
+              class="mr-2"
+            >
+              {{ item.title }}
+            </span>
+
+            <SvgIcon
+              v-if="index !== 0"
+              :size="10"
+              icon="close"
+              @click.stop="closeWorkTab('current', item.path)"
+            />
+          </div>
+
         </li>
       </ul>
     </div>
@@ -426,46 +427,62 @@ function handleTouchEnd() {
       <el-dropdown
         @command="closeWorkTab"
       >
-        <el-icon
+
+        <SvgIcon
           class="btn console-box art-custom-card"
-        >
-          <ArrowDown />
-        </el-icon>
+          icon="blog-workTab-close-open"
+        />
 
         <template
           #dropdown
         >
           <el-dropdown-menu>
             <el-dropdown-item
-              :icon="ArrowLeft"
               command="left"
               :disabled="activeTabIndex === 0 || activeTabIndex === 1"
             >
-              关闭左侧
+              <SvgIcon
+                class="mr-2"
+                icon="blog-workTab-close-left"
+              />
+
+              <span>关闭左侧</span>
             </el-dropdown-item>
 
             <el-dropdown-item
-              :icon="ArrowRight"
               command="right"
               :disabled="activeTabIndex === list.length - 1"
             >
-              关闭右侧
+              <SvgIcon
+                class="mr-2"
+                icon="blog-workTab-close-right"
+              />
+
+              <span>关闭右侧</span>
             </el-dropdown-item>
 
             <el-dropdown-item
-              :icon="Close"
               command="other"
               :disabled="list.length === 1 || (list.length === 2 && activeTabIndex === 1)"
             >
-              关闭其它
+              <SvgIcon
+                class="mr-2"
+                icon="blog-workTab-close-other"
+              />
+
+              <span>关闭其他</span>
             </el-dropdown-item>
 
             <el-dropdown-item
-              :icon="CircleClose"
               command="all"
               :disabled="list.length === 1"
             >
-              关闭全部
+              <SvgIcon
+                class="mr-2"
+                icon="blog-workTab-close-all"
+              />
+
+              <span>关闭全部</span>
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>

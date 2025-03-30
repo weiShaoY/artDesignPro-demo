@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { useCommon } from '@/composables/useCommon'
 
-import { SystemInfo } from '@/config/setting'
-
 import { useSettingStore } from '@/store/modules/setting'
 
 import ActiveUser from './widget/ActiveUser.vue'
@@ -49,8 +47,6 @@ watch(currentGlopTheme, () => {
   settingStore.reload()
 })
 
-const systemName = SystemInfo.name
-
 useCommon().scrollToTop()
 
 function goPage(url: string) {
@@ -94,7 +90,7 @@ function goPage(url: string) {
         </h2>
 
         <p>
-          {{ systemName }} 是一款专注于用户体验和视觉设计的后台管理系统模版
+          是一款专注于用户体验和视觉设计的后台管理系统模版
         </p>
 
         <p>

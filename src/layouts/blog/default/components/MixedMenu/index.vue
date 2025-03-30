@@ -155,10 +155,13 @@ onMounted(() => {
             @click="blogMenuJump(item, true)"
           >
             <!-- 菜单图标 -->
-            <i
-              class="iconfont-sys"
-              v-html="item.meta.icon"
+            <svgIcon
+              v-if="item.meta.icon"
+              :icon="item.meta.icon"
+              :size="26"
+              class="mr-2"
             />
+
             <!-- 菜单标题 -->
             <span>{{ item.meta.title }}</span>
           </div>

@@ -181,17 +181,16 @@ defineExpose({
               :class="{ 'is-disabled': item.disabled }"
               @click="handleMenuClick(item)"
             >
-              <el-icon
+              <svgIcon
                 v-if="item.icon"
-              >
-                <component
-                  :is="item.icon"
-                />
-              </el-icon>
+                :icon="item.icon"
+              />
 
               <span
                 class="menu-label"
-              >{{ item.label }}</span>
+              >
+                {{ item.label }}
+              </span>
             </li>
 
             <!-- 子菜单 -->
@@ -202,13 +201,10 @@ defineExpose({
               <div
                 class="submenu-title"
               >
-                <el-icon
+                <svgIcon
                   v-if="item.icon"
-                >
-                  <component
-                    :is="item.icon"
-                  />
-                </el-icon>
+                  :icon="item.icon"
+                />>
 
                 <span
                   class="menu-label"
