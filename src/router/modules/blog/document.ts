@@ -1,7 +1,7 @@
 import { BLOG_DEFAULT_LAYOUT } from '@/layouts'
 
 const documentRoute: BlogType.AppRouteRecordRaw = {
-  path: '/blog/document',
+  path: 'document',
   name: 'Document',
   component: BLOG_DEFAULT_LAYOUT,
   meta: {
@@ -12,51 +12,97 @@ const documentRoute: BlogType.AppRouteRecordRaw = {
   },
   children: [
     {
-      path: '/blog/document/typescript',
+      path: 'typescript',
       name: 'TypeScript',
       meta: {
         title: 'TypeScript',
         icon: 'blog-menu-typeScript',
+        iframeUrl: 'https://www.typescriptlang.org/zh/',
         keepAlive: false,
         showDefaultBadge: true,
-        iframeUrl: 'https://www.typescriptlang.org/zh/',
       },
     },
     {
-      path: '/blog/document/vite',
+      path: 'vite',
       name: 'Vite',
       meta: {
         title: 'Vite',
-
-        // externalUrl: 'https://cn.vitejs.dev/',
         icon: 'blog-menu-vite',
+        iframeUrl: 'https://cn.vitejs.dev/',
         keepAlive: false,
-        iconBadge: 'blog-menu-vite',
+      },
+    },
+    {
+      path: 'react',
+      name: 'React',
+      meta: {
+        title: 'React',
+        icon: 'blog-menu-react',
+        iframeUrl: 'https://zh-hans.react.dev/',
+        keepAlive: false,
+      },
+    },
+    {
+      path: 'vue',
+      name: 'Vue',
+      meta: {
+        title: 'Vue',
+        icon: 'blog-menu-vue',
+        externalUrl: 'https://cn.vuejs.org/',
+        keepAlive: false,
+      },
+    },
+    {
+      path: 'angular',
+      name: 'Angular',
+      meta: {
+        title: 'Angular',
+        icon: 'blog-menu-angular',
+        iframeUrl: 'https://angular.io/',
+        keepAlive: false,
+      },
+    },
+    {
+      path: 'pinia',
+      name: 'Pinia',
+      meta: {
+        title: 'Pinia',
+        icon: 'blog-menu-pinia',
+        iframeUrl: 'https://pinia.vuejs.org/zh/',
+        keepAlive: false,
+      },
+    },
+    {
+      path: 'vueuse',
+      name: 'VueUse',
+      meta: {
+        title: 'vueuse',
+        icon: 'blog-menu-vueuse',
+        iframeUrl: 'https://vueuse.pages.dev/',
+        keepAlive: false,
+      },
+    },
+    {
+      path: 'unocss',
+      name: 'Unocss',
+      meta: {
+        title: 'Unocss',
+        icon: 'blog-menu-unocss',
+        iframeUrl: 'https://unocss-cn.pages.dev/',
+        keepAlive: false,
+      },
+    },
+    {
+      path: 'tailwindCss',
+      name: 'TailwindCss',
+      meta: {
+        title: 'TailwindCss',
+        icon: 'blog-menu-tailwindCss',
+        iframeUrl: 'https://tailwindcss.com/docs/installation',
+        keepAlive: false,
       },
     },
 
-    // {
-    //   path: '/blog/document/react',
-    //   name: 'React',
-    //   meta: {
-    //     title: 'React',
-    //     link: 'https://zh-hans.react.dev/',
-    //     icon: 'blog-menu-react',
-    //     keepAlive: false,
-    //     isIframe: true,
-    //   },
-    // },
-    // {
-    //   path: '/blog/document/vue',
-    //   name: 'Vue',
-    //   meta: {
-    //     title: 'Vue',
-    //     link: 'https://cn.vuejs.org/',
-    //     icon: 'blog-menu-vue',
-    //     keepAlive: false,
-    //     showTextBadge: '外链',
-    //   },
-    // },
   ],
 }
 

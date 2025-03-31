@@ -1,7 +1,7 @@
 import { BLOG_DEFAULT_LAYOUT } from '@/layouts'
 
 const menuRoute: BlogType.AppRouteRecordRaw = {
-  path: '/blog/menu',
+  path: 'menu',
   name: 'Menu',
   component: BLOG_DEFAULT_LAYOUT,
   meta: {
@@ -11,7 +11,7 @@ const menuRoute: BlogType.AppRouteRecordRaw = {
   },
   children: [
     {
-      path: '/blog/menu/menu1',
+      path: 'menu1',
       name: 'Menus',
       component: () => import('@/pages/blog/menu/Menu.vue'),
       meta: {
@@ -21,7 +21,7 @@ const menuRoute: BlogType.AppRouteRecordRaw = {
       },
     },
     {
-      path: '/blog/menu/permission',
+      path: 'permission',
       name: 'Permission',
       component: () => import('@/pages/blog/menu/Permission.vue'),
 
@@ -33,10 +33,8 @@ const menuRoute: BlogType.AppRouteRecordRaw = {
       },
     },
     {
-      path: '/blog/menu/nested',
+      path: 'nested',
       name: 'Nested',
-
-      // component: '',
       meta: {
         title: '嵌套菜单',
         icon: '&#xe676;',
@@ -44,7 +42,7 @@ const menuRoute: BlogType.AppRouteRecordRaw = {
       },
       children: [
         {
-          path: '/blog/menu/nested/menu1',
+          path: 'menu1',
           name: 'NestedMenu1',
           component: () => import('@/pages/blog/menu/nested/Menu1.vue'),
           meta: {
@@ -54,7 +52,7 @@ const menuRoute: BlogType.AppRouteRecordRaw = {
           },
         },
         {
-          path: '/blog/menu/nested/menu2',
+          path: 'menu2',
           name: 'NestedMenu2',
 
           // component: '',
@@ -65,7 +63,7 @@ const menuRoute: BlogType.AppRouteRecordRaw = {
           },
           children: [
             {
-              path: '/blog/menu/nested/menu2/menu2-1',
+              path: 'menu2-1',
               name: 'NestedMenu2-1',
               component: () => import('@/pages/blog/menu/nested/menu2/Menu2-1.vue'),
               meta: {
@@ -77,7 +75,7 @@ const menuRoute: BlogType.AppRouteRecordRaw = {
           ],
         },
         {
-          path: '/blog/menu/nested/menu3',
+          path: 'menu3',
           name: 'NestedMenu3',
 
           // component: '',
@@ -88,7 +86,7 @@ const menuRoute: BlogType.AppRouteRecordRaw = {
           },
           children: [
             {
-              path: '/blog/menu/nested/menu3/menu3-1',
+              path: 'menu3-1',
               name: 'NestedMenu3-1',
               component: () => import('@/pages/blog/menu/nested/menu3/Menu3-1.vue'),
               meta: {
@@ -98,10 +96,8 @@ const menuRoute: BlogType.AppRouteRecordRaw = {
               },
             },
             {
-              path: '/blog/menu/nested/menu3/menu3-2',
+              path: 'menu3-2',
               name: 'NestedMenu3-2',
-
-              // component: '',
               meta: {
                 title: '菜单3-2',
                 icon: '&#xe676;',
@@ -109,7 +105,7 @@ const menuRoute: BlogType.AppRouteRecordRaw = {
               },
               children: [
                 {
-                  path: '/blog/menu/nested/menu3/menu3-2-1',
+                  path: 'menu3-2-1',
                   name: 'NestedMenu3-2-1',
                   component: () => import('@/pages/blog/menu/nested/menu3/menu3-2/Menu3-2-1.vue'),
                   meta: {

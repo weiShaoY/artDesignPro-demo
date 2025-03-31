@@ -168,11 +168,19 @@ export default {
           class="badge"
         />
 
-        <div
+        <!-- <div
           v-if="item.meta.externalUrl"
           class="text-badge"
         >
           外链
+        </div> -->
+        <div
+          v-if="item.meta.externalUrl"
+          class="absolute bottom-0 right-3 top-0 m-auto"
+        >
+          <SvgIcon
+            icon="blog-menu-externalUrl"
+          />
         </div>
 
         <!-- 文本徽标 -->

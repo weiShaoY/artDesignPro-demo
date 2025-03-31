@@ -1,5 +1,5 @@
 const oneRoute: BlogType.AppRouteRecordRaw = {
-  path: '/blog/one/iframe',
+  path: 'one/iframe',
   name: 'oneIframe',
   meta: {
     title: '一级路由并嵌套iframe',

@@ -1,31 +1,4 @@
 /**
- *  格式化modules模块(将modules模块转化为数组)
- *  @param  _modules - modules模块
- *  @param  result - 格式化后的数组
- */
-export function formatModules(_modules: any, result: any[]) {
-  Object.keys(_modules).forEach((key) => {
-    const defaultModule = _modules[key].default
-
-    if (!defaultModule) {
-      return
-    }
-
-    const moduleList = Array.isArray(defaultModule)
-      ? [...defaultModule]
-      : [defaultModule]
-
-    moduleList.forEach((route: any) => {
-      setRouteDefaultRedirect(route)
-    })
-
-    result.push(...moduleList)
-  })
-
-  return result
-}
-
-/**
  * 递归设置路由的默认重定向
  */
 function setRouteDefaultRedirect(route: any) {
@@ -44,6 +17,109 @@ function setRouteDefaultRedirect(route: any) {
   if (route.children?.length) {
     route.children.forEach((child: any) => setRouteDefaultRedirect(child))
   }
+}
+
+/**
+ * 自动补全博客路由路径（支持数组和对象）
+ * @param routes 原始路由配置（单个或数组）
+ * @param parentPath 父级路径（内部递归使用）
+ * @returns 转换后的完整路径路由配置
+ */
+function transformBlogRoutes(
+  routes: BlogType.AppRouteRecordRaw | BlogType.AppRouteRecordRaw[],
+  parentPath: string = '',
+): BlogType.AppRouteRecordRaw | BlogType.AppRouteRecordRaw[] {
+  // 处理数组输入
+  if (Array.isArray(routes)) {
+    return routes.map(route =>
+      transformBlogRoutes(route, parentPath) as BlogType.AppRouteRecordRaw,
+    )
+  }
+
+  // 处理单个路由对象
+  const route = routes
+
+  // 处理当前路径（清理首尾斜杠）
+  const cleanPath = route.path.replace(/^\/|\/$/g, '')
+
+  /**
+   *  计算完整路径
+   */
+  const fullPath = parentPath
+    ? `${parentPath}/${cleanPath}`
+    : `/blog/${cleanPath}`
+
+  /**
+   *  确保路径以斜杠开头
+   */
+  const normalizedPath = fullPath.startsWith('/') ? fullPath : `/${fullPath}`
+
+  // 处理重定向路径（相对路径转绝对路径）
+  let normalizedRedirect = route.redirect
+
+  if (typeof route.redirect === 'string') {
+    const redirectPath = route.redirect.replace(/^\/|\/$/g, '')
+
+    normalizedRedirect = `${normalizedPath}/${redirectPath}`
+  }
+
+  // 递归处理子路由
+  const children = route.children?.map(child =>
+    transformBlogRoutes(child, normalizedPath) as BlogType.AppRouteRecordRaw,
+  )
+
+  return {
+    ...route,
+    path: normalizedPath,
+    ...(normalizedRedirect
+      ? {
+          redirect: normalizedRedirect,
+        }
+      : {
+        }),
+    ...(children
+      ? {
+          children,
+        }
+      : {
+        }),
+  }
+}
+
+/**
+ *  格式化modules模块(将modules模块转化为数组)
+ *  @param  _modules - modules模块
+ *  @param  result - 格式化后的数组
+ *  @param  isBlog - 是否是博客模块
+ */
+export function formatModules(_modules: any, result: any[], isBlog = false) {
+  Object.keys(_modules).forEach((key) => {
+    const defaultModule = _modules[key].default
+
+    if (!defaultModule) {
+      return
+    }
+
+    // 统一转换为数组
+    const moduleList = Array.isArray(defaultModule)
+      ? [...defaultModule]
+      : [defaultModule]
+
+    let processedRoutes: BlogType.AppRouteRecordRaw[] = moduleList
+
+    if (isBlog) {
+      processedRoutes = transformBlogRoutes(moduleList) as BlogType.AppRouteRecordRaw[]
+    }
+
+    // 设置默认重定向
+    processedRoutes.forEach((route: any) => {
+      setRouteDefaultRedirect(route)
+    })
+
+    result.push(...processedRoutes)
+  })
+
+  return result
 }
 
 // export function formatModules(_modules: any, result: any[]) {

@@ -2,7 +2,7 @@ import { BLOG_DEFAULT_LAYOUT } from '@/layouts'
 
 const dashboardRoute: BlogType.AppRouteRecordRaw = {
   name: 'Dashboard',
-  path: '/blog/dashboard',
+  path: 'dashboard',
   component: BLOG_DEFAULT_LAYOUT,
   meta: {
     title: '仪表盘',
@@ -11,7 +11,7 @@ const dashboardRoute: BlogType.AppRouteRecordRaw = {
   },
   children: [
     {
-      path: '/blog/dashboard/console',
+      path: 'console',
       name: 'Console',
       component: () => import('@/pages/blog/dashboard/console/index.vue'),
       meta: {
@@ -21,7 +21,7 @@ const dashboardRoute: BlogType.AppRouteRecordRaw = {
       },
     },
     {
-      path: '/blog/dashboard/analysis',
+      path: 'analysis',
       name: 'Analysis',
       component: () => import('@/pages/blog/dashboard/analysis/index.vue'),
       meta: {
@@ -31,7 +31,7 @@ const dashboardRoute: BlogType.AppRouteRecordRaw = {
       },
     },
     {
-      path: '/blog/dashboard/ecommerce',
+      path: 'ecommerce',
       name: 'Ecommerce',
       component: () => import('@/pages/blog/dashboard/ecommerce/index.vue'),
       meta: {

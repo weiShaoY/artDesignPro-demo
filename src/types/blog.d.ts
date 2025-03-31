@@ -89,7 +89,7 @@ declare namespace BlogType {
       iconBadge?: string
 
       /**
-       * 是否显示默认徽标样式 default
+       * 是否显示默认徽标
        */
       showDefaultBadge?: boolean
     }
