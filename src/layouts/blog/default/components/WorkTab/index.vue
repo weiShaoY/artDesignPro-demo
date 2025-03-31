@@ -9,6 +9,8 @@ import type { LocationQueryRaw } from 'vue-router'
 
 import type { MenuItemType } from '../MenuRight/index.vue'
 
+import { useSettingStore } from '@/store/modules/setting'
+
 import { useWorkTabStore } from '@/store/modules/workTab'
 
 /**
@@ -30,6 +32,10 @@ import {
  * 导入子组件
  */
 import MenuRight from '../MenuRight/index.vue'
+
+const settingStore = useSettingStore()
+
+const tabStyle = computed(() => settingStore.tabStyle)
 
 /**
  * 状态管理
@@ -376,6 +382,7 @@ function handleTouchEnd() {
 <template>
   <div
     class="workTab"
+    :class="[tabStyle]"
   >
     <!-- 标签页滚动区域 -->
     <div
@@ -415,6 +422,10 @@ function handleTouchEnd() {
               @click.stop="closeWorkTab('current', item.path)"
             />
           </div>
+
+          <div
+            class="line"
+          />
 
         </li>
       </ul>

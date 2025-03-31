@@ -49,6 +49,8 @@ const isTopLeftMenu = computed(() => menuType.value === MenuTypeEnum.TOP_LEFT)
 
 const isDark = computed(() => settingStore.isDark)
 
+const tabStyle = computed(() => settingStore.tabStyle)
+
 /**
  *  计算菜单主题
  */
@@ -118,8 +120,10 @@ function openSearchDialog() {
 <template>
   <div
     class="top-bar"
+    :class="[tabStyle]"
     :style="{ width: topBarWidth() }"
   >
+
     <div
       class="menu"
     >

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 
+import { useCommon } from '@/composables/useCommon'
+
 /**
  *  导入枚举类型
  */
@@ -18,6 +20,8 @@ import { useWorkTabStore } from '@/store/modules/workTab'
  *  导入工具函数
  */
 import { blogMittBus } from '@/utils'
+
+import { getTabConfig } from '@/utils/tabs'
 
 import {
   computed,
@@ -47,6 +51,11 @@ import WorkTab from './components/WorkTab/index.vue'
  *  导入样式文件
  */
 import '@/assets/styles/transition.scss'
+
+const { containerMinHeight } = useCommon()
+
+// 标签页风格
+const tabStyle = computed(() => settingStore.tabStyle)
 
 /**
  *  网络状态监控
@@ -132,15 +141,13 @@ const paddingLeft = computed(() => {
 })
 
 /**
- *  计算最小高度
- *  @description 根据工作标签状态调整布局高度
- */
-const minHeight = computed(() => `calc(100vh - ${showWorkTab.value ? 120 : 75}px)`)
-
-/**
  *  计算顶部填充高度
  */
-const paddingTop = computed(() => showWorkTab.value ? '106px' : '60px')
+const paddingTop = computed(() => {
+  const { openTop, closeTop } = getTabConfig(tabStyle.value)
+
+  return `${showWorkTab.value ? openTop : closeTop}px`
+})
 
 /**
  *  页面刷新状态
@@ -209,7 +216,7 @@ onMounted(() => {
       <router-view
         v-if="isRefresh && isOnline"
         v-slot="{ Component, route }"
-        :style="{ minHeight }"
+        :style="{ minHeight: containerMinHeight }"
       >
         <!-- 路由信息，方便开发者调试 -->
         <div

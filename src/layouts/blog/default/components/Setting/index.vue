@@ -62,6 +62,8 @@ const boxBorderMode = computed(() => store.boxBorderMode)
 
 const pageTransition = computed(() => store.pageTransition)
 
+const tabStyle = computed(() => store.tabStyle)
+
 const customRadius = computed(() => store.customRadius)
 
 const menuType = computed(() => store.menuType)
@@ -95,6 +97,21 @@ const containerWidth = computed(() => store.containerWidth)
 const openSetting = () => (showDrawer.value = true)
 
 const closeDrawer = () => (showDrawer.value = false)
+
+const tabStyleOps = computed(() => [
+  {
+    value: 'tab-default',
+    label: '默认',
+  },
+  {
+    value: 'tab-card',
+    label: '卡片',
+  },
+  {
+    value: 'tab-google',
+    label: '谷歌',
+  },
+])
 
 const pageTransitionOps = [
   {
@@ -312,6 +329,8 @@ const showWorkTabFunc = () => autoCloseHandler(store.setWorkTab, false, !store.s
 function setPageTransition(transition: string) {
   return autoCloseHandler(store.setPageTransition, false, transition)
 }
+
+const setTabStyle = (style: string) => autoCloseHandler(store.setTabStyle, false, style)
 
 function setContainerWidth(type: ContainerWidthEnum) {
   return autoCloseHandler(store.setContainerWidth, true, type)
@@ -770,6 +789,28 @@ watch(
               controls-position="right"
               @change="setMenuOpenSize"
             />
+          </div>
+
+          <div
+            class="item"
+            style="display: flex"
+          >
+            <span>标签页风格</span>
+
+            <el-select
+              v-model="tabStyle"
+              placeholder="Select"
+              size="default"
+              style="width: 120px"
+              @change="setTabStyle"
+            >
+              <el-option
+                v-for="item in tabStyleOps"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
           </div>
 
           <div

@@ -1,5 +1,7 @@
 import { useSettingStore } from '@/store/modules/setting'
 
+import { getTabConfig } from '@/utils/tabs'
+
 /**
  * 通用工具 Hook
  * @description 提供应用中常用的通用功能方法
@@ -28,8 +30,28 @@ export function useCommon() {
     })
   }
 
+  /**
+   *  是否显示工作标签
+   */
+  const showWorkTab = computed(() => settingStore.showWorkTab)
+
+  /**
+   *  当前 tab 样式s
+   */
+  const tabStyle = computed(() => settingStore.tabStyle)
+
+  /**
+   *  页面最小高度s
+   */
+  const containerMinHeight = computed(() => {
+    const { openHeight, closeHeight } = getTabConfig(tabStyle.value)
+
+    return `calc(100vh - ${showWorkTab.value ? openHeight : closeHeight}px)`
+  })
+
   return {
     refresh,
     scrollToTop,
+    containerMinHeight,
   }
 }

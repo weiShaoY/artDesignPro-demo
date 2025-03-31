@@ -183,4 +183,7 @@ export const SystemSetting = {
 
   /** 圆角默认值(rem) */
   defaultCustomRadius: '0.75',
+
+  /** 标签页风格默认值 */
+  defaultTabStyle: 'tab-default',
 }

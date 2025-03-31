@@ -22,7 +22,7 @@ import { defineStore } from 'pinia'
 
 import { computed, ref } from 'vue'
 
-const { defaultMenuWidth, defaultCloseMenuWidth, defaultCustomRadius } = SystemSetting
+const { defaultMenuWidth, defaultCloseMenuWidth, defaultCustomRadius, defaultTabStyle } = SystemSetting
 
 /** Tab 状态管理 */
 export const useSettingStore = defineStore('settingStore', () => {
@@ -76,6 +76,11 @@ export const useSettingStore = defineStore('settingStore', () => {
 
   /**  页面切换动画 */
   const pageTransition = ref('slide-right')
+
+  /**
+   *  标签风格
+   */
+  const tabStyle = ref(defaultTabStyle)
 
   /**  菜单是否展开 */
   const menuOpen = ref(true)
@@ -153,7 +158,11 @@ export const useSettingStore = defineStore('settingStore', () => {
       showNprogress.value = setting.showNprogress
       colorWeak.value = setting.colorWeak
       pageTransition.value = setting.pageTransition
+
+      tabStyle.value = setting.tabStyle || defaultTabStyle
+
       menuOpen.value = setting.menuOpen
+
       watermarkVisible.value = setting.watermarkVisible
       customRadius.value = setting.customRadius || defaultCustomRadius
 
@@ -246,6 +255,11 @@ export const useSettingStore = defineStore('settingStore', () => {
     pageTransition.value = transition
   }
 
+  // 设置标签页风格
+  function setTabStyle(style: string) {
+    tabStyle.value = style
+  }
+
   // 设置菜单是否展开
   function setMenuOpen(open: boolean) {
     menuOpen.value = open
@@ -297,6 +311,8 @@ export const useSettingStore = defineStore('settingStore', () => {
     showNprogress,
     colorWeak,
     pageTransition,
+    tabStyle,
+
     menuOpen,
     refresh,
     watermarkVisible,
@@ -329,6 +345,7 @@ export const useSettingStore = defineStore('settingStore', () => {
     setColorWeak,
 
     setPageTransition,
+    setTabStyle,
     setMenuOpen,
     reload,
     setWatermarkVisible,
