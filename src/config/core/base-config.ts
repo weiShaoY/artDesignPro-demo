@@ -165,7 +165,7 @@ export function createBaseConfig(): SystemConfig {
       defaultMenuWidth: 252, // 菜单宽度
       defaultCloseMenuWidth: 70, // 折叠菜单宽度
       defaultCustomRadius: '0.75', // 自定义圆角
-      defaultTabStyle: 'tab-default', // 标签样式
+      defaultTabStyle: 'tab-google', // 标签样式
     },
   }
 }

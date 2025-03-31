@@ -54,9 +54,6 @@ import '@/assets/styles/transition.scss'
 
 const { containerMinHeight } = useCommon()
 
-// 标签页风格
-const tabStyle = computed(() => settingStore.tabStyle)
-
 /**
  *  网络状态监控
  */
@@ -66,6 +63,9 @@ const { isOnline } = useNetwork()
  *  获取全局状态存储
  */
 const settingStore = useSettingStore()
+
+// 标签页风格
+const tabStyle = computed(() => settingStore.tabStyle)
 
 const menuStore = useMenuStore()
 

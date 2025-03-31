@@ -95,6 +95,7 @@ function isNotEmpty(children: BlogType.MenuListType[] | undefined) {
     :index="item.path || item.meta.title"
     :level="level"
   >
+
     <template
       #title
     >
@@ -125,6 +126,7 @@ function isNotEmpty(children: BlogType.MenuListType[] | undefined) {
     :level-item="level + 1"
     @click="goPage(item)"
   >
+
     <template
       #title
     >

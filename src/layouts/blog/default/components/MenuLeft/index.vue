@@ -279,6 +279,7 @@ watch(
       <el-scrollbar
         style="height: calc(100% - 135px)"
       >
+
         <ul>
           <li
             v-for="menu in firstLevelMenus"
@@ -302,7 +303,7 @@ watch(
                 }"
                 :style="{
                   margin: settingStore.dualMenuShowText ? '5px' : '15px',
-                  height: settingStore.dualMenuShowText ? '60px' : '46px',
+                  height: settingStore.dualMenuShowText ? '80px' : '46px',
                 }"
               >
                 <SvgIcon
@@ -323,13 +324,14 @@ watch(
       </el-scrollbar>
 
       <div
-        class="switch-btn"
+        class="switch-btn hover:cursor-pointer"
         @click="setDualMenuMode"
       >
-        <i
-          class="iconfont-sys"
-        >&#xe798;</i>
+        <SvgIcon
+          icon="blog-switch"
+        />
       </div>
+
     </div>
 
     <!-- 左侧菜单 || 双列菜单（右侧） -->
@@ -368,6 +370,7 @@ watch(
           :theme="theme"
           @close="closeMenu"
         />
+
       </el-menu>
 
       <div

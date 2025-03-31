@@ -56,6 +56,8 @@ const isHome = (route: RouteLocationMatched) => route.name === '/'
 function getBreadcrumb() {
   const { matched } = route
 
+  console.log('%c Line:58 🥛 matched', 'color:#3f7cff', matched)
+
   // 首页特殊处理
   if (isHome(matched[0])) {
     breadList.value = []
@@ -79,6 +81,10 @@ function getBreadcrumb() {
     meta,
   }))
 }
+
+watchEffect(() => {
+  console.log('%c Line:83 🍤 breadList.value', 'color:#b03734', breadList.value)
+})
 
 /**
  *  处理面包屑点击事件
@@ -148,7 +154,9 @@ watch(() => route.path, getBreadcrumb, {
         <i
           v-if="!isLastItem(index) && item.meta?.title"
           aria-hidden="true"
-        >/</i>
+        >
+          /
+        </i>
       </li>
     </ul>
   </nav>

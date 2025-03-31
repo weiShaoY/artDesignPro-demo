@@ -19,6 +19,7 @@ declare module 'vue' {
     DonutChartCard: typeof import('./../components/Widgets/Cards/DonutChartCard.vue')['default']
     DualBarCompareChart: typeof import('./../components/Widgets/Charts/DualBarCompareChart.vue')['default']
     Editor: typeof import('./../components/Form/Editor.vue')['default']
+    ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElButtonGroup: typeof import('element-plus/es')['ElButtonGroup']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
