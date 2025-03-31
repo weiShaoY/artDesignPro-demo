@@ -185,5 +185,5 @@ export const SystemSetting = {
   defaultCustomRadius: '0.75',
 
   /** 标签页风格默认值 */
-  defaultTabStyle: 'tab-default',
+  defaultTabStyle: 'tab-google',
 }

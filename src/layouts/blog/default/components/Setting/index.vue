@@ -2,12 +2,7 @@
 
 import { useTheme } from '@/composables/useTheme'
 
-import {
-  menuLayoutList,
-  SettingThemeList,
-  SystemMainColor,
-  ThemeList,
-} from '@/config/setting'
+import AppConfig from '@/config'
 
 import {
   ContainerWidthEnum,
@@ -42,11 +37,11 @@ const beforeMenuType = ref<MenuTypeEnum>()
 
 const hasChangedMenu = ref(false) // 添加标记来跟踪是否已经改变过菜单
 
-const settingThemeList = SettingThemeList
+const settingThemeList = AppConfig.settingThemeList
 
-const menuThemeList = ThemeList
+const menuThemeList = AppConfig.themeList
 
-const mainColor = SystemMainColor
+const mainColor = AppConfig.systemMainColor
 
 const isDark = computed(() => store.isDark)
 
@@ -56,7 +51,7 @@ const systemThemeMode = computed(() => store.systemThemeMode)
 
 const currentMenuTheme = computed(() => store.menuThemeType)
 
-const systemThemeColor = computed(() => store.systemThemeColor)
+const systemThemeColor = computed(() => store.systemThemeColor as (typeof mainColor)[number])
 
 const boxBorderMode = computed(() => store.boxBorderMode)
 
@@ -412,8 +407,8 @@ function initColorWeak() {
 
 //  如果主题色不在列表中，则设置为列表中的第一个元素
 function initSystemColor() {
-  if (!SystemMainColor.includes(systemThemeColor.value)) {
-    setElementTheme(SystemMainColor[0])
+  if (!AppConfig.systemMainColor.includes(systemThemeColor.value)) {
+    setElementTheme(AppConfig.systemMainColor[0])
   }
 }
 
@@ -508,7 +503,7 @@ watch(
               class="menu-layouts-wrap"
             >
               <div
-                v-for="(item, index) in menuLayoutList"
+                v-for="(item, index) in AppConfig.menuLayoutList"
                 :key="item.value"
                 class="style-item"
                 @click="switchMenuLayouts(item.value)"

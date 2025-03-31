@@ -1,6 +1,6 @@
 import type { SystemThemeTypes } from '@/types/store'
 
-import { SystemThemeStyles } from '@/config/setting'
+import AppConfig from '@/config'
 
 import { SystemThemeEnum } from '@/enums/appEnum'
 
@@ -67,7 +67,7 @@ export function useTheme() {
 
     const effectiveThemeMode = themeMode || theme
 
-    const currentTheme = SystemThemeStyles[theme as keyof SystemThemeTypes]
+    const currentTheme = AppConfig.systemThemeStyles[theme as keyof SystemThemeTypes]
 
     // 应用主题类名
     if (currentTheme) {

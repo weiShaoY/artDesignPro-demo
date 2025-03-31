@@ -1,11 +1,6 @@
 import type { MenuThemeType } from '@/types/store'
 
-import {
-  DarkMenuStyles,
-  ElementPlusTheme,
-  SystemSetting,
-  ThemeList,
-} from '@/config/setting'
+import AppConfig from '@/config'
 
 import {
   ContainerWidthEnum,
@@ -22,7 +17,7 @@ import { defineStore } from 'pinia'
 
 import { computed, ref } from 'vue'
 
-const { defaultMenuWidth, defaultCloseMenuWidth, defaultCustomRadius, defaultTabStyle } = SystemSetting
+const { defaultMenuWidth, defaultCustomRadius, defaultCloseMenuWidth, defaultTabStyle } = AppConfig.systemSetting
 
 /** Tab 状态管理 */
 export const useSettingStore = defineStore('settingStore', () => {
@@ -45,7 +40,7 @@ export const useSettingStore = defineStore('settingStore', () => {
   const menuThemeType = ref(MenuThemeEnum.DESIGN)
 
   /**  系统主题颜色 */
-  const systemThemeColor = ref(ElementPlusTheme.primary)
+  const systemThemeColor = ref(AppConfig.elementPlusTheme.primary)
 
   /**  盒子模式 border | shadow */
   const boxBorderMode = ref(true)
@@ -108,10 +103,10 @@ export const useSettingStore = defineStore('settingStore', () => {
    * @returns 菜单主题配置
    */
   const getMenuTheme = computed<MenuThemeType>(() => {
-    const list = ThemeList.filter(item => item.theme === menuThemeType.value)
+    const list = AppConfig.themeList.filter(item => item.theme === menuThemeType.value)
 
     if (isDark.value) {
-      return DarkMenuStyles[0]
+      return AppConfig.darkMenuStyles[0]
     }
     else {
       return list[0]
@@ -147,7 +142,7 @@ export const useSettingStore = defineStore('settingStore', () => {
       systemThemeMode.value = setting.systemThemeMode || SystemThemeEnum.LIGHT
       menuThemeType.value = setting.menuThemeType || MenuThemeEnum.DESIGN
       containerWidth.value = setting.containerWidth || ContainerWidthEnum.FULL
-      systemThemeColor.value = setting.systemThemeColor || ElementPlusTheme.primary
+      systemThemeColor.value = setting.systemThemeColor || AppConfig.elementPlusTheme.primary
       boxBorderMode.value = setting.boxBorderMode
       uniqueOpened.value = setting.uniqueOpened
       showMenuButton.value = setting.showMenuButton
@@ -174,7 +169,7 @@ export const useSettingStore = defineStore('settingStore', () => {
     }
     else {
       setCustomRadius(customRadius.value)
-      setElementThemeColor(ElementPlusTheme.primary)
+      setElementThemeColor(AppConfig.elementPlusTheme.primary)
     }
   }
 

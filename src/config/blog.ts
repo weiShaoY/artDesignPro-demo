@@ -6,17 +6,17 @@ import menu_layout_mixed from '@/assets/images/blog/menu/layout/mixed.png'
 
 import menu_layout_vertical from '@/assets/images/blog/menu/layout/vertical.png'
 
-import menu_mode_dark from '@/assets/images/blog/menu/mode/dark.png'
+import menu_mode_dark from '@/assets/images/blog/menu/theme/dark.png'
 
-import menu_mode_design from '@/assets/images/blog/menu/mode/design.png'
+import menu_mode_design from '@/assets/images/blog/menu/theme/design.png'
 
-import menu_mode_light from '@/assets/images/blog/menu/mode/light.png'
+import menu_mode_light from '@/assets/images/blog/menu/theme/light.png'
 
-import system_theme_dark from '@/assets/images/blog/theme/dark.png'
+import system_theme_dark from '@/assets/images/blog/system/dark.png'
 
-import system_theme_light from '@/assets/images/blog/theme/light.png'
+import system_theme_light from '@/assets/images/blog/system/light.png'
 
-import system_theme_system from '@/assets/images/blog/theme/system.png'
+import system_theme_system from '@/assets/images/blog/system/system.png'
 
 /**
  *   博客模块配置
@@ -28,7 +28,7 @@ export const blogConfig = {
    */
   menuThemeList: [
     {
-      theme: BlogTypeTest.MenuThemeEnum.DESIGN,
+      theme: 'design',
       background: '#FFFFFF',
       systemNameColor: 'var(--art-text-gray-800)',
       iconColor: '#6B6B6B',
@@ -42,7 +42,7 @@ export const blogConfig = {
       img: menu_mode_design,
     },
     {
-      theme: BlogTypeTest.MenuThemeEnum.DARK,
+      theme: 'dark',
       background: '#191A23',
       systemNameColor: '#BABBBD',
       iconColor: '#BABBBD',
@@ -56,7 +56,7 @@ export const blogConfig = {
       img: menu_mode_dark,
     },
     {
-      theme: BlogTypeTest.MenuThemeEnum.LIGHT,
+      theme: 'light',
       background: '#ffffff',
       systemNameColor: '#68758E',
       iconColor: '#6B6B6B',
@@ -76,7 +76,7 @@ export const blogConfig = {
    */
   menuDarkThemeList: [
     {
-      theme: BlogTypeTest.MenuThemeEnum.DARK,
+      theme: 'dark',
       background: '#161618',
       systemNameColor: '#DDDDDD',
       iconColor: '#BABBBD',
@@ -124,7 +124,7 @@ export const blogConfig = {
         className: '',
       },
       [BlogTypeTest.SystemThemeModeEnum.DARK]: {
-        className: BlogTypeTest.SystemThemeModeEnum.DARK,
+        className: 'dark',
       },
     },
 
@@ -134,17 +134,17 @@ export const blogConfig = {
     themeStyleList: [
       {
         name: '浅色',
-        theme: BlogTypeTest.SystemThemeModeEnum.LIGHT,
+        theme: 'light',
         img: system_theme_light,
       },
       {
         name: '深色',
-        theme: BlogTypeTest.SystemThemeModeEnum.DARK,
+        theme: 'dark',
         img: system_theme_dark,
       },
       {
         name: '系统',
-        theme: BlogTypeTest.SystemThemeModeEnum.AUTO,
+        theme: 'auto',
         img: system_theme_system,
       },
     ],
@@ -155,22 +155,22 @@ export const blogConfig = {
     menuLayoutList: [
       {
         name: '左侧',
-        value: BlogTypeTest.MenuLayoutEnum.LEFT,
+        value: 'left',
         img: menu_layout_vertical,
       },
       {
         name: '顶部',
-        value: BlogTypeTest.MenuLayoutEnum.TOP,
+        value: 'top',
         img: menu_layout_horizontal,
       },
       {
         name: '混合',
-        value: BlogTypeTest.MenuLayoutEnum.TOP_LEFT,
+        value: 'top-left',
         img: menu_layout_mixed,
       },
       {
         name: '双列',
-        value: BlogTypeTest.MenuLayoutEnum.DUAL_MENU,
+        value: 'dual-menu',
         img: menu_layout_dual_column,
       },
     ],
