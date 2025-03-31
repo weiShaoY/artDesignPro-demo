@@ -2,7 +2,7 @@ const oneRoute: BlogType.AppRouteRecordRaw = {
   path: 'one/iframe',
   name: 'oneIframe',
   meta: {
-    title: '一级路由并嵌套iframe',
+    title: '一级路由并嵌套iframe模板',
     icon: 'blog-menu-creativity',
     keepAlive: false,
     isInMainContainer: true,

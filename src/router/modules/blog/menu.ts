@@ -5,7 +5,7 @@ const menuRoute: BlogType.AppRouteRecordRaw = {
   name: 'Menu',
   component: BLOG_DEFAULT_LAYOUT,
   meta: {
-    title: '菜单管理',
+    title: '多级路由模版',
     icon: '&#xe8a4;',
     keepAlive: false,
   },

@@ -107,6 +107,7 @@ export function formatModules(_modules: any, result: any[], isBlog = false) {
 
     let processedRoutes: BlogType.AppRouteRecordRaw[] = moduleList
 
+    //  处理博客路由
     if (isBlog) {
       processedRoutes = transformBlogRoutes(moduleList) as BlogType.AppRouteRecordRaw[]
     }
