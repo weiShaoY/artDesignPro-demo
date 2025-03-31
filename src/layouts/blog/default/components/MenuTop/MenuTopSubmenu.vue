@@ -139,7 +139,7 @@ function isNotEmpty(children: BlogType.MenuListType[] | undefined) {
       <span>{{ item.meta.title }}</span>
 
       <div
-        v-if="item.meta.showBadge"
+        v-if="item.meta.showDefaultBadge"
         class="badge"
       />
     </template>

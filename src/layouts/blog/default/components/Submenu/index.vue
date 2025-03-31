@@ -126,7 +126,7 @@ export default {
         >{{ item.meta.title }} </span>
 
         <div
-          v-if="item.meta.showBadge"
+          v-if="item.meta.showDefaultBadge"
           class="badge"
           style="right: 35px"
         />
@@ -164,7 +164,7 @@ export default {
         >{{ item.meta.title }} </span>
 
         <div
-          v-if="item.meta.showBadge"
+          v-if="item.meta.showDefaultBadge"
           class="badge"
         />
 
@@ -175,12 +175,24 @@ export default {
           外链
         </div>
 
+        <!-- 文本徽标 -->
         <div
-          v-else-if="item.meta.showTextBadge"
+          v-else-if="item.meta.textBadge"
           class="text-badge"
         >
-          {{ item.meta.showTextBadge }}
+          {{ item.meta.textBadge }}
         </div>
+
+        <!-- 图标徽标 -->
+        <div
+          v-else-if="item.meta.iconBadge"
+          class="absolute bottom-0 right-3 top-0 m-auto"
+        >
+          <SvgIcon
+            :icon="item.meta.iconBadge"
+          />
+        </div>
+
       </template>
     </el-menu-item>
   </template>

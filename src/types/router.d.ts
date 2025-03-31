@@ -14,9 +14,14 @@ declare namespace RouterType {
     path: string
 
     /**
-     * 组件名称
+     * 路由名称（唯一标识）
      */
     name: string
+
+    /**
+     * 重定向地址
+     */
+    redirect?: string
 
     /**
      * 组件路径的异步导入
@@ -24,34 +29,19 @@ declare namespace RouterType {
     component?: RouteRecordRaw['component'] | (() => Promise<any>)
 
     /**
-     *  重定向
-     */
-    redirect?: string
-
-    /**
      * 路由元信息
      */
     meta: {
 
       /**
-       * 菜单名称
+       * 菜单显示标题（必填）
        */
       title: string
 
       /**
-       * 菜单图标
+       * 菜单图标组件
        */
       icon?: string
-
-      /**
-       * 是否显示徽标
-       */
-      showBadge?: boolean
-
-      /**
-       * 是否显示文本徽标
-       */
-      showTextBadge?: string
 
       /**
        * 是否在菜单中隐藏
@@ -64,33 +54,48 @@ declare namespace RouterType {
       isHideTab?: boolean
 
       /**
-       * 外部链接地址
-       */
-      link?: string
-
-      /**
-       * 是否是 iframe 嵌入
-       */
-      isIframe?: boolean
-
-      /**
        * 是否缓存组件
        */
       keepAlive: boolean
 
       /**
-       * 是否在主容器内
+       * 是否渲染在主容器内
        */
       isInMainContainer?: boolean
 
       /**
-       *  排序
+       * 菜单排序（越小越靠前）
        */
       order?: number
+
+      /**
+       * 外链跳转地址
+       */
+      externalUrl?: string
+
+      /**
+       * 内嵌iframe地址
+       */
+      iframeUrl?: string
+
+      /**
+       * 文本徽标内容
+       */
+      textBadge?: string
+
+      /**
+       * 图标徽标组件（优先级高于textBadge）
+       */
+      iconBadge?: string
+
+      /**
+       * 是否显示默认徽标样式 default
+       */
+      showDefaultBadge?: boolean
     }
 
     /**
-     * 子路由列表
+     * 子路由配置
      */
     children?: AppRouteRecordRaw[]
   }

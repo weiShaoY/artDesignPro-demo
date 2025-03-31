@@ -36,7 +36,7 @@ const dashboardRoute: BlogType.AppRouteRecordRaw = {
       meta: {
         title: '电子商务',
         keepAlive: true,
-        showTextBadge: 'new',
+        textBadge: 'new',
       },
     },
   ],

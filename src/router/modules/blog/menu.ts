@@ -28,7 +28,7 @@ const menuRoute: BlogType.AppRouteRecordRaw = {
       meta: {
         title: '权限控制',
         icon: '&#xe831;',
-        showTextBadge: 'new',
+        textBadge: 'new',
         keepAlive: true,
       },
     },

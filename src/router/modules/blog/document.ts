@@ -16,28 +16,22 @@ const documentRoute: BlogType.AppRouteRecordRaw = {
       name: 'TypeScript',
       meta: {
         title: 'TypeScript',
-
-        // link: 'https://www.typescriptlang.org/zh/',
         icon: 'blog-menu-typeScript',
         keepAlive: false,
-
-        // isIframe: true,
-        showBadge: true,
-
+        showDefaultBadge: true,
         iframeUrl: 'https://www.typescriptlang.org/zh/',
       },
     },
-
     {
       path: '/blog/document/vite',
       name: 'Vite',
       meta: {
         title: 'Vite',
-        externalUrl: 'https://cn.vitejs.dev/',
+
+        // externalUrl: 'https://cn.vitejs.dev/',
         icon: 'blog-menu-vite',
         keepAlive: false,
-
-        // showTextBadge: '外链',
+        iconBadge: 'blog-menu-vite',
       },
     },
 
