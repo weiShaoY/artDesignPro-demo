@@ -125,7 +125,7 @@ export const useSettingStore = defineStore('settingStore', () => {
   /**
    *  搜索历史列表
    */
-  const searchHistoryList = ref<BlogType.MenuListType[]>([])
+  const searchHistoryList = ref<RouterType.BlogMenuListType[]>([])
 
   function initState() {
     let sys = getSysStorage()
@@ -284,7 +284,7 @@ export const useSettingStore = defineStore('settingStore', () => {
   /**
    *  设置搜索历史列表
    */
-  function setSearchHistoryList(list: BlogType.MenuListType[]) {
+  function setSearchHistoryList(list: RouterType.BlogMenuListType[]) {
     searchHistoryList.value = list
   }
 

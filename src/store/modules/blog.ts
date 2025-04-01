@@ -1,4 +1,4 @@
-import { blogConfig } from '@/config'
+// import { blogConfig } from '@/config'
 
 import { defineStore } from 'pinia'
 
@@ -8,7 +8,7 @@ export const useBlogStore = defineStore('BlogStore', () => {
   /**
    *  菜单布局
    */
-  const state = ref<BlogTypeTest.SettingType>({
+  const state = ref({
     menuLayout: BlogTypeTest.MenuLayoutEnum.LEFT,
     menuOpenWidth: 230,
     menuCloseWidth: 70,
@@ -37,7 +37,7 @@ export const useBlogStore = defineStore('BlogStore', () => {
     containerWidth: BlogTypeTest.ContainerWidthEnum.FULL,
 
     isDark: false,
-    menuTheme: blogConfig.menuThemeList[0],
+    // menuTheme:
     searchHistoryList: [],
   })
 

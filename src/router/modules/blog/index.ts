@@ -27,6 +27,6 @@ const modules = Object.fromEntries(
  * @constant
  * @description 通过调用 `formatModules` 函数格式化模块化路由，并排除当前文件，以便生成代码模块的子路由列表。
  */
-export const blogRouteList = formatModules(modules, [], true) as BlogType.MenuListType[]
+export const blogRouteList = formatModules(modules, [], true) as RouterType.BlogMenuListType[]
 
 console.log('%c Line:31 🍯 blogRouteList', 'color:#ffdd4d', blogRouteList)

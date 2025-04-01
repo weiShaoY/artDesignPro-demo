@@ -3,7 +3,7 @@ import { SIMPLE_LAYOUT } from '@/layouts'
 /**
  *  错误路由
  */
-const errorRouter = [{
+const errorRouter: RouterType.RouteRecordRaw[] = [{
   path: '/403',
   component: SIMPLE_LAYOUT,
   children: [

@@ -1,4 +1,4 @@
-const oneRoute: BlogType.AppRouteRecordRaw = {
+const oneRoute: RouterType.BlogRouteRecordRaw = {
   path: 'one/iframe',
   name: 'oneIframe',
   meta: {

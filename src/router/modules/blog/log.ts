@@ -1,5 +1,5 @@
 // 一级菜单
-const logRoute: BlogType.AppRouteRecordRaw = {
+const logRoute: RouterType.BlogRouteRecordRaw = {
   path: 'log/changeLog',
   name: 'ChangeLog',
   component: () => import('@/pages/blog/log/ChangeLog.vue'),

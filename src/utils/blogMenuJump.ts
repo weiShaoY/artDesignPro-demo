@@ -12,7 +12,7 @@ function openExternalLink(link: string) {
  * @param item 菜单项
  * @param jumpToFirst 是否跳转到第一个子菜单
  */
-export function blogMenuJump(item: BlogType.MenuListType, jumpToFirst: boolean = false) {
+export function blogMenuJump(item: RouterType.BlogMenuListType, jumpToFirst: boolean = false) {
   // 处理外部链接
   const { externalUrl } = item.meta
 

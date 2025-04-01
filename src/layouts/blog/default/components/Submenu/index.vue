@@ -29,7 +29,7 @@ type PropsType = {
   /**
    *  菜单列表
    */
-  list?: BlogType.MenuListType[]
+  list?: RouterType.BlogMenuListType[]
 
   /**
    *  菜单主题
@@ -67,7 +67,7 @@ const closeMenu = () => emit('close')
 /**
  *  跳转页面
  */
-function goPage(item: BlogType.MenuListType) {
+function goPage(item: RouterType.BlogMenuListType) {
   closeMenu()
   blogMenuJump(item)
 }
@@ -75,14 +75,14 @@ function goPage(item: BlogType.MenuListType) {
 /**
  *  判断是否有子菜单
  */
-function hasChildren(item: BlogType.MenuListType): boolean {
+function hasChildren(item: RouterType.BlogMenuListType): boolean {
   return Boolean(item.children?.length)
 }
 
 /**
  *  过滤路由列表
  */
-function filterRouteList(items: BlogType.MenuListType[]): BlogType.MenuListType[] {
+function filterRouteList(items: RouterType.BlogMenuListType[]): RouterType.BlogMenuListType[] {
   return items
     .filter(item => !item.meta.isHide)
     .map(item => ({

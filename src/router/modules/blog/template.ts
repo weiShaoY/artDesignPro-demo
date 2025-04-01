@@ -1,7 +1,7 @@
 import { BLOG_DEFAULT_LAYOUT } from '@/layouts'
 
 // eslint-disable-next-line unused-imports/no-unused-vars
-const dashboardRoute: BlogType.AppRouteRecordRaw = {
+const dashboardRoute: RouterType.BlogRouteRecordRaw = {
   name: 'Dashboard',
   path: 'dashboard',
   component: BLOG_DEFAULT_LAYOUT,

@@ -1,6 +1,6 @@
 import { HOME_DEFAULT_LAYOUT } from '@/layouts'
 
-const homeRoute: BlogType.AppRouteRecordRaw = {
+const homeRoute: RouterType.BlogRouteRecordRaw = {
   name: 'home',
   path: '/home',
 

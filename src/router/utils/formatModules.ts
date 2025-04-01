@@ -26,13 +26,13 @@ function setRouteDefaultRedirect(route: any) {
  * @returns 转换后的完整路径路由配置
  */
 function transformBlogRoutes(
-  routes: BlogType.AppRouteRecordRaw | BlogType.AppRouteRecordRaw[],
+  routes: RouterType.BlogRouteRecordRaw | RouterType.BlogRouteRecordRaw[],
   parentPath: string = '',
-): BlogType.AppRouteRecordRaw | BlogType.AppRouteRecordRaw[] {
+): RouterType.BlogRouteRecordRaw | RouterType.BlogRouteRecordRaw[] {
   // 处理数组输入
   if (Array.isArray(routes)) {
     return routes.map(route =>
-      transformBlogRoutes(route, parentPath) as BlogType.AppRouteRecordRaw,
+      transformBlogRoutes(route, parentPath) as RouterType.BlogRouteRecordRaw,
     )
   }
 
@@ -65,7 +65,7 @@ function transformBlogRoutes(
 
   // 递归处理子路由
   const children = route.children?.map(child =>
-    transformBlogRoutes(child, normalizedPath) as BlogType.AppRouteRecordRaw,
+    transformBlogRoutes(child, normalizedPath) as RouterType.BlogRouteRecordRaw,
   )
 
   return {
@@ -105,11 +105,11 @@ export function formatModules(_modules: any, result: any[], isBlog = false) {
       ? [...defaultModule]
       : [defaultModule]
 
-    let processedRoutes: BlogType.AppRouteRecordRaw[] = moduleList
+    let processedRoutes: RouterType.BlogRouteRecordRaw[] = moduleList
 
     //  处理博客路由
     if (isBlog) {
-      processedRoutes = transformBlogRoutes(moduleList) as BlogType.AppRouteRecordRaw[]
+      processedRoutes = transformBlogRoutes(moduleList) as RouterType.BlogRouteRecordRaw[]
     }
 
     // 设置默认重定向

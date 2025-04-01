@@ -4,7 +4,7 @@ export const useMenuStore = defineStore('menuStore', () => {
   /**
    *  菜单列表
    */
-  const menuList = ref<BlogType.MenuListType[]>([])
+  const menuList = ref<RouterType.BlogMenuListType[]>([])
 
   /**
    *  菜单宽度

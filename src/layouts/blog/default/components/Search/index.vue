@@ -81,8 +81,8 @@ function search(val: string) {
    * @returns 扁平化后的菜单项数组
    */
   const flattenItems = (
-    items: BlogType.MenuListType[],
-  ): BlogType.MenuListType[] => {
+    items: RouterType.BlogMenuListType[],
+  ): RouterType.BlogMenuListType[] => {
     return items.flatMap((item) => {
       // 包含在主体容器中的项直接保留
       if (item.meta.isInMainContainer) {
@@ -123,14 +123,14 @@ function search(val: string) {
  * @param  val - 搜索关键字
  * @returns  - 查询结果
  */ function fuzzyQueryList(
-  arr: BlogType.MenuListType[],
+  arr: RouterType.BlogMenuListType[],
   val: string,
-): BlogType.MenuListType[] {
+): RouterType.BlogMenuListType[] {
   const lowerVal = val.toLowerCase() // 将查询值转换为小写
 
   const searchItem = (
-    item: BlogType.MenuListType,
-  ): BlogType.MenuListType | null => {
+    item: RouterType.BlogMenuListType,
+  ): RouterType.BlogMenuListType | null => {
     // 如果当前项有 isHide: true，直接过滤掉
     if (item.meta.isHide) {
       return null
@@ -157,7 +157,7 @@ function search(val: string) {
   // 使用 map 和 filter 来优化处理逻辑，排除 null 结果
   return arr
     .map(searchItem)
-    .filter((item): item is BlogType.MenuListType => item !== null)
+    .filter((item): item is RouterType.BlogMenuListType => item !== null)
 }
 
 // 搜索框键盘向上切换
@@ -222,9 +222,9 @@ function searchBlur() {
 
 /**
  * 跳转到搜索结果页面
- * @param {BlogType.MenuListType} item - 搜索结果项
+ * @param {RouterType.BlogMenuListType} item - 搜索结果项
  */
-function searchGoPage(item: BlogType.MenuListType) {
+function searchGoPage(item: RouterType.BlogMenuListType) {
   isShowSearchDialog.value = false
 
   addHistory(item)
@@ -247,7 +247,7 @@ function updateHistory() {
  * 清理搜索项
  * @param  item - 搜索结果项
  */
-function cleanItem(item: BlogType.MenuListType) {
+function cleanItem(item: RouterType.BlogMenuListType) {
   delete item.children
 }
 
@@ -255,9 +255,9 @@ function cleanItem(item: BlogType.MenuListType) {
  * 添加搜索历史
  * @param  item - 搜索结果项
  */
-function addHistory(item: BlogType.MenuListType) {
+function addHistory(item: RouterType.BlogMenuListType) {
   const hasItemIndex = searchHistoryList.value.findIndex(
-    (historyItem: BlogType.MenuListType) => historyItem.path === item.path,
+    (historyItem: RouterType.BlogMenuListType) => historyItem.path === item.path,
   )
 
   if (hasItemIndex !== -1) {

@@ -10,7 +10,7 @@ type PropsType = {
    * 菜单项数据对象
    * 包含菜单路径、名称、图标、子菜单等完整信息
    */
-  item: BlogType.MenuListType
+  item: RouterType.BlogMenuListType
 
   /**
    * 主题配置对象
@@ -66,7 +66,7 @@ const emit = defineEmits(['close'])
  * 跳转到菜单对应页面
  * @param item - 要跳转的菜单项
  */
-function goPage(item: BlogType.MenuListType) {
+function goPage(item: RouterType.BlogMenuListType) {
   closeMenu() // 先关闭菜单
   blogMenuJump(item) // 执行页面跳转
 }
@@ -84,7 +84,7 @@ function closeMenu() {
  * @param  children - 子菜单数组
  * @returns  是否有子菜单项
  */
-function isNotEmpty(children: BlogType.MenuListType[] | undefined) {
+function isNotEmpty(children: RouterType.BlogMenuListType[] | undefined) {
   return children && children.length > 0
 }
 </script>

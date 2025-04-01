@@ -45,7 +45,7 @@ const isAddBlogMenu = ref(false)
  * @param parentId - 父级路由的ID，默认为0
  * @returns 添加了ID并排序后的路由列表
  */
-function assignIdsAndSortRoutes(routeList: BlogType.MenuListType[], parentId: number = 0): any[] {
+function assignIdsAndSortRoutes(routeList: RouterType.BlogMenuListType[], parentId: number = 0): any[] {
   // 按 meta.order 排序路由列表
   const sortedRouteList = routeList.sort((a, b) => {
     const orderA = a.meta?.order ?? Number.MAX_SAFE_INTEGER // 如果没有 order，则排在后面
@@ -91,7 +91,7 @@ type ConvertedRoute = {
  * @param route - 单个菜单项数据
  * @returns 转换后的路由对象
  */
-function convertRouteComponent(route: BlogType.MenuListType): ConvertedRoute {
+function convertRouteComponent(route: RouterType.BlogMenuListType): ConvertedRoute {
   const { component, children, ...routeConfig } = route
 
   // 创建基础路由对象
@@ -144,7 +144,7 @@ function convertRouteComponent(route: BlogType.MenuListType): ConvertedRoute {
 
     // 递归处理子路由
     if (children?.length) {
-      converted.children = children.map(child => convertRouteComponent(child as BlogType.MenuListType))
+      converted.children = children.map(child => convertRouteComponent(child as RouterType.BlogMenuListType))
     }
 
     return converted

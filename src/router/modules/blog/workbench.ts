@@ -1,7 +1,7 @@
 /**
  *  工作台路由
  */
-const workbenchRoute: BlogType.AppRouteRecordRaw = {
+const workbenchRoute: RouterType.BlogRouteRecordRaw = {
   path: 'workbench/index',
   name: 'Workbench',
   component: () => import('@/pages/blog/workbench/index.vue'),

@@ -15,7 +15,7 @@ type PropsType = {
   /**
    * 菜单列表数据
    */
-  list?: BlogType.MenuListType[]
+  list?: RouterType.BlogMenuListType[]
 }
 
 // 设置默认属性值
@@ -40,10 +40,10 @@ const menuOpenWidth = computed(() => settingStore.getMenuOpenWidth)
 
 /**
  * 检查菜单项是否处于激活状态(基于当前路由路径)
- * @param {BlogType.MenuListType} item - 要检查的菜单项
+ * @param {RouterType.BlogMenuListType} item - 要检查的菜单项
  * @returns {boolean} 如果该项或其任意子项匹配当前路由则返回true
  */
-function isActive(item: BlogType.MenuListType): boolean {
+function isActive(item: RouterType.BlogMenuListType): boolean {
   const currentPath = route.path
 
   if (item.children?.length) {

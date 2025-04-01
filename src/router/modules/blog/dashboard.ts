@@ -1,6 +1,6 @@
 import { BLOG_DEFAULT_LAYOUT } from '@/layouts'
 
-const dashboardRoute: BlogType.AppRouteRecordRaw = {
+const dashboardRoute: RouterType.BlogRouteRecordRaw = {
   name: 'Dashboard',
   path: 'dashboard',
   component: BLOG_DEFAULT_LAYOUT,

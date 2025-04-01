@@ -7,7 +7,7 @@ type PropsType = {
   /**
    *   菜单列表
    */
-  list?: BlogType.MenuListType[]
+  list?: RouterType.BlogMenuListType[]
 
   /**
    *   菜单宽度
