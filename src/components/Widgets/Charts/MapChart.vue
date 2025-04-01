@@ -257,7 +257,7 @@ watch(isDark, (newVal, oldVal) => {
 <template>
   <div
     class="map-container"
-    style="height: calc(100vh - 120px)"
+    style="height: calc(100vh - 200px)"
   >
     <div
       id="china-map"
