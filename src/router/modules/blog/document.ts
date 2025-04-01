@@ -102,7 +102,76 @@ const documentRoute: BlogType.AppRouteRecordRaw = {
         keepAlive: false,
       },
     },
-
+    {
+      path: 'eslint',
+      name: 'Eslint',
+      meta: {
+        title: 'Eslint',
+        icon: 'blog-menu-eslint',
+        iframeUrl: 'https://eslint.org/docs/latest/',
+        keepAlive: false,
+      },
+    },
+    {
+      path: 'prettier',
+      name: 'Prettier',
+      meta: {
+        title: 'Prettier',
+        icon: 'blog-menu-prettier',
+        iframeUrl: 'https://prettier.io/',
+        keepAlive: false,
+      },
+    },
+    {
+      path: 'docker',
+      name: 'Docker',
+      meta: {
+        title: 'Docker',
+        icon: 'blog-menu-docker',
+        externalUrl: 'https://docs.docker.com/build-cloud/',
+        keepAlive: false,
+      },
+    },
+    {
+      path: 'echarts',
+      name: 'Echarts',
+      meta: {
+        title: 'Echarts',
+        icon: 'blog-menu-echarts',
+        externalUrl: 'https://echarts.apache.org/zh/index.html',
+        keepAlive: false,
+      },
+    },
+    {
+      path: 'nginx',
+      name: 'Nginx',
+      meta: {
+        title: 'Nginx',
+        icon: 'blog-menu-nginx',
+        iframeUrl: 'https://nginx.org/en/docs/',
+        keepAlive: false,
+      },
+    },
+    {
+      path: 'electron',
+      name: 'Electron',
+      meta: {
+        title: 'Electron',
+        icon: 'blog-menu-electron',
+        iframeUrl: 'https://www.electronjs.org/zh/docs/latest/',
+        keepAlive: false,
+      },
+    },
+    {
+      path: 'nextJs',
+      name: 'NextJs',
+      meta: {
+        title: 'NextJs',
+        icon: 'blog-menu-nextJs',
+        externalUrl: 'https://www.nextjs.cn/',
+        keepAlive: false,
+      },
+    },
   ],
 }
 

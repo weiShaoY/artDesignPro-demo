@@ -6,7 +6,7 @@ const dashboardRoute: BlogType.AppRouteRecordRaw = {
   path: 'dashboard',
   component: BLOG_DEFAULT_LAYOUT,
   meta: {
-    title: '仪表盘',
+    title: '代码模板',
     icon: '&#xe721;',
     keepAlive: false,
   },
