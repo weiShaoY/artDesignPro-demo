@@ -8,7 +8,7 @@ import { useSettingStore } from '@/store/modules/setting'
 
 import { blogMittBus } from '@/utils'
 
-import { themeAnimation } from '@/utils/theme/animation'
+// import { themeAnimation } from '@/utils/theme/animation'
 
 import { useFullscreen } from '@vueuse/core'
 
@@ -19,6 +19,8 @@ import FastEnter from '../FastEnter/index.vue'
 import MenuTop from '../MenuTop/index.vue'
 
 import MixedMenu from '../MixedMenu/index.vue'
+
+import ThemeAnimationBtn from './components/themeAnimation/index.vue'
 
 const isWindows = navigator.userAgent.includes('Windows')
 
@@ -47,7 +49,7 @@ const isTopMenu = computed(() => menuType.value === MenuTypeEnum.TOP)
 
 const isTopLeftMenu = computed(() => menuType.value === MenuTypeEnum.TOP_LEFT)
 
-const isDark = computed(() => settingStore.isDark)
+// const isDark = computed(() => settingStore.isDark)
 
 const tabStyle = computed(() => settingStore.tabStyle)
 
@@ -247,6 +249,22 @@ function openSearchDialog() {
           </div>
         </div>
 
+        <!-- 切换主题 -->
+        <ThemeAnimationBtn />
+
+        <!-- <div
+          class="btn-box"
+          @click="themeAnimation"
+        >
+          <div
+            class="btn theme-btn"
+          >
+            <SvgIcon
+              :icon="isDark ? 'blog-topBar-dark' : 'blog-topBar-light'"
+            />
+          </div>
+        </div> -->
+
         <!-- 全屏按钮 -->
         <div
           class="btn-box screen-box"
@@ -258,20 +276,6 @@ function openSearchDialog() {
           >
             <SvgIcon
               :icon="!isFullscreen ? 'blog-topBar-fullscreen' : 'blog-topBar-exit-fullscreen'"
-            />
-          </div>
-        </div>
-
-        <!-- 切换主题 -->
-        <div
-          class="btn-box"
-          @click="themeAnimation"
-        >
-          <div
-            class="btn theme-btn"
-          >
-            <SvgIcon
-              :icon="isDark ? 'blog-topBar-dark' : 'blog-topBar-light'"
             />
           </div>
         </div>
