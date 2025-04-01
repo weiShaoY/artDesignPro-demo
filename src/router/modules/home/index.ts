@@ -3,7 +3,6 @@ import { HOME_DEFAULT_LAYOUT } from '@/layouts'
 const homeRoute: RouterType.BlogRouteRecordRaw = {
   name: 'home',
   path: '/home',
-
   component: HOME_DEFAULT_LAYOUT,
   meta: {
     title: '首页',

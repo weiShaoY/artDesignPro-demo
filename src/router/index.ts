@@ -39,6 +39,8 @@ const staticRoutes: RouteRecordRaw[] = [
   ...routeList,
 ]
 
+console.log('%c Line:42 🍯 staticRoutes', 'color:#4fff4B', staticRoutes)
+
 /** 创建路由实例 */
 export const router = createRouter({
   history: createWebHashHistory(),
