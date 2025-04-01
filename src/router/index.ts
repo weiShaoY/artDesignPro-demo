@@ -2,8 +2,6 @@ import type { App } from 'vue'
 
 import type { RouteRecordRaw } from 'vue-router'
 
-import { SIMPLE_LAYOUT } from '@/layouts'
-
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 import { createRouterGuard } from './guard'
@@ -21,65 +19,21 @@ export const routeList = formatModules(appModules, [])
 
 console.log('%c Line:19 🍖 routeList', 'color:#2eafb0', routeList)
 
-/** 扩展的路由配置类型 */
-export type AppRouteRecordRaw = RouteRecordRaw & {
-  hidden?: boolean
-}
-
-/** 首页路径常量 */
-export const HOME_PAGE = '/blog/dashboard/console'
+/**
+ * 博客模块首页路径常量
+ */
+export const BLOG_HOME = import.meta.env.VITE_ROUTER_BLOG_HOME
 
 /** 静态路由配置 */
-const staticRoutes: AppRouteRecordRaw[] = [
+const staticRoutes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: HOME_PAGE,
+    redirect: BLOG_HOME,
   },
-  {
-    path: '/403',
-    component: SIMPLE_LAYOUT,
-    children: [
-      {
-        path: '',
-        name: '403',
-        component: () => import('@/pages/error/403/index.vue'),
-        meta: {
-          title: '403',
-        },
-      },
-    ],
-  },
-  {
-    path: '/404',
-    component: SIMPLE_LAYOUT,
-    children: [
-      {
-        path: '',
-        name: '404',
-        component: () => import('@/pages/error/404/index.vue'),
-        meta: {
-          title: '404',
-        },
-      },
-    ],
-  },
-  {
-    path: '/500',
-    component: SIMPLE_LAYOUT,
-    children: [
-      {
-        path: '',
-        name: '500',
-        component: () => import('@/pages/error/500/index.vue'),
-        meta: {
-          title: '500',
-        },
-      },
-    ],
-  },
+
   {
     path: '/blog',
-    redirect: import.meta.env.VITE_ROUTER_BLOG_HOME,
+    redirect: BLOG_HOME,
   },
 
   ...routeList,

@@ -15,7 +15,7 @@ const dashboardRoute: BlogType.AppRouteRecordRaw = {
       name: 'Console',
       component: () => import('@/pages/blog/dashboard/console/index.vue'),
       meta: {
-        title: '工作台',
+        title: '工作台11',
         keepAlive: true,
         icon: 'blog-menu-creativity',
       },

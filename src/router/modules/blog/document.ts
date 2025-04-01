@@ -7,7 +7,7 @@ const documentRoute: BlogType.AppRouteRecordRaw = {
   meta: {
     title: '文档',
     keepAlive: false,
-    order: 0,
+    order: 1,
     icon: 'blog-menu-document',
   },
   children: [

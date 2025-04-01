@@ -2,7 +2,7 @@ import type { WorkTabType } from '@/types/store'
 
 import { router } from '@/router'
 
-import { HOME_PAGE } from '@/router/index'
+import { BLOG_HOME } from '@/router/index'
 
 import { getSysStorage } from '@/utils/storage'
 
@@ -59,8 +59,8 @@ export const useWorkTabStore = defineStore('workTabStore', () => {
     opened.value.splice(index, 1)
 
     // 若关闭后无选项卡，且关闭的不是首页，则跳转首页
-    if (!opened.value.length && path !== HOME_PAGE) {
-      router.push(HOME_PAGE)
+    if (!opened.value.length && path !== BLOG_HOME) {
+      router.push(BLOG_HOME)
       return
     }
 
@@ -116,11 +116,11 @@ export const useWorkTabStore = defineStore('workTabStore', () => {
    */
   const removeOthers = (path: string) => {
     const tabsToRemove = opened.value.filter(
-      tab => tab.path !== path && tab.path !== HOME_PAGE,
+      tab => tab.path !== path && tab.path !== BLOG_HOME,
     )
 
     markTabsToRemove(tabsToRemove)
-    opened.value = opened.value.filter(tab => tab.path === path || tab.path === HOME_PAGE)
+    opened.value = opened.value.filter(tab => tab.path === path || tab.path === BLOG_HOME)
   }
 
   /**
@@ -128,20 +128,20 @@ export const useWorkTabStore = defineStore('workTabStore', () => {
    * @param path 当前选项卡的路由路径
    */
   const removeAll = (path: string) => {
-    if (path !== HOME_PAGE) {
+    if (path !== BLOG_HOME) {
       markTabsToRemove(opened.value)
       current.value = {
       }
       opened.value = []
-      router.push(HOME_PAGE)
+      router.push(BLOG_HOME)
     }
     else {
-      const tabsToRemove = opened.value.filter(tab => tab.path !== HOME_PAGE)
+      const tabsToRemove = opened.value.filter(tab => tab.path !== BLOG_HOME)
 
       markTabsToRemove(tabsToRemove)
-      opened.value = opened.value.filter(tab => tab.path === HOME_PAGE)
+      opened.value = opened.value.filter(tab => tab.path === BLOG_HOME)
       if (opened.value.length === 0) {
-        router.push(HOME_PAGE)
+        router.push(BLOG_HOME)
       }
     }
   }
@@ -198,8 +198,8 @@ export const useWorkTabStore = defineStore('workTabStore', () => {
    * 检查第一个选项卡是否为首页，否则清空所有标签并跳转首页
    */
   const checkFirstHomePage = () => {
-    if (opened.value.length && opened.value[0].path !== HOME_PAGE) {
-      removeAll(HOME_PAGE)
+    if (opened.value.length && opened.value[0].path !== BLOG_HOME) {
+      removeAll(BLOG_HOME)
     }
   }
 

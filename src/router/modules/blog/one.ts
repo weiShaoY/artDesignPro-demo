@@ -7,7 +7,7 @@ const oneRoute: BlogType.AppRouteRecordRaw = {
     keepAlive: false,
     isInMainContainer: true,
     iframeUrl: 'https://element-plus.org/zh-CN/component/overview.html',
-    order: 1,
+    order: 2,
   },
 }
 
