@@ -288,6 +288,17 @@ export const useSettingStore = defineStore('settingStore', () => {
     searchHistoryList.value = list
   }
 
+  // ////////////////////////  菜单  ////////////////////////
+  /**
+   *  菜单宽度
+   */
+  const menuWidth = ref<string>('')
+
+  /**
+   *  菜单列表
+   */
+  const menuList = ref<RouterType.BlogMenuListType[]>([])
+
   return {
     menuType,
     menuOpenWidth,
@@ -349,6 +360,9 @@ export const useSettingStore = defineStore('settingStore', () => {
     setDualMenuShowText,
     searchHistoryList,
     setSearchHistoryList,
+
+    menuWidth,
+    menuList,
   }
 })
 

@@ -155,6 +155,11 @@ function convertRouteComponent(route: RouterType.BlogMenuListType): ConvertedRou
   }
 }
 
+/**
+ *  处理博客菜单列表
+ * @param router - 路由实例
+ * @param delay - 延迟时间
+ */
 function handleBlogMenuList(router: Router, delay: number = 300): Promise<{ closeLoading: () => void }> {
   const loading = ElLoading.service({
     lock: true,
