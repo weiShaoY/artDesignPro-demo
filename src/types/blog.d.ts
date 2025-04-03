@@ -3,6 +3,4 @@
  */
 declare namespace BlogType {
 
-
-
 }

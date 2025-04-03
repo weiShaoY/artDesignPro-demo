@@ -37,6 +37,7 @@ export const useBlogStore = defineStore('BlogStore', () => {
     containerWidth: BlogTypeTest.ContainerWidthEnum.FULL,
 
     isDark: false,
+
     // menuTheme:
     searchHistoryList: [],
   })

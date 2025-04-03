@@ -4,12 +4,13 @@
 declare namespace RouterType {
   import type { Component } from 'vue'
 
-  import type { RouteRedirect, RouteRecordRaw } from 'vue-router'
+  import type { RouteRecordRaw, RouteRedirect } from 'vue-router'
 
   /**
    *  路由类型
    */
   type RouteRecordRaw = {
+
     /**
      * 路由路径，例如 `/home`
      */
@@ -50,6 +51,7 @@ declare namespace RouterType {
    * 博客模块路由类型
    */
   type BlogRouteRecordRaw = {
+
     /**
      * 路由路径
      */
@@ -74,6 +76,7 @@ declare namespace RouterType {
      * 路由元信息
      */
     meta: {
+
       /**
        * 菜单显示标题（必填）
        */
@@ -145,6 +148,7 @@ declare namespace RouterType {
    *  博客模块菜单列表菜单项类型
    */
   type BlogMenuListType = Omit<BlogRouteRecordRaw, 'children'> & {
+
     /**
      *  菜单ID
      */
