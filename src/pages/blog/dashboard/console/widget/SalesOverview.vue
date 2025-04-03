@@ -3,7 +3,7 @@ import { SystemThemeEnum } from '@/enums/appEnum'
 
 import echarts from '@/plugins/echarts'
 
-import { useSettingStore } from '@/store/modules/setting'
+import { useSettingStore } from '@/store'
 
 import { getCssVariable, hexToRgba } from '@/utils/colors'
 
@@ -142,7 +142,7 @@ function createChart() {
 
 <template>
   <div
-    class="region sales-overview art-custom-card"
+    class="region art-custom-card sales-overview"
   >
     <div
       class="card-header"

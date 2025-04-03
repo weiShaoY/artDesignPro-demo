@@ -2,7 +2,7 @@ import type { ECharts, EChartsOption } from 'echarts'
 
 import { SystemThemeEnum } from '@/enums/appEnum'
 
-import { useSettingStore } from '@/store/modules/setting'
+import { useSettingStore } from '@/store'
 
 import { getCssVariable } from '@/utils/colors'
 

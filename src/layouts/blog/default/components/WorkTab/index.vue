@@ -9,9 +9,7 @@ import type { LocationQueryRaw } from 'vue-router'
 
 import type { MenuItemType } from '../MenuRight/index.vue'
 
-import { useSettingStore } from '@/store/modules/setting'
-
-import { useWorkTabStore } from '@/store/modules/workTab'
+import { useSettingStore, useWorkTabStore } from '@/store'
 
 /**
  * 导入Vue组合式API
@@ -440,7 +438,7 @@ function handleTouchEnd() {
       >
 
         <SvgIcon
-          class="btn console-box art-custom-card"
+          class="btn art-custom-card console-box"
           icon="blog-workTab-close-open"
         />
 

@@ -4,7 +4,7 @@ import AppConfig from '@/config'
 
 import { SystemThemeEnum } from '@/enums/appEnum'
 
-import { useSettingStore } from '@/store/modules/setting'
+import { useSettingStore } from '@/store'
 
 import { getDarkColor, getLightColor } from '@/utils/color'
 

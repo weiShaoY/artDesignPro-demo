@@ -1,4 +1,4 @@
-import { useSettingStore } from '@/store/modules/setting'
+import { useSettingStore } from '@/store'
 
 import { getTabConfig } from '@/utils/tabs'
 

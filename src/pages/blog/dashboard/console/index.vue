@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useCommon } from '@/composables/useCommon'
 
-import { useSettingStore } from '@/store/modules/setting'
+import { useSettingStore } from '@/store'
 
 import ActiveUser from './widget/ActiveUser.vue'
 
@@ -80,7 +80,7 @@ function goPage(url: string) {
     </div>
 
     <div
-      class="bottom-wrap art-custom-card"
+      class="art-custom-card bottom-wrap"
     >
       <div>
         <h2

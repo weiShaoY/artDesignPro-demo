@@ -9,3 +9,5 @@ export function initStore(app: App<Element>) {
 }
 
 export * from './modules/setting'
+
+export * from './modules/workTab'

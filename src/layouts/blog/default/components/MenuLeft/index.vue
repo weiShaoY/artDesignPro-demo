@@ -9,7 +9,7 @@ import { MenuTypeEnum } from '@/enums/appEnum'
 /**
  *  导入设置存储模块
  */
-import { useSettingStore } from '@/store/modules/setting'
+import { useSettingStore } from '@/store'
 
 /**
  *  导入菜单跳转处理函数

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useSettingStore } from '@/store/modules/setting'
+import { useSettingStore } from '@/store'
 
 import { CountTo } from 'vue3-count-to'
 
@@ -54,11 +54,11 @@ const dataList = reactive([
       class="art-custom-card"
     >
       <span
-        class="des subtitle"
+        class="subtitle des"
       >{{ item.des }}</span>
 
       <CountTo
-        class="number box-title"
+        class="box-title number"
         :end-val="item.num"
         :duration="1000"
         separator=""

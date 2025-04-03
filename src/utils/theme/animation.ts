@@ -4,7 +4,7 @@ import { useTheme } from '@/composables/useTheme'
 
 import { SystemThemeEnum } from '@/enums/appEnum'
 
-import { useSettingStore } from '@/store/modules/setting'
+import { useSettingStore } from '@/store'
 
 const { LIGHT, DARK } = SystemThemeEnum
 

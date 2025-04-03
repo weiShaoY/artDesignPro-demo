@@ -2,7 +2,7 @@
 
 import { MenuTypeEnum } from '@/enums/appEnum'
 
-import { useSettingStore } from '@/store/modules/setting'
+import { useSettingStore } from '@/store'
 
 import { blogMittBus } from '@/utils'
 

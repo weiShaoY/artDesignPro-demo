@@ -7,9 +7,7 @@ import { useCommon } from '@/composables/useCommon'
  */
 import { MenuTypeEnum } from '@/enums/appEnum'
 
-import { useSettingStore } from '@/store/modules/setting'
-
-import { useWorkTabStore } from '@/store/modules/workTab'
+import { useSettingStore, useWorkTabStore } from '@/store'
 
 /**
  *  导入工具函数

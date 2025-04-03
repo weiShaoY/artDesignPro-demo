@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useSettingStore } from '@/store/modules/setting'
+import { useSettingStore } from '@/store'
 
 import { useECharts } from '@/utils/echarts/useECharts'
 

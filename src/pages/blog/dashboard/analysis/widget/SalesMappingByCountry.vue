@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { EChartsOption } from 'echarts'
 
-import { useSettingStore } from '@/store/modules/setting'
+import { useSettingStore } from '@/store'
 
 import { useECharts } from '@/utils/echarts/useECharts'
 
@@ -114,7 +114,7 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="custom-card art-custom-card sales-mapping-country"
+    class="art-custom-card custom-card sales-mapping-country"
   >
     <div
       class="custom-card-header"

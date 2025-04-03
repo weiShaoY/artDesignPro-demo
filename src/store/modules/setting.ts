@@ -19,7 +19,7 @@ import { computed, ref } from 'vue'
 
 const { defaultMenuWidth, defaultCustomRadius, defaultCloseMenuWidth, defaultTabStyle } = AppConfig.systemSetting
 
-/** Tab 状态管理 */
+/** blog模块设置 */
 export const useSettingStore = defineStore('settingStore', () => {
   /**  菜单类型 */
   const menuType = ref(MenuTypeEnum.LEFT)

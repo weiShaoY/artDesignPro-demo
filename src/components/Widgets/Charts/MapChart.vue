@@ -3,7 +3,7 @@ import chinaMapJson from '@/assets/jsons/chinaMap.json'
 
 import { SystemThemeEnum } from '@/enums/appEnum'
 
-import { useSettingStore } from '@/store/modules/setting'
+import { useSettingStore } from '@/store'
 
 import * as echarts from 'echarts'
 

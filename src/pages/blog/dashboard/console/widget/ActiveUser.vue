@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useSettingStore } from '@/store/modules/setting'
+import { useSettingStore } from '@/store'
 
 import { getCssVariable } from '@/utils/colors'
 
@@ -140,7 +140,7 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="region active-user art-custom-card"
+    class="art-custom-card region active-user"
   >
     <div
       ref="chartRef"

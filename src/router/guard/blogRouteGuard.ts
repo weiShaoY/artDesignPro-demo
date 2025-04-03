@@ -11,9 +11,7 @@ import { useTheme } from '@/composables/useTheme'
 
 import { BLOG_DEFAULT_LAYOUT, BLOG_IFRAME_LAYOUT } from '@/layouts'
 
-import { useSettingStore } from '@/store/modules/setting'
-
-import { useWorkTabStore } from '@/store/modules/workTab'
+import { useSettingStore, useWorkTabStore } from '@/store'
 
 import { blogRouteList } from '../modules/blog'
 
