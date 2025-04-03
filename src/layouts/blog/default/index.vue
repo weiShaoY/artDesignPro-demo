@@ -7,11 +7,6 @@ import { useCommon } from '@/composables/useCommon'
  */
 import { MenuTypeEnum } from '@/enums/appEnum'
 
-/**
- *  导入状态管理模块
- */
-import { useMenuStore } from '@/store/modules/menu'
-
 import { useSettingStore } from '@/store/modules/setting'
 
 import { useWorkTabStore } from '@/store/modules/workTab'
@@ -66,8 +61,6 @@ const settingStore = useSettingStore()
 
 // 标签页风格
 const tabStyle = computed(() => settingStore.tabStyle)
-
-const menuStore = useMenuStore()
 
 const workTabStore = useWorkTabStore()
 
@@ -130,7 +123,7 @@ const showLeftMenu = computed(
 const paddingLeft = computed(() => {
   const width = menuOpen.value ? settingStore.getMenuOpenWidth : settingStore.getMenuCloseWidth
 
-  menuStore.menuWidth = width // 更新菜单宽度状态
+  settingStore.menuWidth = width // 更新菜单宽度状态
 
   // 双列菜单特殊处理
   if (menuType.value === MenuTypeEnum.DUAL_MENU) {

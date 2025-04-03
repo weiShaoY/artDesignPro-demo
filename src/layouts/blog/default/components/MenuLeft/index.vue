@@ -7,11 +7,6 @@
 import { MenuTypeEnum } from '@/enums/appEnum'
 
 /**
- *  导入菜单存储模块
- */
-import { useMenuStore } from '@/store/modules/menu'
-
-/**
  *  导入设置存储模块
  */
 import { useSettingStore } from '@/store/modules/setting'
@@ -75,14 +70,14 @@ const defaultOpenedsArray = ref([])
  *  计算一级菜单列表
  */
 const firstLevelMenus = computed(() => {
-  return useMenuStore().menuList
+  return settingStore.menuList
 })
 
 /**
  *  计算当前显示的菜单列表
  */
 const menuList = computed(() => {
-  const list = useMenuStore().menuList
+  const list = settingStore.menuList
 
   /**
    *  如果不是顶部左侧菜单或双列菜单，直接返回完整菜单列表

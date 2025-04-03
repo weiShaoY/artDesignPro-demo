@@ -2,8 +2,6 @@
 
 import { MenuTypeEnum } from '@/enums/appEnum'
 
-import { useMenuStore } from '@/store/modules/menu'
-
 import { useSettingStore } from '@/store/modules/setting'
 
 import { blogMittBus } from '@/utils'
@@ -37,7 +35,7 @@ const menuOpen = computed(() => settingStore.menuOpen)
 
 const showCrumbs = computed(() => settingStore.showCrumbs)
 
-const menuList = computed(() => useMenuStore().menuList)
+const menuList = computed(() => settingStore.menuList)
 
 const menuType = computed(() => settingStore.menuType)
 

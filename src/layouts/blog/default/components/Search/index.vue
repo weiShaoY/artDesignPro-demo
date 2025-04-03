@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { useMenuStore } from '@/store/modules/menu'
 
 import { useSettingStore } from '@/store/modules/setting'
 
@@ -17,7 +16,7 @@ const HISTORY_MAX_LENGTH = 5
 /**
  *  菜单列表
  */
-const menuList = computed(() => useMenuStore().menuList)
+const menuList = computed(() => settingStore.menuList)
 
 /**
  *  是否显示搜索弹窗

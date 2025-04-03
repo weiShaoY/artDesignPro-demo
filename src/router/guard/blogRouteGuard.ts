@@ -11,8 +11,6 @@ import { useTheme } from '@/composables/useTheme'
 
 import { BLOG_DEFAULT_LAYOUT, BLOG_IFRAME_LAYOUT } from '@/layouts'
 
-import { useMenuStore } from '@/store/modules/menu'
-
 import { useSettingStore } from '@/store/modules/setting'
 
 import { useWorkTabStore } from '@/store/modules/workTab'
@@ -173,7 +171,7 @@ function handleBlogMenuList(router: Router, delay: number = 300): Promise<{ clos
   console.log('%c Line:178 🥓 menuList', 'color:#93c0a4', menuList)
 
   // 设置菜单列表
-  useMenuStore().menuList = menuList
+  useSettingStore().menuList = menuList
 
   menuList.forEach((route: any) => {
     // 递归处理
