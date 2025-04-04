@@ -148,7 +148,7 @@ const isRefresh = ref(true)
 /**
  *  路由信息调试开关
  */
-const isOpenRouteInfo = import.meta.env.VITE_OPEN_ROUTE_INFO
+const isOpenRouteInfo = import.meta.env.VITE_ROUTE_INFO_OPEN === 'true'
 
 /**
  *  执行页面刷新
@@ -168,14 +168,19 @@ watch(refresh, () => {
   reload()
 })
 
+// 是否显示烟花  后续放到config里
+const isShowFireworks = false
+
 /**
  *  组件挂载钩子
  */
 onMounted(() => {
+  if (isShowFireworks) {
   // 延迟3秒触发烟花效果
-  setTimeout(() => {
-    blogMittBus.emit('triggerFireworks')
-  }, 3000)
+    setTimeout(() => {
+      blogMittBus.emit('triggerFireworks')
+    }, 3000)
+  }
 })
 </script>
 
@@ -211,7 +216,7 @@ onMounted(() => {
       >
         <!-- 路由信息，方便开发者调试 -->
         <div
-          v-if="isOpenRouteInfo === 'true'"
+          v-if="isOpenRouteInfo"
         >
           {{ route.meta }}
         </div>
@@ -256,7 +261,9 @@ onMounted(() => {
     <Setting />
 
     <!-- 烟花组件 -->
-    <Fireworks />
+    <Fireworks
+      v-if="isShowFireworks"
+    />
 
     <!-- 水印组件 -->
     <Watermark

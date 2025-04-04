@@ -22,13 +22,13 @@ console.log('%c Line:19 🍖 routeList', 'color:#2eafb0', routeList)
 /**
  * 博客模块首页路径常量
  */
-export const BLOG_HOME = import.meta.env.VITE_ROUTER_BLOG_HOME
+export const BLOG_HOME = import.meta.env.VITE_ROUTER_BLOG_HOME_PATH
 
 /** 静态路由配置 */
 const staticRoutes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: BLOG_HOME,
+    redirect: import.meta.env.VITE_ROUTER_ROOT_REDIRECT_PATH || '/home',
   },
 
   {

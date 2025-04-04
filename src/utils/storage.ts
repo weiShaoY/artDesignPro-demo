@@ -18,7 +18,7 @@ export function initState() {
  *  获取系统存储数据
  */
 export function getSysStorage() {
-  const version = getSysVersion() || import.meta.env.VITE_VERSION || '1.0.0'
+  const version = getSysVersion() || import.meta.env.VITE_APP_VERSION || '1.0.0'
 
   return localStorage.getItem(`sys-v${version}`) as any
 }

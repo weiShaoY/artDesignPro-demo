@@ -28,7 +28,7 @@ const mode = ref('defualt')
 
 // token
 // 图片上传地址
-const server = `${import.meta.env.VITE_API_URL}/api/common/upload/wangeditor`
+const server = `${import.meta.env.VITE_APP_API_URL}/api/common/upload/wangeditor`
 
 const toolbarConfig = {
   // 重新配置工具栏，显示哪些菜单，以及菜单的排序、分组。

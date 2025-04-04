@@ -10,9 +10,9 @@ export function createDocumentTitleGuard(router: Router) {
     const { title } = to.meta
 
     if (title) {
-      setTimeout(() => {
-        document.title = `${title} - weiShaoY`
-      }, 150)
+      const documentTitle = `${title} - ${import.meta.env.VITE_APP_TITLE}`
+
+      useTitle(documentTitle)
     }
   })
 }

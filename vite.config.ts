@@ -26,21 +26,20 @@ export default ({ mode }) => {
 
   const env = loadEnv(mode, root)
 
-  const { VITE_VERSION, VITE_PORT, VITE_BASE_URL, VITE_API_URL } = env
+  const { VITE_APP_VERSION, VITE_APP_PORT, VITE_APP_API_URL } = env
 
-  console.log(`🚀 API_URL = ${VITE_API_URL}`)
-  console.log(`🚀 VERSION = ${VITE_VERSION}`)
+  console.log(`🚀 API_URL = ${VITE_APP_API_URL}`)
+  console.log(`🚀 VERSION = ${VITE_APP_VERSION}`)
 
   return defineConfig({
     define: {
-      __APP_VERSION__: JSON.stringify(VITE_VERSION),
+      __APP_VERSION__: JSON.stringify(VITE_APP_VERSION),
     },
-    base: VITE_BASE_URL,
     server: {
-      port: Number.parseInt(VITE_PORT),
+      port: Number.parseInt(VITE_APP_PORT),
       proxy: {
         '/api': {
-          target: VITE_API_URL,
+          target: VITE_APP_API_URL,
           changeOrigin: true,
           rewrite: path => path.replace(/^\/api/, ''),
         },
