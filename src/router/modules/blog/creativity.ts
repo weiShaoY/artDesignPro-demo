@@ -30,6 +30,16 @@ const creativityRoute: RouterType.BlogRouteRecordRaw = {
         icon: 'blog-menu-muYu',
       },
     },
+    {
+      path: 'calendar',
+      name: 'Calendar',
+      component: () => import('@/pages/blog/creativity/calendar/index.vue'),
+      meta: {
+        title: '日历',
+        keepAlive: true,
+        icon: 'blog-menu-calendar',
+      },
+    },
   ],
 }
 
