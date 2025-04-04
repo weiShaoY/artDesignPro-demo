@@ -53,19 +53,33 @@ export default defineConfig({
   /**
    *  @description 预定义的样式快捷方式，可直接在模板中通过类名使用
    */
-  shortcuts: [
-    // 宽高 100%
-    ['wh-full', 'w-full h-full'],
+  // shortcuts: [
+  //   // 宽高 100%
+  //   ['wh-full', 'w-full h-full'],
 
-    // Flex 布局居中
-    ['flex-center', 'flex justify-center items-center'],
+  //   // Flex 布局居中
+  //   ['flex-center', 'flex justify-center items-center'],
 
-    // Flex 列布局
-    ['flex-col', 'flex flex-col'],
+  //   // Flex 列布局
+  //   ['flex-col', 'flex flex-col'],
 
-    // 文本溢出显示省略号
-    ['text-ellipsis', 'truncate'],
-  ],
+  //   // 文本溢出显示省略号
+  //   ['text-ellipsis', 'truncate'],
+
+  //   // 'card-wrapper': 'rd-8px shadow-sm',
+
+  // ],
+  shortcuts: {
+    'wh-full': 'w-full h-full',
+
+    'flex-center': 'flex justify-center items-center',
+
+    'flex-col': 'flex flex-col',
+
+    'text-ellipsis': 'truncate',
+
+    'card-wrapper': 'rd-8px shadow-sm',
+  },
 
   /**
    *  @description 自定义生成 CSS 工具的规则，后定义的规则优先级更高

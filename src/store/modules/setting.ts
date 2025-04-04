@@ -13,6 +13,8 @@ import { colourBlend, handleElementThemeColor } from '@/utils/colors'
 
 import { getSysStorage } from '@/utils/storage'
 
+import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
+
 import { defineStore } from 'pinia'
 
 import { computed, ref } from 'vue'
@@ -20,351 +22,365 @@ import { computed, ref } from 'vue'
 const { defaultMenuWidth, defaultCustomRadius, defaultCloseMenuWidth, defaultTabStyle } = AppConfig.systemSetting
 
 /** blog模块设置 */
-export const useSettingStore = defineStore('settingStore', () => {
+export const useSettingStore = defineStore(
+  'settingStore',
+  () => {
   /**  菜单类型 */
-  const menuType = ref(MenuTypeEnum.LEFT)
+    const menuType = ref(MenuTypeEnum.LEFT)
 
-  /**  菜单展开宽度 */
-  const menuOpenWidth = ref(defaultMenuWidth)
+    /**  菜单展开宽度 */
+    const menuOpenWidth = ref(defaultMenuWidth)
 
-  /**  菜单关闭宽度 */
-  const menuCloseWidth = ref(defaultCloseMenuWidth)
+    /**  菜单关闭宽度 */
+    const menuCloseWidth = ref(defaultCloseMenuWidth)
 
-  /**  全局主题类型 light dark */
-  const systemThemeType = ref(SystemThemeEnum.LIGHT)
+    /**  全局主题类型 light dark */
+    const systemThemeType = ref(SystemThemeEnum.LIGHT)
 
-  /**  全局主题模式 light dark auto */
-  const systemThemeMode = ref(SystemThemeEnum.LIGHT)
+    /**  全局主题模式 light dark auto */
+    const systemThemeMode = ref(SystemThemeEnum.LIGHT)
 
-  /**  菜单主题类型 */
-  const menuThemeType = ref(MenuThemeEnum.DESIGN)
+    /**  菜单主题类型 */
+    const menuThemeType = ref(MenuThemeEnum.DESIGN)
 
-  /**  系统主题颜色 */
-  const systemThemeColor = ref(AppConfig.elementPlusTheme.primary)
+    /**  系统主题颜色 */
+    const systemThemeColor = ref(AppConfig.elementPlusTheme.primary)
 
-  /**  盒子模式 border | shadow */
-  const boxBorderMode = ref(true)
+    /**  盒子模式 border | shadow */
+    const boxBorderMode = ref(true)
 
-  /**  是否开启手风琴模式 */
-  const uniqueOpened = ref(true)
+    /**  是否开启手风琴模式 */
+    const uniqueOpened = ref(true)
 
-  /**  是否显示菜单展开按钮 */
-  const showMenuButton = ref(true)
+    /**  是否显示菜单展开按钮 */
+    const showMenuButton = ref(true)
 
-  /**  是否显示页面刷新按钮 */
-  const showRefreshButton = ref(true)
+    /**  是否显示页面刷新按钮 */
+    const showRefreshButton = ref(true)
 
-  /**  是否显示全局面包屑 */
-  const showCrumbs = ref(true)
+    /**  是否显示全局面包屑 */
+    const showCrumbs = ref(true)
 
-  /**  设置后是否自动关闭窗口 */
-  const autoClose = ref(false)
+    /**  设置后是否自动关闭窗口 */
+    const autoClose = ref(false)
 
-  /**  是否显示多标签 */
-  const showWorkTab = ref(true)
+    /**  是否显示多标签 */
+    const showWorkTab = ref(true)
 
-  /**  是否显示顶部进度条 */
-  const showNprogress = ref(true)
+    /**  是否显示顶部进度条 */
+    const showNprogress = ref(true)
 
-  /**  色弱模式 */
-  const colorWeak = ref(false)
+    /**  色弱模式 */
+    const colorWeak = ref(false)
 
-  /**  页面切换动画 */
-  const pageTransition = ref('slide-right')
+    /**  页面切换动画 */
+    const pageTransition = ref('slide-right')
 
-  /**
-   *  标签风格
-   */
-  const tabStyle = ref(defaultTabStyle)
+    /**
+     *  标签风格
+     */
+    const tabStyle = ref(defaultTabStyle)
 
-  /**  菜单是否展开 */
-  const menuOpen = ref(true)
+    /**  菜单是否展开 */
+    const menuOpen = ref(true)
 
-  /**  刷新 */
-  const refresh = ref(false)
+    /**  刷新 */
+    const refresh = ref(false)
 
-  /**  水印是否显示 */
-  const watermarkVisible = ref(false)
+    /**  水印是否显示 */
+    const watermarkVisible = ref(false)
 
-  /**  自定义圆角 */
-  const customRadius = ref(defaultCustomRadius)
+    /**  自定义圆角 */
+    const customRadius = ref(defaultCustomRadius)
 
-  /**  双列菜单是否显示文本 */
-  const dualMenuShowText = ref(false)
+    /**  双列菜单是否显示文本 */
+    const dualMenuShowText = ref(false)
 
-  /** 容器宽度 */
-  const containerWidth = ref(ContainerWidthEnum.FULL)
+    /** 容器宽度 */
+    const containerWidth = ref(ContainerWidthEnum.FULL)
 
-  /**  是否为暗黑模式 */
-  const isDark = computed(() => systemThemeType.value === SystemThemeEnum.DARK)
+    /**  是否为暗黑模式 */
+    const isDark = computed(() => systemThemeType.value === SystemThemeEnum.DARK)
 
-  /**
-   * 获取菜单主题
-   * @returns 菜单主题配置
-   */
-  const getMenuTheme = computed<MenuThemeType>(() => {
-    const list = AppConfig.themeList.filter(item => item.theme === menuThemeType.value)
+    /**
+     * 获取菜单主题
+     * @returns 菜单主题配置
+     */
+    const getMenuTheme = computed<MenuThemeType>(() => {
+      const list = AppConfig.themeList.filter(item => item.theme === menuThemeType.value)
 
-    if (isDark.value) {
-      return AppConfig.darkMenuStyles[0]
+      if (isDark.value) {
+        return AppConfig.darkMenuStyles[0]
+      }
+      else {
+        return list[0]
+      }
+    })
+
+    /**  获取菜单展开宽度 */
+    const getMenuOpenWidth = computed(() => `${menuOpenWidth.value}px` || `${defaultMenuWidth}px`)
+
+    /**  获取菜单关闭宽度 */
+    const getMenuCloseWidth = computed(() => `${menuCloseWidth.value}px` || `${defaultCloseMenuWidth}px`)
+
+    /**  获取自定义圆角 */
+    const getCustomRadius = computed(() => `${customRadius.value}rem` || `${defaultCustomRadius}rem`)
+
+    /**
+     *  搜索历史列表
+     */
+    const searchHistoryList = ref<RouterType.BlogMenuListType[]>([])
+
+    function initState() {
+      let sys = getSysStorage()
+
+      console.log('%c Line:150 🌽 sys', 'color:#b03734', sys)
+
+      if (sys) {
+        sys = JSON.parse(sys)
+        const { setting } = sys.user
+
+        menuType.value = setting.menuType || MenuTypeEnum.LEFT
+        menuOpenWidth.value = Number(setting.menuOpenWidth) || defaultMenuWidth
+        systemThemeType.value = setting.systemThemeType || SystemThemeEnum.LIGHT
+        systemThemeMode.value = setting.systemThemeMode || SystemThemeEnum.LIGHT
+        menuThemeType.value = setting.menuThemeType || MenuThemeEnum.DESIGN
+        containerWidth.value = setting.containerWidth || ContainerWidthEnum.FULL
+        systemThemeColor.value = setting.systemThemeColor || AppConfig.elementPlusTheme.primary
+        boxBorderMode.value = setting.boxBorderMode
+        uniqueOpened.value = setting.uniqueOpened
+        showMenuButton.value = setting.showMenuButton
+        showRefreshButton.value = setting.showRefreshButton
+        showCrumbs.value = setting.showCrumbs
+        autoClose.value = setting.autoClose
+        showWorkTab.value = setting.showWorkTab
+        showNprogress.value = setting.showNprogress
+        colorWeak.value = setting.colorWeak
+        pageTransition.value = setting.pageTransition
+
+        tabStyle.value = setting.tabStyle || defaultTabStyle
+
+        menuOpen.value = setting.menuOpen
+
+        watermarkVisible.value = setting.watermarkVisible
+        customRadius.value = setting.customRadius || defaultCustomRadius
+
+        dualMenuShowText.value = setting.dualMenuShowText
+        setCustomRadius(customRadius.value)
+        setElementThemeColor(setting.systemThemeColor)
+
+        searchHistoryList.value = setting.searchHistoryList || []
+      }
+      else {
+        setCustomRadius(customRadius.value)
+        setElementThemeColor(AppConfig.elementPlusTheme.primary)
+      }
     }
-    else {
-      return list[0]
+
+    function switchMenuLayouts(type: MenuTypeEnum) {
+      menuType.value = type
     }
-  })
 
-  /**  获取菜单展开宽度 */
-  const getMenuOpenWidth = computed(() => `${menuOpenWidth.value}px` || `${defaultMenuWidth}px`)
-
-  /**  获取菜单关闭宽度 */
-  const getMenuCloseWidth = computed(() => `${menuCloseWidth.value}px` || `${defaultCloseMenuWidth}px`)
-
-  /**  获取自定义圆角 */
-  const getCustomRadius = computed(() => `${customRadius.value}rem` || `${defaultCustomRadius}rem`)
-
-  /**
-   *  搜索历史列表
-   */
-  const searchHistoryList = ref<RouterType.BlogMenuListType[]>([])
-
-  function initState() {
-    let sys = getSysStorage()
-
-    console.log('%c Line:150 🌽 sys', 'color:#b03734', sys)
-
-    if (sys) {
-      sys = JSON.parse(sys)
-      const { setting } = sys.user
-
-      menuType.value = setting.menuType || MenuTypeEnum.LEFT
-      menuOpenWidth.value = Number(setting.menuOpenWidth) || defaultMenuWidth
-      systemThemeType.value = setting.systemThemeType || SystemThemeEnum.LIGHT
-      systemThemeMode.value = setting.systemThemeMode || SystemThemeEnum.LIGHT
-      menuThemeType.value = setting.menuThemeType || MenuThemeEnum.DESIGN
-      containerWidth.value = setting.containerWidth || ContainerWidthEnum.FULL
-      systemThemeColor.value = setting.systemThemeColor || AppConfig.elementPlusTheme.primary
-      boxBorderMode.value = setting.boxBorderMode
-      uniqueOpened.value = setting.uniqueOpened
-      showMenuButton.value = setting.showMenuButton
-      showRefreshButton.value = setting.showRefreshButton
-      showCrumbs.value = setting.showCrumbs
-      autoClose.value = setting.autoClose
-      showWorkTab.value = setting.showWorkTab
-      showNprogress.value = setting.showNprogress
-      colorWeak.value = setting.colorWeak
-      pageTransition.value = setting.pageTransition
-
-      tabStyle.value = setting.tabStyle || defaultTabStyle
-
-      menuOpen.value = setting.menuOpen
-
-      watermarkVisible.value = setting.watermarkVisible
-      customRadius.value = setting.customRadius || defaultCustomRadius
-
-      dualMenuShowText.value = setting.dualMenuShowText
-      setCustomRadius(customRadius.value)
-      setElementThemeColor(setting.systemThemeColor)
-
-      searchHistoryList.value = setting.searchHistoryList || []
+    function setMenuOpenWidth(width: number) {
+      menuOpenWidth.value = width
     }
-    else {
-      setCustomRadius(customRadius.value)
-      setElementThemeColor(AppConfig.elementPlusTheme.primary)
+
+    function setGlopTheme(theme: SystemThemeEnum, themeMode: SystemThemeEnum) {
+      systemThemeType.value = theme
+      systemThemeMode.value = themeMode
     }
-  }
 
-  function switchMenuLayouts(type: MenuTypeEnum) {
-    menuType.value = type
-  }
+    function switchMenuStyles(theme: MenuThemeEnum) {
+      menuThemeType.value = theme
+    }
 
-  function setMenuOpenWidth(width: number) {
-    menuOpenWidth.value = width
-  }
+    function setElementTheme(theme: string) {
+      systemThemeColor.value = theme
+      setElementThemeColor(theme)
+    }
 
-  function setGlopTheme(theme: SystemThemeEnum, themeMode: SystemThemeEnum) {
-    systemThemeType.value = theme
-    systemThemeMode.value = themeMode
-  }
+    // 设置盒子模式
+    function setBorderMode() {
+      boxBorderMode.value = !boxBorderMode.value
+    }
 
-  function switchMenuStyles(theme: MenuThemeEnum) {
-    menuThemeType.value = theme
-  }
+    // 设置容器宽度
+    function setContainerWidth(width: ContainerWidthEnum) {
+      containerWidth.value = width
+    }
 
-  function setElementTheme(theme: string) {
-    systemThemeColor.value = theme
-    setElementThemeColor(theme)
-  }
+    // 设置菜单是否为手风琴模式
+    function setUniqueOpened() {
+      uniqueOpened.value = !uniqueOpened.value
+    }
 
-  // 设置盒子模式
-  function setBorderMode() {
-    boxBorderMode.value = !boxBorderMode.value
-  }
+    // 显示侧边栏折叠按钮
+    function setButton() {
+      showMenuButton.value = !showMenuButton.value
+    }
 
-  // 设置容器宽度
-  function setContainerWidth(width: ContainerWidthEnum) {
-    containerWidth.value = width
-  }
+    // 是否自动关闭个性化设置
+    function setAutoClose() {
+      autoClose.value = !autoClose.value
+    }
 
-  // 设置菜单是否为手风琴模式
-  function setUniqueOpened() {
-    uniqueOpened.value = !uniqueOpened.value
-  }
+    // 是否显示页面刷新按钮
+    function setShowRefreshButton() {
+      showRefreshButton.value = !showRefreshButton.value
+    }
 
-  // 显示侧边栏折叠按钮
-  function setButton() {
-    showMenuButton.value = !showMenuButton.value
-  }
+    // 是否显示面包屑导航
+    function setCrumbs() {
+      showCrumbs.value = !showCrumbs.value
+    }
 
-  // 是否自动关闭个性化设置
-  function setAutoClose() {
-    autoClose.value = !autoClose.value
-  }
+    // 是否显示多标签
+    function setWorkTab(show: boolean) {
+      showWorkTab.value = show
+    }
 
-  // 是否显示页面刷新按钮
-  function setShowRefreshButton() {
-    showRefreshButton.value = !showRefreshButton.value
-  }
+    // 是否显示顶部进度条
+    function setNprogress() {
+      showNprogress.value = !showNprogress.value
+    }
 
-  // 是否显示面包屑导航
-  function setCrumbs() {
-    showCrumbs.value = !showCrumbs.value
-  }
+    // 色弱模式
+    function setColorWeak() {
+      colorWeak.value = !colorWeak.value
+    }
 
-  // 是否显示多标签
-  function setWorkTab(show: boolean) {
-    showWorkTab.value = show
-  }
+    // 设置页面切换动画
+    function setPageTransition(transition: string) {
+      pageTransition.value = transition
+    }
 
-  // 是否显示顶部进度条
-  function setNprogress() {
-    showNprogress.value = !showNprogress.value
-  }
+    // 设置标签页风格
+    function setTabStyle(style: string) {
+      tabStyle.value = style
+    }
 
-  // 色弱模式
-  function setColorWeak() {
-    colorWeak.value = !colorWeak.value
-  }
+    // 设置菜单是否展开
+    function setMenuOpen(open: boolean) {
+      menuOpen.value = open
+    }
 
-  // 设置页面切换动画
-  function setPageTransition(transition: string) {
-    pageTransition.value = transition
-  }
+    // 刷新当前页
+    function reload() {
+      refresh.value = !refresh.value
+    }
 
-  // 设置标签页风格
-  function setTabStyle(style: string) {
-    tabStyle.value = style
-  }
+    // 设置水印是否显示
+    function setWatermarkVisible(visible: boolean) {
+      watermarkVisible.value = visible
+    }
 
-  // 设置菜单是否展开
-  function setMenuOpen(open: boolean) {
-    menuOpen.value = open
-  }
+    // 设置自定义圆角
+    function setCustomRadius(radius: string) {
+      customRadius.value = radius
+      document.documentElement.style.setProperty('--custom-radius', `${radius}rem`)
+    }
 
-  // 刷新当前页
-  function reload() {
-    refresh.value = !refresh.value
-  }
+    // 设置双列菜单是否显示文本
+    function setDualMenuShowText(show: boolean) {
+      dualMenuShowText.value = show
+    }
 
-  // 设置水印是否显示
-  function setWatermarkVisible(visible: boolean) {
-    watermarkVisible.value = visible
-  }
+    /**
+     *  设置搜索历史列表
+     */
+    function setSearchHistoryList(list: RouterType.BlogMenuListType[]) {
+      searchHistoryList.value = list
+    }
 
-  // 设置自定义圆角
-  function setCustomRadius(radius: string) {
-    customRadius.value = radius
-    document.documentElement.style.setProperty('--custom-radius', `${radius}rem`)
-  }
+    // ////////////////////////  菜单  ////////////////////////
+    /**
+     *  菜单宽度
+     */
+    const menuWidth = ref<string>('')
 
-  // 设置双列菜单是否显示文本
-  function setDualMenuShowText(show: boolean) {
-    dualMenuShowText.value = show
-  }
+    /**
+     *  菜单列表
+     */
+    const menuList = ref<RouterType.BlogMenuListType[]>([])
 
-  /**
-   *  设置搜索历史列表
-   */
-  function setSearchHistoryList(list: RouterType.BlogMenuListType[]) {
-    searchHistoryList.value = list
-  }
+    /** 断点管理（用于响应式布局） */
+    const breakpoints = useBreakpoints(breakpointsTailwind)
 
-  // ////////////////////////  菜单  ////////////////////////
-  /**
-   *  菜单宽度
-   */
-  const menuWidth = ref<string>('')
+    /** 是否为移动布局 */
+    const isMobile = breakpoints.smaller('sm')
 
-  /**
-   *  菜单列表
-   */
-  const menuList = ref<RouterType.BlogMenuListType[]>([])
+    return {
+      menuType,
+      menuOpenWidth,
+      menuCloseWidth,
+      systemThemeType,
+      systemThemeMode,
+      menuThemeType,
+      systemThemeColor,
+      boxBorderMode,
+      uniqueOpened,
+      showMenuButton,
+      showRefreshButton,
+      showCrumbs,
+      autoClose,
+      showWorkTab,
+      showNprogress,
+      colorWeak,
+      pageTransition,
+      tabStyle,
 
-  return {
-    menuType,
-    menuOpenWidth,
-    menuCloseWidth,
-    systemThemeType,
-    systemThemeMode,
-    menuThemeType,
-    systemThemeColor,
-    boxBorderMode,
-    uniqueOpened,
-    showMenuButton,
-    showRefreshButton,
-    showCrumbs,
-    autoClose,
-    showWorkTab,
-    showNprogress,
-    colorWeak,
-    pageTransition,
-    tabStyle,
+      menuOpen,
+      refresh,
+      watermarkVisible,
+      customRadius,
 
-    menuOpen,
-    refresh,
-    watermarkVisible,
-    customRadius,
+      dualMenuShowText,
+      containerWidth,
 
-    dualMenuShowText,
-    containerWidth,
+      // ////
+      getMenuTheme,
+      isDark,
+      getMenuOpenWidth,
+      getMenuCloseWidth,
+      getCustomRadius,
+      initState,
+      switchMenuLayouts,
+      setMenuOpenWidth,
+      setGlopTheme,
+      switchMenuStyles,
+      setElementTheme,
+      setBorderMode,
+      setContainerWidth,
+      setUniqueOpened,
+      setButton,
+      setAutoClose,
+      setShowRefreshButton,
+      setCrumbs,
+      setWorkTab,
+      setNprogress,
+      setColorWeak,
 
-    // ////
-    getMenuTheme,
-    isDark,
-    getMenuOpenWidth,
-    getMenuCloseWidth,
-    getCustomRadius,
-    initState,
-    switchMenuLayouts,
-    setMenuOpenWidth,
-    setGlopTheme,
-    switchMenuStyles,
-    setElementTheme,
-    setBorderMode,
-    setContainerWidth,
-    setUniqueOpened,
-    setButton,
-    setAutoClose,
-    setShowRefreshButton,
-    setCrumbs,
-    setWorkTab,
-    setNprogress,
-    setColorWeak,
+      setPageTransition,
+      setTabStyle,
+      setMenuOpen,
+      reload,
+      setWatermarkVisible,
+      setCustomRadius,
 
-    setPageTransition,
-    setTabStyle,
-    setMenuOpen,
-    reload,
-    setWatermarkVisible,
-    setCustomRadius,
+      setDualMenuShowText,
+      searchHistoryList,
+      setSearchHistoryList,
 
-    setDualMenuShowText,
-    searchHistoryList,
-    setSearchHistoryList,
+      menuWidth,
+      menuList,
 
-    menuWidth,
-    menuList,
-  }
-})
+      isMobile,
+    }
+  },
+  {
+    persist: true,
+  },
+)
 
 /**
  * 设置Element Plus主题色

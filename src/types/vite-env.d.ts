@@ -51,7 +51,7 @@ declare namespace Env {
     /**
      *  路由信息是否打开
      */
-    readonly VITE_ROUTE_INFO_OPEN: boolean
+    readonly VITE_ROUTE_INFO_OPEN: string
 
     /**
      *  路由-根路由默认重定向地址

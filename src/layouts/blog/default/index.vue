@@ -206,7 +206,7 @@ onMounted(() => {
 
     <!-- 内容区域 -->
     <div
-      class="container"
+      class="flex flex-col flex-grow container"
       :style="{ maxWidth: containerWidth }"
     >
       <router-view
