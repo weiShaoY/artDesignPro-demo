@@ -8,7 +8,7 @@ import { registerGlobComp } from './components' // 注册全局组件
 
 import { setupDirectives } from './directives'
 
-import { setupNProgress } from './plugins'
+import { setupLoading, setupNProgress } from './plugins'
 
 import { initRouter } from './router' // Router
 
@@ -45,13 +45,19 @@ import '@styles/theme-animation.scss' // 主题切换动画
 import '@/themes/index'
 
 async function setupApp() {
+  // 设置加载指示器
+  setupLoading()
+
   // 设置顶部进度条
   setupNProgress()
 
   const app = createApp(App)
 
   initStore(app)
+
   initRouter(app)
+
+  // 注册全局组件
   registerGlobComp(app)
 
   // 设置指令

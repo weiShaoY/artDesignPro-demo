@@ -1,12 +1,30 @@
 <script setup lang="ts">
-
-// import type { EChartsOption } from 'echarts'
-
 import chinaMapJson from '@/assets/jsons/chinaMap.json'
 
 import { SystemThemeEnum } from '@/enums/appEnum'
 
 import { useSettingStore } from '@/store'
+
+import * as echarts from 'echarts'
+
+import {
+  computed,
+  nextTick,
+  onMounted,
+  onUnmounted,
+  ref,
+  watch,
+} from 'vue'
+
+// 定义 emit
+const emit = defineEmits<{
+  (e: 'onRenderComplete'): void
+}>()
+
+// 响应式引用与主题
+const chinaMapRef = ref<HTMLElement | null>(null)
+
+const chartInstance = ref<echarts.ECharts | null>(null)
 
 const settingStore = useSettingStore()
 
@@ -17,7 +35,7 @@ const isDark = computed(
 /**
  *  构造 ECharts 配置项
  */
-const options = {
+const option = {
   /**
    *  文字样式配置
    */
@@ -38,7 +56,7 @@ const options = {
     top: '12%', // 标题距离顶部的距离
     left: 'center', // 标题水平居中
     textStyle: {
-      color: isDark.value ? '#FFF' : '#333639',
+      color: '#333639', // 标题颜色
       fontSize: 35, // 标题字体大小
       fontWeight: 700, // 标题字体粗细
     },
@@ -327,24 +345,93 @@ const options = {
   ],
 }
 
-function handleClick(params: any) {
-  if (params.name === '长沙') {
-    window.$notification?.success('风里雨里，长沙等你')
+/**
+ *  初始化并渲染地图
+ */
+async function initMap() {
+  if (!chinaMapRef.value) {
+    return
+  }
+
+  chartInstance.value = echarts.init(chinaMapRef.value)
+  chartInstance.value.showLoading()
+
+  try {
+    echarts.registerMap('china', chinaMapJson as any)
+
+    chartInstance.value.setOption(option)
+    chartInstance.value.hideLoading()
+
+    // 触发渲染完成事件
+    emit('onRenderComplete')
+
+    // 点击事件：选中地图区域
+    chartInstance.value.on('click', (params: any) => {
+      console.log(`选中区域: ${params.name}`, params)
+
+      if (params.name === '长沙') {
+        window.$notification?.success('风里雨里，长沙等你')
+      }
+
+      chartInstance.value?.dispatchAction({
+        type: 'select',
+        seriesIndex: 0,
+        dataIndex: params.dataIndex,
+      })
+    })
+  }
+  catch (error) {
+    console.error('加载地图数据失败:', error)
+    chartInstance.value?.hideLoading()
   }
 }
+
+/**
+ * 窗口 resize 时调整图表大小
+ */
+const resizeChart = () => chartInstance.value?.resize()
+
+onMounted(() => {
+  initMap().then(() => setTimeout(resizeChart, 100))
+  window.addEventListener('resize', resizeChart)
+})
+
+onUnmounted(() => {
+  chartInstance.value?.dispose()
+  chartInstance.value = null
+  window.removeEventListener('resize', resizeChart)
+})
+
+// 监听主题变化，重新初始化地图
+watch(isDark, (newVal, oldVal) => {
+  if (newVal !== oldVal) {
+    chartInstance.value?.dispose()
+    chartInstance.value = null
+    nextTick(initMap)
+  }
+})
 </script>
 
 <template>
   <div
-    class="w-full"
+    class="map-container"
     style="height: calc(100vh - 200px)"
   >
-    <VueEcharts
-      :option="options"
-      :map-json="chinaMapJson"
-      map-name="china"
-      :is-dark="isDark"
-      @click="handleClick"
+    <div
+      id="china-map"
+      ref="chinaMapRef"
+      class="china-map"
     />
   </div>
 </template>
+
+<style lang="scss" scoped>
+.map-container {
+  width: 100%;
+
+  .china-map {
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>

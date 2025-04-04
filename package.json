@@ -41,6 +41,7 @@
     "pinia": "^3.0.1",
     "vue": "^3.5.13",
     "vue-draggable-plus": "^0.6.0",
+    "vue-echarts": "^7.0.3",
     "vue-router": "^4.5.0",
     "vue3-count-to": "^1.1.2",
     "xgplayer": "^3.0.21",
@@ -49,6 +50,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "^4.10.0",
     "@types/node": "^22.13.13",
+    "@types/nprogress": "0.2.3",
     "@typescript-eslint/eslint-plugin": "^8.27.0",
     "@typescript-eslint/parser": "^8.27.0",
     "@unocss/eslint-config": "^66.0.0",

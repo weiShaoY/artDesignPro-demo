@@ -17,7 +17,9 @@ import type {
   TooltipComponentOption,
 } from 'echarts/components'
 
-import { useThemeStore } from '@/store/modules/theme'
+import { SystemThemeEnum } from '@/enums/appEnum'
+
+import { useSettingStore } from '@/store'
 
 import { useElementSize } from '@vueuse/core'
 
@@ -108,9 +110,11 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
 }) {
   const scope = effectScope()
 
-  const themeStore = useThemeStore()
+  const settingStore = useSettingStore()
 
-  const darkMode = computed(() => themeStore.darkMode)
+  const isDark = computed(
+    () => settingStore.systemThemeType === SystemThemeEnum.DARK,
+  )
 
   const domRef = ref<HTMLElement | null>(null)
 
@@ -127,12 +131,12 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
 
   const {
     onRender = (instance) => {
-      const textColor = darkMode.value ? 'rgb(224, 224, 224)' : 'rgb(31, 31, 31)'
+      const textColor = isDark.value ? 'rgb(224, 224, 224)' : 'rgb(31, 31, 31)'
 
-      const maskColor = darkMode.value ? 'rgba(0, 0, 0, 0.4)' : 'rgba(255, 255, 255, 0.8)'
+      const maskColor = isDark.value ? 'rgba(0, 0, 0, 0.4)' : 'rgba(255, 255, 255, 0.8)'
 
       instance.showLoading({
-        color: themeStore.themeColor,
+        // color: themeStore.themeColor,
         textColor,
         fontSize: 14,
         maskColor,
@@ -191,7 +195,7 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
   /** render chart */
   async function render() {
     if (!isRendered()) {
-      const chartTheme = darkMode.value ? 'dark' : 'light'
+      const chartTheme = isDark.value ? 'dark' : 'light'
 
       await nextTick()
 
@@ -220,13 +224,6 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
     await onDestroy?.(chart)
     chart?.dispose()
     chart = null
-  }
-
-  /** change chart theme */
-  async function changeTheme() {
-    await destroy()
-    await render()
-    await onUpdated?.(chart!)
   }
 
   /**
@@ -258,10 +255,6 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
   scope.run(() => {
     watch([width, height], ([newWidth, newHeight]) => {
       renderChartBySize(newWidth, newHeight)
-    })
-
-    watch(darkMode, () => {
-      changeTheme()
     })
   })
 

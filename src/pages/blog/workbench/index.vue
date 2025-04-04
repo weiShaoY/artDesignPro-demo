@@ -1,22 +1,29 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const loading = ref(false)
+
+function onLoaded() {
+  loading.value = false
+}
+
+const MapChart = defineAsyncComponent(() => import('./MapChart.vue'))
+</script>
+
 <template>
-  <div class="page-content" v-loading="loading" element-loading-text="加载中...">
-    <MapChart @onRenderComplete="onLoaded" />
+  <div
+    v-loading="loading"
+    class="page-content"
+    element-loading-text="加载中..."
+  >
+    <MapChart />
+    <!-- @on-render-complete="onLoaded" -->
+
   </div>
 </template>
 
-<script setup lang="ts">
-  import { ref } from 'vue'
-
-  const loading = ref(true)
-  const onLoaded = () => {
-    loading.value = false
-  }
-
-  const MapChart = defineAsyncComponent(() => import('./MapChart.vue'))
-</script>
-
 <style lang="scss" scoped>
   .page-content {
-    height: 100%;
-  }
+  height: 100%;
+}
 </style>

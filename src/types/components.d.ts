@@ -80,6 +80,7 @@ declare module 'vue' {
     TextScroll: typeof import('./../components/Widgets/TextScroll.vue')['default']
     TimelineListCard: typeof import('./../components/Widgets/Cards/TimelineListCard.vue')['default']
     VideoPlayer: typeof import('./../components/Widgets/VideoPlayer.vue')['default']
+    VueEcharts: typeof import('./../components/VueEcharts/index.vue')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']
