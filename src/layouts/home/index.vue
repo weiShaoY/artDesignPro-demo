@@ -1,5 +1,7 @@
 v3<!------------------------------------    ------------------------------------------------->
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import MousePosition from './components/mousePosition/index.vue'
+</script>
 
 <template>
   <div
@@ -8,6 +10,7 @@ v3<!------------------------------------    ------------------------------------
     首页布局
     <router-view />
 
+    <MousePosition />
   </div>
 </template>
 
