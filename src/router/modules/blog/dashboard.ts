@@ -1,8 +1,8 @@
 import { BLOG_DEFAULT_LAYOUT } from '@/layouts'
 
 const dashboardRoute: RouterType.BlogRouteRecordRaw = {
-  name: 'Dashboard',
   path: 'dashboard',
+  name: 'Dashboard',
   component: BLOG_DEFAULT_LAYOUT,
   meta: {
     title: '仪表盘',

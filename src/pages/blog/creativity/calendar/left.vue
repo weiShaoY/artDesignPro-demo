@@ -2,7 +2,11 @@
 <script lang="ts" setup>
 import type { DayType, StateType } from './utils'
 
+import { useSettingStore } from '@/store'
+
 import CalendarUtils from './utils'
+
+const settingStore = useSettingStore()
 
 const elementRef = ref<HTMLElement | null>(null)
 
@@ -73,7 +77,7 @@ function handleNextMonth(): void {
  *  监听鼠标滚动
  */
 onMounted(() => {
-  if (elementRef.value) {
+  if (elementRef.value && !settingStore.isMobile) {
     useEventListener(elementRef.value, 'wheel', (event: WheelEvent) => {
       if (event.deltaY < 0) {
         CalendarUtils.toPrevMonth(state.value)
@@ -102,6 +106,7 @@ onMounted(() => {
         v-model="monthPicker"
         type="month"
         placeholder="请选择月份"
+        class="!w-30"
         @change="handleMonthPickerChange"
       />
 
@@ -181,6 +186,7 @@ onMounted(() => {
         class="m-y-1 h-full w-full flex items-center justify-around"
       >
         <div
+          v-if="!settingStore.isMobile"
           class="w-15 flex items-center justify-start text-5"
           :class="{
             'text-primary': week.isTodayWeek,

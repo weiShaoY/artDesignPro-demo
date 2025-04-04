@@ -15,27 +15,12 @@ import CalendarUtils from './utils'
 const state = ref<StateType>(CalendarUtils.init())
 
 onMounted(() => {
+  // console.log('%c Line:18 🥓 onMounted', 'color:#ffdd4d', '日历')
   CalendarUtils.render(state.value)
 })
 </script>
 
 <template>
-  <!-- <div
-    class="h-full w-full flex items-center justify-center"
-  >
-    <div
-      class="h-full w-full flex items-center justify-between bg-white p-3"
-    >
-      <Left
-        v-model="state"
-      />
-
-      <Right
-        v-model="state"
-      />
-    </div>
-  </div> -->
-
   <ElSpace
     direction="vertical"
     fill

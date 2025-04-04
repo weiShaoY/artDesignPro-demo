@@ -1,8 +1,8 @@
 import { BLOG_DEFAULT_LAYOUT } from '@/layouts'
 
 const creativityRoute: RouterType.BlogRouteRecordRaw = {
-  name: 'Creativity',
   path: 'creativity',
+  name: 'Creativity',
   component: BLOG_DEFAULT_LAYOUT,
   meta: {
     title: '创意',

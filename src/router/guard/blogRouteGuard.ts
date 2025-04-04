@@ -93,7 +93,10 @@ function convertRouteComponent(route: RouterType.BlogMenuListType): ConvertedRou
   // 创建基础路由对象
   const converted: ConvertedRoute = {
     ...routeConfig,
-    component, // 默认组件
+    component: typeof component === 'function'
+      ? component
+      : () => Promise.resolve(component),
+
   }
 
   try {
@@ -127,7 +130,9 @@ function convertRouteComponent(route: RouterType.BlogMenuListType): ConvertedRou
           id: route.id,
           path: route.path,
           name: route.name,
-          component: component as RouteRecordRaw['component'],
+          component: typeof component === 'function'
+            ? component
+            : () => Promise.resolve(component),
           meta: route.meta,
         },
       ]
